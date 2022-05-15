@@ -6,7 +6,7 @@ exports.verifyToken = (req, res, next) => {
   const { token } = req.cookies
   if (!token) {
     return res.status(403).send({
-      message: "Please login to continue"
+      //message: "Please login to continue"
     });
   }
   try {
