@@ -8,8 +8,9 @@ const cors = require("cors")
 require("dotenv").config();
 
 
+
 // connecting to mongodb
-mongoose.connect(process.env.DATABASE, {
+mongoose.connect(process.env.mongoURL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
