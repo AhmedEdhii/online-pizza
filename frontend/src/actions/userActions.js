@@ -40,7 +40,7 @@ export const login = (email, password) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: LOGIN_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.error
         })
     }
 }
@@ -88,24 +88,24 @@ export const loadUser = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: LOAD_USER_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.error
         })
     }
 }
 
 // Register user 
-export const register = (name, phonenumber, email, password) => async (dispatch) => {
+export const register = (userData) => async (dispatch) => {
     try {
 
         dispatch({ type: REGISTER_USER_REQUEST })
 
         const config = {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'multipart/form-data'
             }
         }
 
-        const { data } = await axios.post('/api/signup', { name, phonenumber, email, password }, config)
+        const { data } = await axios.post('/api/signup', userData, config)
 
         dispatch({
             type: REGISTER_USER_SUCCESS,
@@ -115,7 +115,7 @@ export const register = (name, phonenumber, email, password) => async (dispatch)
     } catch (error) {
         dispatch({
             type: REGISTER_USER_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.error
         })
     }
 }

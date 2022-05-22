@@ -26,6 +26,16 @@ const userSchema = new mongoose.Schema({
         default: "user",
         enum: ["superadmin", "admin", "user", "customer"]
     },
+    avatar: {
+        public_id: {
+            type: String,
+            //required: true
+        },
+        url: {
+            type: String,
+            //required: true
+        }
+    },
     account_status: {
         type: String,
         default: "active",

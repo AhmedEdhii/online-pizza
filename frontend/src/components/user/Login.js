@@ -27,7 +27,7 @@ const Login = ({ history }) => {
         }
 
         if (error) {
-            alert.error(error);
+            //alert.error(error);
             dispatch(clearErrors());
         }
 
@@ -67,7 +67,7 @@ const Login = ({ history }) => {
                                     />
                                 </div>
                                 <button
-                                    id="login_button"
+                                    id="button"
                                     type="submit"
                                     className="primary"
                                 >

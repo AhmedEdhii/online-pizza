@@ -2,9 +2,9 @@ const User = require("../models/user")
 const { validationResult } = require('express-validator')
 var jwt = require('jsonwebtoken')
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
+const cloudinary = require('cloudinary')
 
-
-exports.signup = (req, res) => {
+exports.signup = catchAsyncErrors(async (req, res) => {
     const errors = validationResult(req)
 
     if (!errors.isEmpty()) {
@@ -12,14 +12,31 @@ exports.signup = (req, res) => {
             error: errors.array()[0].msg
         })
     }
-    const user = new User(req.body)
+
+    const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+        folder: 'avatars',
+        width: 150,
+        crop: "scale"
+    })
+
+    const { name, phonenumber, email, password } = req.body;
+    const user = new User({
+        name,
+        phonenumber,
+        email,
+        password,
+        avatar: {
+            public_id: result.public_id,
+            url: result.secure_url
+        }
+    })
     user.save((err, newuser) => {
         if (err) {
             return res.status(400).json({
-                error: "Email address already used"
+                error: "Error!"
             })
         }
-        const { _id, name, email, phonenumber, role, createdAt } = newuser
+        const { _id, name, email, phonenumber, role, createdAt, avatar } = newuser
         // generate a token 
         const token = jwt.sign({ _id: user._id, role: user.role }, process.env.TOKEN_KEY, {
             expiresIn: '15m'
@@ -37,11 +54,15 @@ exports.signup = (req, res) => {
                 name,
                 email,
                 phonenumber,
-                createdAt
+                createdAt,
+                // avatar: {
+                //     public_id: result.public_id,
+                //     url: result.secure_url
+                // }
             }
         })
     })
-}
+})
 
 
 exports.signin = (req, res) => {
@@ -85,7 +106,7 @@ exports.signin = (req, res) => {
                 _id,
                 name,
                 email,
-                phonenumber, 
+                phonenumber,
                 role,
                 createdAt
             }
@@ -106,22 +127,31 @@ exports.signout = (req, res) => {
 }
 
 // View your Profile
-exports.getprofile = (req, res) => {
-    User.findOne({ _id: req.user._id }, (err, user) => {
-        const { _id, name, email, phonenumber, role, createdAt } = user
-        return res.status(200).json({
-            message: "Route to User Profile Successful",
-            user: {
-                _id,
-                name,
-                email,
-                phonenumber, 
-                role,
-                createdAt
-            }
+exports.getprofile = catchAsyncErrors(async (req, res, next) => {
+    // const user = await User.findById({ _id: req.user._id });
+
+    // res.status(200).json({
+    //     message: "Route to User Profile Successful",
+    //     user: user
+    // })
+
+    if (req.user != null) {
+        User.findOne({ _id: req.user._id }, (err, user) => {
+            const { _id, name, email, phonenumber, role, createdAt } = user
+            return res.status(200).json({
+                message: "Route to User Profile Successful",
+                user: {
+                    _id,
+                    name,
+                    email,
+                    phonenumber,
+                    role,
+                    createdAt
+                }
+            })
         })
-    })
-}
+    }
+})
 
 // Update your profile  
 exports.updateProfile = (req, res) => {
@@ -134,7 +164,7 @@ exports.updateProfile = (req, res) => {
         { new: true, useFindAndModify: false }
     )
         .then(user => {
-            const { _id, name, phonenumber, email, role, createdAt} = user
+            const { _id, name, phonenumber, email, role, createdAt } = user
             res.status(200).json({
                 success: true,
                 user: {

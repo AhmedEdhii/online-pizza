@@ -2,8 +2,10 @@ const mongoose = require("mongoose")
 const express = require("express")
 const app = express()
 
+const cloudinary = require('cloudinary')
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
+const fileUpload = require('express-fileupload')
 const cors = require("cors")
 require("dotenv").config();
 
@@ -20,10 +22,21 @@ mongoose.connect(process.env.mongoURL, {
     console.log("Unable to connect to the database.")
 })
 
+// Setting up cloudinary configuration
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+})
+
 // use parsing middlewares
-app.use(bodyParser.json())
-//app.use(bodyParser.urlencoded({ extended: true }));
+//app.use(bodyParser.json())
+// app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
+app.use(fileUpload());
 app.use(cors())
 
 // importing routes
@@ -40,7 +53,7 @@ app.use('/api', toppingRoutes)
 app.use('/api', dealRoutes)
 app.use('/api', orderRoutes)
 
-const port = process.env.PORT || 8000
+const port = process.env.PORT || 5000
 
 // starting the server
 app.listen(port, () => {

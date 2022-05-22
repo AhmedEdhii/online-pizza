@@ -1,7 +1,27 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { Link } from 'react-router-dom'
+import ProductModal from './ProductModal'
+import { useAlert } from 'react-alert'
+import { Modal, Button, Form } from "react-bootstrap";
 
 const Product = ({ product }) => {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+
+    const alert = useAlert();
+
+    const addtocart = () => {
+        alert.success("Added to cart!");
+    }
+
+    const loadmodal = () => {
+        setShow(true);
+        // <ProductModal flag = {show} match={product._id} />
+        //console.log(show)
+        console.log(product._id)
+    }
+
     return (
         <Fragment>
             {product.category === 'Pizzas' && (
@@ -15,6 +35,7 @@ const Product = ({ product }) => {
                                 <p style={{ fontSize: "15px" }} className="card-text">Starting Price Rs {product.PizzaDetails.size.large}</p>
                                 {/* <Link to={`/product/${product._id}`} id="view_btn" className="btn btn-block">ADD TO CART</Link> */}
                             </div>
+                            {/* <Modal match={product._id} /> */}
                             <div className="col p-0 text-right flex-auto" id="col" style={{ maxWidth: "500px", height: "220px" }}>
                                 <i className="onlycover circlex icon icon-pos" style={{ height: "220px" }}>
                                     <div className="img container">
@@ -26,11 +47,24 @@ const Product = ({ product }) => {
                                         </div>
                                     </div>
                                 </i>
-                                <i className="fa fa-plus flat-plus-icon foreground background"></i>
+                                <i onClick={() => { loadmodal() }} type="button" className="fa fa-plus flat-plus-icon foreground background"></i>
+                                {/* <i onClick={() => { loadmodal() }} type="button" data-toggle="modal" data-target="#exampleModalCenter" className="fa fa-plus flat-plus-icon foreground background"></i> */}
                             </div>
                         </div>
                     </div>
-                </div>)
+                    {/* <ProductModal flag = {show} match={product._id} /> */}
+                    <Modal show={show} onHide={handleClose}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>{product._id}</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={handleClose}>
+                                Close Modal
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
+                </div>
+            )
             }
             {product.category === 'Beverages' && (
                 <div className="container mt-5" style={{ maxWidth: "500px", height: "220px" }}>
@@ -54,7 +88,7 @@ const Product = ({ product }) => {
                                         </div>
                                     </div>
                                 </i>
-                                <i className="fa fa-plus flat-plus-icon foreground background"></i>
+                                <i type="button" onClick={() => { addtocart() }} className="fa fa-plus flat-plus-icon foreground background"></i>
                             </div>
                         </div>
                     </div>
@@ -82,11 +116,12 @@ const Product = ({ product }) => {
                                         </div>
                                     </div>
                                 </i>
-                                <i className="fa fa-plus flat-plus-icon foreground background"></i>
+                                <i type="button" onClick={() => { addtocart() }} className="fa fa-plus flat-plus-icon foreground background"></i>
                             </div>
                         </div>
                     </div>
-                </div>)
+                </div>
+            )
             }
         </Fragment>
     )

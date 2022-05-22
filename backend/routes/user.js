@@ -6,6 +6,7 @@ const router = express.Router()
 
 router.post('/signup', [
      check("name", "Name should be atleast 3 characters").isLength({min: 3}),
+     check("phonenumber", "Phone Number should be exactly 11 digits").isLength({min: 11, max:11}),
      check("email", "Email Address should be valid").isEmail(),
      check("password", "Password should be atleast 8 characters").isLength({min: 8}),
  ], signup)

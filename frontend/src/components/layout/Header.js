@@ -59,7 +59,8 @@ const Header = () => {
                             </div>
 
                         </div>
-                    ) : !loading && <Link to="/login" style={{color: "white"}} className="btn ml-4" id="login_btn">Login</Link>}
+                    ) : <Link to="/login" style={{color: "white"}} className="btn ml-4" id="login_btn">Login</Link>}
+                    {/* ) : !loading && <Link to="/login" style={{color: "white"}} className="btn ml-4" id="login_btn">Login</Link>} */}
                 </div>
             </nav>
         </Fragment>
