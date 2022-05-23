@@ -1,15 +1,28 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import ProductModal from './ProductModal'
 import { useAlert } from 'react-alert'
 import { Modal, Button, Form } from "react-bootstrap";
 
-const Product = ({ product }) => {
-    const [show, setShow] = useState(false);
+import { useDispatch, useSelector } from 'react-redux'
+import { getToppings } from '../../actions/toppingActions';
 
-    const handleClose = () => setShow(false);
+const Product = ({ product }) => {
 
     const alert = useAlert();
+    const dispatch = useDispatch();
+
+    const { loading, toppings, error, toppingsCount } = useSelector(state => state.toppings)
+
+    useEffect(() => {
+        if (error) {
+            return alert.error(error)
+        }
+        //alert.success('Success')
+    }, [alert, error])
+
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
 
     const addtocart = () => {
         alert.success("Added to cart!");
@@ -19,6 +32,7 @@ const Product = ({ product }) => {
         setShow(true);
         // <ProductModal flag = {show} match={product._id} />
         //console.log(show)
+        dispatch(getToppings());
         console.log(product._id)
     }
 
@@ -55,8 +69,33 @@ const Product = ({ product }) => {
                     {/* <ProductModal flag = {show} match={product._id} /> */}
                     <Modal show={show} onHide={handleClose}>
                         <Modal.Header closeButton>
-                            <Modal.Title>{product._id}</Modal.Title>
+                            <Modal.Title>{product.name}</Modal.Title>
+                            {/* <Modal.Title>{product._id}</Modal.Title> */}
                         </Modal.Header>
+                        <Modal.Body>
+                            <div>
+                                <h1>
+                                    Rs. {product.PizzaDetails.size.small}
+                                </h1>
+                                <h1>
+                                    Rs. {product.PizzaDetails.size.regular}
+                                </h1>
+                                <h1>
+                                    Rs. {product.PizzaDetails.size.large}
+                                </h1>
+                                <h1>
+                                    Rs. {product.PizzaDetails.size.jumbo}
+                                </h1>
+                            </div>
+                            <div>
+                                <h1>Extra Toppings</h1>
+                                {toppings && toppings.map(topping => (
+                                    <h1>
+                                        {topping.name}
+                                    </h1>
+                                ))}
+                            </div>
+                        </Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>
                                 Close Modal

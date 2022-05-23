@@ -9,10 +9,11 @@ import { UPDATE_PROFILE_RESET } from '../../constants/userConstants'
 
 const UpdateProfile = ({ history }) => {
 
-    const [name, setName] = useState('');
-    const [phonenumber, setPhoneNumber] = useState('');
-    const [email, setEmail] = useState('');
-    //const [password, setPassword] = useState('');
+    const [name, setName] = useState('')
+    const [phonenumber, setPhoneNumber] = useState('')
+    const [email, setEmail] = useState('')
+    const [avatar, setAvatar] = useState('')
+    const [avatarPreview, setAvatarPreview] = useState('/images/default_avatar.jpg')
 
     const alert = useAlert();
     const dispatch = useDispatch();
@@ -20,7 +21,7 @@ const UpdateProfile = ({ history }) => {
     const { user } = useSelector(state => state.auth);
     const { error, isUpdated, loading } = useSelector(state => state.user)
 
-    //const redirect = location.search ? location.search.split('=')[1] : '/'
+    //const [password, setPassword] = useState('');
 
     useEffect(() => {
 
@@ -28,6 +29,7 @@ const UpdateProfile = ({ history }) => {
             setName(user.name);
             setPhoneNumber(user.phonenumber);
             setEmail(user.email);
+            setAvatarPreview((user && user.avatar.url) || '/images/default_avatar.jpg')
         }
 
         if (error) {
@@ -50,9 +52,30 @@ const UpdateProfile = ({ history }) => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(updateProfile(name, phonenumber, email))
+        const formData = new FormData();
+        formData.set('name', name);
+        formData.set('phonenumber', phonenumber);
+        formData.set('email', email);
+        // formData.set('password', password);
+        formData.set('avatar', avatar);
+        dispatch(updateProfile(formData))
     }
-    
+
+    const onChange = e => {
+        if (e.target.name === 'avatar') {
+            const reader = new FileReader();
+            console.log("444" + e.target.value)
+            reader.onload = () => {
+                console.log(reader.readyState)
+                if (reader.readyState === 2) {
+                    setAvatarPreview(reader.result)
+                    setAvatar(reader.result)
+                }
+            }
+            reader.readAsDataURL(e.target.files[0])
+        }
+    }
+
     return (
         <Fragment>
             <MetaData title={'Update Profile'} />
@@ -98,7 +121,35 @@ const UpdateProfile = ({ history }) => {
                             />
                         </div>
 
-                        <button type="submit" className="btn update-btn btn-block mt-4 mb-3" disabled={loading ? true : false} >Update</button>
+                        <div className='form-group'>
+                            <label htmlFor='avatar_upload'>Avatar</label>
+                            <div className='d-flex align-items-center'>
+                                <div>
+                                    <figure className='avatar mr-3 item-rtl'>
+                                        <img
+                                            src={avatarPreview}
+                                            className='rounded-circle'
+                                            alt='Avatar Preview'
+                                        />
+                                    </figure>
+                                </div>
+                                <div className='custom-file'>
+                                    <input
+                                        type='file'
+                                        name='avatar'
+                                        className='custom-file-input'
+                                        id='customFile'
+                                        accept='image/*'
+                                        onChange={onChange}
+                                    />
+                                    <label className='custom-file-label' htmlFor='customFile'>
+                                        Choose Avatar
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" className="btn update-btn btn-block mt-4 mb-3" disabled={loading ? true : false}>Update</button>
+                        {/* <button type="submit" id = "update_profile" className="btn update-btn btn-block mt-4 mb-3" disabled={loading ? true : false}>Update</button> */}
                     </form>
                 </div>
             </div>

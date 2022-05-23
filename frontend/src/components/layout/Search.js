@@ -17,7 +17,7 @@ const Search = ({ history }) => {
     return (
         <div>
             <form onSubmit={searchHandler} >
-                <div className="search-group">
+                <div className="input-group">
                     <input
                         type="text"
                         id="search_field"
@@ -25,7 +25,7 @@ const Search = ({ history }) => {
                         placeholder="Search Product.."
                         onChange={(e) => setKeyword(e.target.value)}
                     />
-                    <div className="search-group-append">
+                    <div className="input-group-append">
                         <button id="search_btn" className="btn">
                             <i className="fa fa-search" aria-hidden="true"></i>
                         </button>

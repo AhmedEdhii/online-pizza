@@ -46,18 +46,18 @@ export const login = (email, password) => async (dispatch) => {
 }
 
 // Register user 
-export const updateProfile = (name, phonenumber, email, password) => async (dispatch) => {
+export const updateProfile = (userData) => async (dispatch) => {
     try {
 
         dispatch({ type: UPDATE_PROFILE_REQUEST })
 
         const config = {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'multipart/form-data'
             }
         }
 
-        const { data } = await axios.put('/api/profile/update', { name, phonenumber, email, password }, config)
+        const { data } = await axios.put('/api/profile/update', userData, config)
 
         dispatch({
             type: UPDATE_PROFILE_SUCCESS,
@@ -67,7 +67,7 @@ export const updateProfile = (name, phonenumber, email, password) => async (disp
     } catch (error) {
         dispatch({
             type: UPDATE_PROFILE_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.error
         })
     }
 }

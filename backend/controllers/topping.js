@@ -20,16 +20,16 @@ exports.getallToppings = catchAsyncErrors(async (req, res, next) => {
         const toppings = await Topping.find();
         res.status(200).json({
             success: true,
+            toppings,
             count: toppings.length,
-            toppings
         })
     }
     else {
         const toppings = await Topping.find({ topping_status: "active" });
         res.status(200).json({
             success: true,
-            count: toppings.length,
-            toppings
+            toppings,
+            count: toppings.length
         })
     }
 })

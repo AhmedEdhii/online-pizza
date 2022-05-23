@@ -13,55 +13,91 @@ exports.signup = catchAsyncErrors(async (req, res) => {
         })
     }
 
-    const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
-        folder: 'avatars',
-        width: 150,
-        crop: "scale"
-    })
-
     const { name, phonenumber, email, password } = req.body;
-    const user = new User({
-        name,
-        phonenumber,
-        email,
-        password,
-        avatar: {
-            public_id: result.public_id,
-            url: result.secure_url
-        }
-    })
-    user.save((err, newuser) => {
-        if (err) {
-            return res.status(400).json({
-                error: "Error!"
-            })
-        }
-        const { _id, name, email, phonenumber, role, createdAt, avatar } = newuser
-        // generate a token 
-        const token = jwt.sign({ _id: user._id, role: user.role }, process.env.TOKEN_KEY, {
-            expiresIn: '15m'
+    if (req.body.avatar !== '') {
+        const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+            folder: 'avatars',
+            width: 150,
+            crop: "scale"
         })
-        //save token into a cookie, the token expires after a day
-        res.cookie('token', token, {
-            expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
-            httpOnly: true
-        })
-        return res.json({
-            message: "Sign up successful",
-            user: {
-                _id,
-                role,
-                name,
-                email,
-                phonenumber,
-                createdAt,
-                // avatar: {
-                //     public_id: result.public_id,
-                //     url: result.secure_url
-                // }
+        const user = new User({
+            name,
+            phonenumber,
+            email,
+            password,
+            avatar: {
+                public_id: result.public_id,
+                url: result.secure_url
             }
         })
-    })
+        user.save((err, newuser) => {
+            if (err) {
+                return res.status(400).json({
+                    error: "Error!"
+                })
+            }
+            const { _id, name, email, phonenumber, role, createdAt, avatar } = newuser
+            // generate a token 
+            const token = jwt.sign({ _id: user._id, role: user.role }, process.env.TOKEN_KEY, {
+                expiresIn: '15m'
+            })
+            //save token into a cookie, the token expires after a day
+            res.cookie('token', token, {
+                expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+                httpOnly: true
+            })
+            return res.json({
+                message: "Sign up successful",
+                user: {
+                    _id,
+                    role,
+                    name,
+                    email,
+                    phonenumber,
+                    createdAt,
+                    avatar
+                }
+            })
+        })
+
+    }
+    else {
+        const user = new User({
+            name,
+            phonenumber,
+            email,
+            password
+        })
+        user.save((err, newuser) => {
+            if (err) {
+                return res.status(400).json({
+                    error: "Error!"
+                })
+            }
+            const { _id, name, email, phonenumber, role, createdAt, avatar } = newuser
+            // generate a token 
+            const token = jwt.sign({ _id: user._id, role: user.role }, process.env.TOKEN_KEY, {
+                expiresIn: '15m'
+            })
+            //save token into a cookie, the token expires after a day
+            res.cookie('token', token, {
+                expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+                httpOnly: true
+            })
+            return res.json({
+                message: "Sign up successful",
+                user: {
+                    _id,
+                    role,
+                    name,
+                    email,
+                    phonenumber,
+                    createdAt,
+                    avatar
+                }
+            })
+        })
+    }
 })
 
 
@@ -98,7 +134,7 @@ exports.signin = (req, res) => {
         })
 
         //send response
-        const { _id, name, email, phonenumber, role, createdAt } = user
+        const { _id, name, email, phonenumber, role, createdAt, avatar } = user
         return res.json({
             message: "Signed in successfully",
             token,
@@ -108,7 +144,8 @@ exports.signin = (req, res) => {
                 email,
                 phonenumber,
                 role,
-                createdAt
+                createdAt,
+                avatar
             }
         })
     })
@@ -137,7 +174,7 @@ exports.getprofile = catchAsyncErrors(async (req, res, next) => {
 
     if (req.user != null) {
         User.findOne({ _id: req.user._id }, (err, user) => {
-            const { _id, name, email, phonenumber, role, createdAt } = user
+            const { _id, name, email, phonenumber, role, createdAt, avatar } = user
             return res.status(200).json({
                 message: "Route to User Profile Successful",
                 user: {
@@ -146,7 +183,8 @@ exports.getprofile = catchAsyncErrors(async (req, res, next) => {
                     email,
                     phonenumber,
                     role,
-                    createdAt
+                    createdAt,
+                    avatar
                 }
             })
         })
@@ -154,33 +192,137 @@ exports.getprofile = catchAsyncErrors(async (req, res, next) => {
 })
 
 // Update your profile  
-exports.updateProfile = (req, res) => {
-    const { token } = req.cookies
-    const { name, phonenumber, email } = req.body;
-    const decoded = jwt.verify(token, process.env.TOKEN_KEY);
-    User.findOneAndUpdate(
-        { _id: { $eq: decoded._id } },
-        { name, phonenumber, email }, // data to be updated
-        { new: true, useFindAndModify: false }
-    )
-        .then(user => {
-            const { _id, name, phonenumber, email, role, createdAt } = user
-            res.status(200).json({
-                success: true,
-                user: {
-                    _id,
-                    name,
-                    phonenumber,
-                    email,
-                    role,
-                    createdAt
-                }
-            })
+exports.updateProfile = catchAsyncErrors(async (req, res) => {
+    const newUserData = {
+        name: req.body.name,
+        email: req.body.email
+    }
+
+    // Update avatar
+    //if (req.body.avatar !== '') {
+    const user = await User.findById(req.user._id)
+
+    var image_id = user.avatar.public_id;
+    if (image_id) {
+        console.log("Before: " + user.avatar.public_id)
+        // if (user.avatar.public_id) {
+        //     user.avatar.public_id = null;
+        //     user.avatar.url = null;
+        // }
+        console.log("After:" + user.avatar.public_id)
+        const resp = await cloudinary.v2.uploader.destroy(image_id);
+    }
+    // cloudinary.v2.uploader.destroy(image_id, (err, res) => {
+    //     console.log(err, res);
+    // });
+    // try {
+    //     const response = await cloudinary.v2.uploader.destroy(user.avatar.public_id, {
+    //         resource_type: "image",
+    //         invalidate: true,
+    //         type:'upload'
+    //     })
+    //     console.log({ response })
+
+    //     if (response.result !== 'ok') {
+    //         throw {
+    //             error: new Error(response.result)
+    //         }
+    //     }
+    // } catch (error) {
+    //     console.trace({ error })
+    //     throw error.error
+    // }
+    if (req.body.avatar) {
+        const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+            folder: 'avatars',
+            width: 150,
+            crop: "scale"
         })
-        .catch(error => {
-            return res.status(500).json(error);
-        });
-}
+        console.log("here " + result.public_id)
+
+        newUserData.avatar = {
+            public_id: result.public_id,
+            url: result.secure_url
+        }
+    }
+    //}
+
+    user1 = await User.findByIdAndUpdate(req.user._id, newUserData, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false
+    })
+
+    res.status(200).json({
+        success: true
+    })
+
+    // const { token } = req.cookies
+    // // const { name, phonenumber, email } = req.body;
+    // const decoded = jwt.verify(token, process.env.TOKEN_KEY);
+
+    // const user = await User.findById(decoded._id)
+
+    // const newUserData = {
+    //     name: req.body.name,
+    //     phonenumber: req.body.phonenumber,
+    //     email: req.body.email
+    // }
+
+    // // Update avatar
+    // //console.log(req.body.avatar)
+    // if (req.body.avatar) {
+    //     console.log("hello")
+
+    //     console.log(user.avatar.public_id)
+    //     const image_id = user.avatar.public_id;
+    //     const res = await cloudinary.v2.uploader.destroy(image_id);
+
+    //     console.log(res);
+    //     const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+    //         folder: 'avatars',
+    //         width: 150,
+    //         crop: "scale"
+    //     })
+
+    //     newUserData.avatar = {
+    //         public_id: result.public_id,
+    //         url: result.secure_url
+    //     }
+    // }
+
+    // userr = await User.findByIdAndUpdate(req.user.id, newUserData, {
+    //     new: true,
+    //     runValidators: true,
+    //     useFindAndModify: false
+    // })
+    // res.status(200).json({
+    //     success: true
+    // })
+    // User.findOneAndUpdate(
+    //     { _id: { $eq: decoded._id } },
+    //     newUserData, // data to be updated
+    //     { new: true, useFindAndModify: false }
+    // )
+    //     .then(user => {
+    //         const { _id, name, phonenumber, email, role, createdAt, avatar } = user
+    //         res.status(200).json({
+    //             success: true,
+    //             user: {
+    //                 _id,
+    //                 name,
+    //                 phonenumber,
+    //                 email,
+    //                 role,
+    //                 createdAt,
+    //                 avatar
+    //             }
+    //         })
+    //     })
+    //     .catch(error => {
+    //         return res.status(500).json(error);
+    //     });
+})
 
 // Delete your account - For any user
 exports.deleteYourAccount = catchAsyncErrors(async (req, res) => {

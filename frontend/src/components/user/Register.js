@@ -17,7 +17,7 @@ const Register = ({ history }) => {
 
     const { name, phonenumber, email, password } = user;
 
-    const [avatar, setAvatar] = useState('/images/default_avatar.jpg')
+    const [avatar, setAvatar] = useState('')
     const [avatarPreview, setAvatarPreview] = useState('/images/default_avatar.jpg')
     const [path, setpath] = useState('')
     // const { name, email, password } = user;
@@ -52,8 +52,6 @@ const Register = ({ history }) => {
         formData.set('email', email);
         formData.set('password', password);
         formData.set('avatar', avatar);
-
-
         dispatch(register(formData))
     }
 
@@ -86,7 +84,7 @@ const Register = ({ history }) => {
                 <img src="/images/logo-1.jpg" className="logo" alt="Business view - Reports" />
                 <form className="form" onSubmit={submitHandler} encType='multipart/form-data'>
                     {/* <h1 className="mb-3">Register</h1> */}
-                    <div className="input-group">
+                    <div className="group">
                         <label htmlFor="name_field">Name</label>
                         <input
                             type="name"
@@ -97,7 +95,7 @@ const Register = ({ history }) => {
                         />
                     </div>
 
-                    <div className="input-group">
+                    <div className="group">
                         <label htmlFor="phonenumber_field">Phone Number</label>
                         <input
                             type="phonenumber"
@@ -108,7 +106,7 @@ const Register = ({ history }) => {
                         />
                     </div>
 
-                    <div className="input-group">
+                    <div className="group">
                         <label htmlFor="email_field">Email</label>
                         <input
                             type="email"
@@ -119,7 +117,7 @@ const Register = ({ history }) => {
                         />
                     </div>
 
-                    <div className="input-group">
+                    <div className="group">
                         <label htmlFor="password_field">Password</label>
                         <input
                             type="password"
@@ -130,7 +128,7 @@ const Register = ({ history }) => {
                         />
                     </div>
 
-                    {/* <div className="input-group">
+                    {/* <div className="group">
                         <label htmlFor="confirmPassword">Confirm Password</label>
                         <input 
                         type="confirmPassword" 
@@ -138,7 +136,7 @@ const Register = ({ history }) => {
                         />
                     </div> */}
 
-                    <div className='input-group'>
+                    <div className='group'>
                         <label htmlFor='avatar_upload'>Avatar</label>
                         <div className='d-flex align-items-center'>
                             <div>
@@ -150,7 +148,7 @@ const Register = ({ history }) => {
                                     />
                                 </figure>
                             </div>
-                            <div className='custom-file' style={{marginRight:"80px"}}>
+                            <div className='custom-file' style={{marginRight:"75px"}}>
                                 <input
                                     type='file'
                                     name='avatar'

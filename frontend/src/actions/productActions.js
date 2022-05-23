@@ -23,7 +23,7 @@ export const getProducts = (keyword = '') => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: ALL_PRODUCTS_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.error
         })
     }
 }

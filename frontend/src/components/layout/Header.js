@@ -44,7 +44,14 @@ const Header = () => {
                     {user ? (
                         <div className="ml-4 dropdown d-inline">
                             <Link to="#!" className="btn dropdown-toggle text-black mr-4" type="button" id="dropDownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span id="text"> {user && user.name}</span>
+                            <figure className="avatar avatar-nav">  
+                                    <img
+                                        src={(user.avatar && user.avatar.url) || '/images/default_avatar.jpg'}
+                                        alt={user && user.name}
+                                        className="rounded-circle"
+                                    />
+                                </figure>
+                                <span>{user && user.name}</span>
                             </Link>
                             <div className="dropdown-menu" aria-labelledby="dropDownMenuButton">
                                 {user && user.role !== 'admin' ? (
@@ -59,11 +66,11 @@ const Header = () => {
                             </div>
 
                         </div>
-                    ) : <Link to="/login" style={{color: "white"}} className="btn ml-4" id="login_btn">Login</Link>}
-                    {/* ) : !loading && <Link to="/login" style={{color: "white"}} className="btn ml-4" id="login_btn">Login</Link>} */}
-                </div>
-            </nav>
-        </Fragment>
+                ) : !loading && <Link to="/login" style={{ color: "white" }} className="btn ml-4" id="login_btn">Login</Link>}
+                {/* ) : !loading && <Link to="/login" style={{color: "white"}} className="btn ml-4" id="login_btn">Login</Link>} */}
+            </div>
+        </nav>
+        </Fragment >
     )
 }
 

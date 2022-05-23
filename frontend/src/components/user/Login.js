@@ -47,7 +47,7 @@ const Login = ({ history }) => {
                         <img src="/images/logo-1.jpg" className="logo" alt="Business view - Reports" />
                         <form className="form" onSubmit={submitHandler}>
                                 {/* <h1 className="mb-3">Login</h1> */}
-                                <div className="input-group">
+                                <div className="group">
                                     <label htmlFor="email_field">Email</label>
                                     <input
                                         type="email"
@@ -57,7 +57,7 @@ const Login = ({ history }) => {
                                     />
                                 </div>
 
-                                <div className="input-group">
+                                <div className="group">
                                     <label htmlFor="password_field">Password</label>
                                     <input
                                         type="password"
