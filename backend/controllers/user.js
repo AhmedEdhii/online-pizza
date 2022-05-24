@@ -324,6 +324,46 @@ exports.updateProfile = catchAsyncErrors(async (req, res) => {
     //     });
 })
 
+// Update / Change password   =>  /api/password/update
+exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
+    const user = await User.findById(req.user._id).select('+password');
+
+    // Check previous user password
+    const isMatched = await user.authenticate(req.body.oldPassword)
+    if (!isMatched) {
+        return res.status(404).json({
+            error: 'Old password is incorrect'
+        })
+    }
+
+    user.password = req.body.password;
+    await user.save();
+
+    const { _id, name, email, phonenumber, role, createdAt, avatar } = user
+            // generate a token 
+            const token = jwt.sign({ _id: user._id, role: user.role }, process.env.TOKEN_KEY, {
+                expiresIn: '15m'
+            })
+            //save token into a cookie, the token expires after a day
+            res.cookie('token', token, {
+                expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+                httpOnly: true
+            })
+            return res.json({
+                success: true,
+                user: {
+                    _id,
+                    role,
+                    name,
+                    email,
+                    phonenumber,
+                    createdAt,
+                    avatar
+                }
+            })
+    // sendToken(user, 200, res)
+})
+
 // Delete your account - For any user
 exports.deleteYourAccount = catchAsyncErrors(async (req, res) => {
     // const { token } = req.cookies

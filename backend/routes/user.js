@@ -1,5 +1,5 @@
 const express = require("express")
-const { signup, signin, signout, getprofile, updateUser, getAllUsers, getUserDetails, updateProfile, deactivateUser, updateAnyUser, deactivateAnyUser, deleteYourAccount} = require("../controllers/user")
+const { signup, signin, signout, getprofile, updateUser, getAllUsers, getUserDetails, updateProfile, updatePassword, deactivateUser, updateAnyUser, deactivateAnyUser, deleteYourAccount} = require("../controllers/user")
 const {verifyToken, authorizeRoles} = require("../middlewares/authentication");
 const {check} = require('express-validator')
 const router = express.Router()
@@ -37,6 +37,9 @@ router.get('/profile', verifyToken, getprofile)
 
 // update your profile
 router.put('/profile/update', verifyToken, updateProfile)
+
+// update your password
+router.put('/profile/update/password', verifyToken, updatePassword)
 
 // delete your user
 router.put("/myaccount/delete", verifyToken, deleteYourAccount)
