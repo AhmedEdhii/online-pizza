@@ -1,4 +1,6 @@
-import './App.css';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 import { useEffect } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
@@ -19,6 +21,10 @@ import ProtectedRoute from './components/route/protectedRoute';
 import { loadUser } from './actions/userActions'
 import store from './store'
 
+import { Homepage } from './_Pages/Homepage';
+
+import Mynavbar from './_Atomic/Mynavbar';
+
 function App() {
 
   useEffect(() => {
@@ -28,8 +34,9 @@ function App() {
   return (
     <Router>
       <div className="App">
-        {/* <Navbar /> */}
-        <Header/>
+       <Mynavbar/>
+        {/* <Header/> */}
+        
         <div className="container container-fluid">
           <Route path="/" component={Home} exact />
           <Route path="/search/:keyword" component={Home} />
@@ -40,7 +47,9 @@ function App() {
           <ProtectedRoute path="/profile/update" component={UpdateProfile} exact/>
           <ProtectedRoute path="/profile/update/password" component={UpdatePassword} exact/>
           <ProtectedRoute path="/admin/dashboard" component={Dashboard} isAdmin={true} exact/>
+          {/* <Route path="/Homepage" component={Homepage} exact /> */}
         </div>
+        
         <Footer />
       </div>
     </Router>
