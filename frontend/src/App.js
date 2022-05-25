@@ -1,6 +1,5 @@
-
-import 'bootstrap/dist/css/bootstrap.min.css';
-
+import './App.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { useEffect } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
@@ -34,22 +33,20 @@ function App() {
   return (
     <Router>
       <div className="App">
-       <Mynavbar/>
+        {/* <Mynavbar /> */}
         {/* <Header/> */}
-        
         <div className="container container-fluid">
           <Route path="/" component={Home} exact />
           <Route path="/search/:keyword" component={Home} />
 
           <Route path="/login" component={login_signup} />
           {/* <Route path="/signup" component={Register} /> */}
-          <ProtectedRoute path="/profile" component={Profile} exact/>
-          <ProtectedRoute path="/profile/update" component={UpdateProfile} exact/>
-          <ProtectedRoute path="/profile/update/password" component={UpdatePassword} exact/>
-          <ProtectedRoute path="/admin/dashboard" component={Dashboard} isAdmin={true} exact/>
+          <ProtectedRoute path="/profile" component={Profile} exact />
+          <ProtectedRoute path="/profile/update" component={UpdateProfile} exact />
+          <ProtectedRoute path="/profile/update/password" component={UpdatePassword} exact />
+          <ProtectedRoute path="/admin/dashboard" component={Dashboard} isAdmin={true} exact />
           {/* <Route path="/Homepage" component={Homepage} exact /> */}
         </div>
-        
         <Footer />
       </div>
     </Router>

@@ -35,7 +35,7 @@ const login_signup = () => {
         <div className="row1">
             <MetaData title={'Login/Signup'} />
             <Route render={({ history }) => <Login history={history} />} />
-            {/* <Route render={({ history }) => <Register history={history} />} /> */}
+            <Route render={({ history }) => <Register history={history} />} />
         </div>
     )
 }

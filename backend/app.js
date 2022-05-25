@@ -53,7 +53,7 @@ app.use('/api', toppingRoutes)
 app.use('/api', dealRoutes)
 app.use('/api', orderRoutes)
 
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 8000
 
 // starting the server
 app.listen(port, () => {

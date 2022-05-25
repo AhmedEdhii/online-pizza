@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import ProductModal from './ProductModal'
 import { useAlert } from 'react-alert'
-import { Modal, Button, Form } from "react-bootstrap";
+// import { Modal, Button, Form } from "react-bootstrap";
 
 import { useDispatch, useSelector } from 'react-redux'
 import { getToppings } from '../../actions/toppingActions';
@@ -66,42 +66,45 @@ const Product = ({ product }) => {
                             </div>
                         </div>
                     </div>
+                    
+                    {/* Product Modal commented */}
+
                     {/* <ProductModal flag = {show} match={product._id} /> */}
-                    <Modal show={show} onHide={handleClose}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>{product.name}</Modal.Title>
+                    {/* <Modal show={show} onHide={handleClose}> */}
+                        {/* <Modal.Header closeButton> */}
+                            {/* <Modal.Title>{product.name}</Modal.Title> */}
                             {/* <Modal.Title>{product._id}</Modal.Title> */}
-                        </Modal.Header>
-                        <Modal.Body>
-                            <div>
-                                <h1>
-                                    Rs. {product.PizzaDetails.size.small}
-                                </h1>
-                                <h1>
-                                    Rs. {product.PizzaDetails.size.regular}
-                                </h1>
-                                <h1>
-                                    Rs. {product.PizzaDetails.size.large}
-                                </h1>
-                                <h1>
-                                    Rs. {product.PizzaDetails.size.jumbo}
-                                </h1>
-                            </div>
-                            <div>
-                                <h1>Extra Toppings</h1>
-                                {toppings && toppings.map(topping => (
-                                    <h1>
-                                        {topping.name}
-                                    </h1>
-                                ))}
-                            </div>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={handleClose}>
-                                Close Modal
-                            </Button>
-                        </Modal.Footer>
-                    </Modal>
+                        {/* </Modal.Header> */}
+                        {/* <Modal.Body> */}
+                            {/* <div> */}
+                                {/* <h1> */}
+                                    {/* Rs. {product.PizzaDetails.size.small} */}
+                                {/* </h1> */}
+                                {/* <h1> */}
+                                    {/* Rs. {product.PizzaDetails.size.regular} */}
+                                {/* </h1> */}
+                                {/* <h1> */}
+                                    {/* Rs. {product.PizzaDetails.size.large} */}
+                                {/* </h1> */}
+                                {/* <h1> */}
+                                    {/* Rs. {product.PizzaDetails.size.jumbo} */}
+                                {/* </h1> */}
+                            {/* </div> */}
+                            {/* <div> */}
+                                {/* <h1>Extra Toppings</h1> */}
+                                {/* {toppings && toppings.map(topping => ( */}
+                                    {/* <h1> */}
+                                        {/* {topping.name} */}
+                                    {/* </h1> */}
+                                {/* ))} */}
+                            {/* </div> */}
+                        {/* </Modal.Body> */}
+                        {/* <Modal.Footer> */}
+                            {/* <Button variant="secondary" onClick={handleClose}> */}
+                                {/* Close Modal */}
+                            {/* </Button> */}
+                        {/* </Modal.Footer> */}
+                    {/* </Modal> */}
                 </div>
             )
             }

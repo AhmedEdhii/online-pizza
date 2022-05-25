@@ -3,6 +3,7 @@ const { validationResult } = require('express-validator')
 var jwt = require('jsonwebtoken')
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const cloudinary = require('cloudinary')
+const generateToken = require('../utils/jwtToken');
 
 exports.signup = catchAsyncErrors(async (req, res) => {
     const errors = validationResult(req)
@@ -36,28 +37,31 @@ exports.signup = catchAsyncErrors(async (req, res) => {
                     error: "Error!"
                 })
             }
-            const { _id, name, email, phonenumber, role, createdAt, avatar } = newuser
-            // generate a token 
-            const token = jwt.sign({ _id: user._id, role: user.role }, process.env.TOKEN_KEY, {
-                expiresIn: '15m'
-            })
-            //save token into a cookie, the token expires after a day
-            res.cookie('token', token, {
-                expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
-                httpOnly: true
-            })
-            return res.json({
-                message: "Sign up successful",
-                user: {
-                    _id,
-                    role,
-                    name,
-                    email,
-                    phonenumber,
-                    createdAt,
-                    avatar
-                }
-            })
+
+            generateToken(user, 200, res)
+
+            // const { _id, name, email, phonenumber, role, createdAt, avatar } = newuser
+            // // generate a token 
+            // const token = jwt.sign({ _id: user._id, role: user.role }, process.env.TOKEN_KEY, {
+            //     expiresIn: '15m'
+            // })
+            // //save token into a cookie, the token expires after a day
+            // res.cookie('token', token, {
+            //     expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+            //     httpOnly: true
+            // })
+            // return res.json({
+            //     message: "Sign up successful",
+            //     user: {
+            //         _id,
+            //         role,
+            //         name,
+            //         email,
+            //         phonenumber,
+            //         createdAt,
+            //         avatar
+            //     }
+            // })
         })
 
     }
@@ -74,28 +78,29 @@ exports.signup = catchAsyncErrors(async (req, res) => {
                     error: "Error!"
                 })
             }
-            const { _id, name, email, phonenumber, role, createdAt, avatar } = newuser
-            // generate a token 
-            const token = jwt.sign({ _id: user._id, role: user.role }, process.env.TOKEN_KEY, {
-                expiresIn: '15m'
-            })
-            //save token into a cookie, the token expires after a day
-            res.cookie('token', token, {
-                expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
-                httpOnly: true
-            })
-            return res.json({
-                message: "Sign up successful",
-                user: {
-                    _id,
-                    role,
-                    name,
-                    email,
-                    phonenumber,
-                    createdAt,
-                    avatar
-                }
-            })
+            generateToken(user, 200, res)
+            // const { _id, name, email, phonenumber, role, createdAt, avatar } = newuser
+            // // generate a token 
+            // const token = jwt.sign({ _id: user._id, role: user.role }, process.env.TOKEN_KEY, {
+            //     expiresIn: '15m'
+            // })
+            // //save token into a cookie, the token expires after a day
+            // res.cookie('token', token, {
+            //     expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+            //     httpOnly: true
+            // })
+            // return res.json({
+            //     message: "Sign up successful",
+            //     user: {
+            //         _id,
+            //         role,
+            //         name,
+            //         email,
+            //         phonenumber,
+            //         createdAt,
+            //         avatar
+            //     }
+            // })
         })
     }
 })
@@ -122,32 +127,34 @@ exports.signin = (req, res) => {
             })
         }
 
-        // generate a token 
-        const token = jwt.sign({ _id: user._id, role: user.role }, process.env.TOKEN_KEY, {
-            expiresIn: '15m'
-        })
+        generateToken(user, 200, res)
 
-        //save token into a cookie, the token expires after a day
-        res.cookie('token', token, {
-            expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
-            httpOnly: true
-        })
+        // // generate a token 
+        // const token = jwt.sign({ _id: user._id, role: user.role }, process.env.TOKEN_KEY, {
+        //     expiresIn: '15m'
+        // })
 
-        //send response
-        const { _id, name, email, phonenumber, role, createdAt, avatar } = user
-        return res.json({
-            message: "Signed in successfully",
-            token,
-            user: {
-                _id,
-                name,
-                email,
-                phonenumber,
-                role,
-                createdAt,
-                avatar
-            }
-        })
+        // //save token into a cookie, the token expires after a day
+        // res.cookie('token', token, {
+        //     expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+        //     httpOnly: true
+        // })
+
+        // //send response
+        // const { _id, name, email, phonenumber, role, createdAt, avatar } = user
+        // return res.json({
+        //     message: "Signed in successfully",
+        //     token,
+        //     user: {
+        //         _id,
+        //         name,
+        //         email,
+        //         phonenumber,
+        //         role,
+        //         createdAt,
+        //         avatar
+        //     }
+        // })
     })
 }
 
@@ -159,6 +166,7 @@ exports.signout = (req, res) => {
     })
     //req.session = null
     return res.json({
+        success: true,
         message: "User signed out successfully."
     })
 }
@@ -328,7 +336,7 @@ exports.updateProfile = catchAsyncErrors(async (req, res) => {
 exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
     const user = await User.findById(req.user._id).select('+password');
 
-    // Check previous user password
+    // Checks previous password of user
     const isMatched = await user.authenticate(req.body.oldPassword)
     if (!isMatched) {
         return res.status(404).json({
@@ -339,28 +347,29 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
     user.password = req.body.password;
     await user.save();
 
-    const { _id, name, email, phonenumber, role, createdAt, avatar } = user
-            // generate a token 
-            const token = jwt.sign({ _id: user._id, role: user.role }, process.env.TOKEN_KEY, {
-                expiresIn: '15m'
-            })
-            //save token into a cookie, the token expires after a day
-            res.cookie('token', token, {
-                expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
-                httpOnly: true
-            })
-            return res.json({
-                success: true,
-                user: {
-                    _id,
-                    role,
-                    name,
-                    email,
-                    phonenumber,
-                    createdAt,
-                    avatar
-                }
-            })
+    generateToken(user, 200, res)
+    // const { _id, name, email, phonenumber, role, createdAt, avatar } = user
+    //         // generate a token 
+    //         const token = jwt.sign({ _id: user._id, role: user.role }, process.env.TOKEN_KEY, {
+    //             expiresIn: '15m'
+    //         })
+    //         //save token into a cookie, the token expires after a day
+    //         res.cookie('token', token, {
+    //             expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+    //             httpOnly: true
+    //         })
+    //         return res.json({
+    //             success: true,
+    //             user: {
+    //                 _id,
+    //                 role,
+    //                 name,
+    //                 email,
+    //                 phonenumber,
+    //                 createdAt,
+    //                 avatar
+    //             }
+    //         })
     // sendToken(user, 200, res)
 })
 
