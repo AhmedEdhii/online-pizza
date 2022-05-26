@@ -3,9 +3,11 @@ import React, { Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useAlert } from 'react-alert'
 import { logout } from '../../actions/userActions'
+import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import {
-  Link, AppBar, createTheme, styled, Grid, Toolbar, Typography, ThemeProvider, Avatar, IconButton,
+  AppBar, createTheme, styled, Grid, Toolbar, Typography, ThemeProvider, Avatar, IconButton,
   Box, Menu, MenuItem, Tooltip, Button, CssBaseline, Badge, ButtonGroup, Divider, ListItemIcon
 } from '@mui/material';
 import AdbIcon from '@mui/icons-material/Adb';
@@ -56,16 +58,23 @@ const Mynavbar = () => {
 
 
 
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
   const alert = useAlert();
   const dispatch = useDispatch();
 
@@ -78,7 +87,7 @@ const Mynavbar = () => {
 
   return (
     <>
-      {!loading && (
+      {/* {!loading && ( */}
         <ThemeProvider theme={theme}>
           {!user ? (
             <AppBar elevation={0} position='static' sx={{ backgroundColor: "#fff" }} >
@@ -93,28 +102,29 @@ const Mynavbar = () => {
 
                   <Grid item display='flex'>
 
-                    <a href='/' > <Img alt="complex" src="/images/OP.png" /></a>
+                    <Link to="/">
+                    <a> <Img alt="complex" src="/images/OP.png" /></a>
+                    </Link>
+                    {/* <a href='/' > <Img alt="complex" src="/images/OP.png" /></a> */}
 
                   </Grid>
 
                   <Grid sx={{ display: { xs: 'none', md: 'flex' } }}>
 
-
-                    <Button variant="text" color='secondary' href="/">One</Button>
-                    <Button variant="text" color='secondary' href="/">Two</Button>
-                    <Button variant="text" color='secondary' href="/">Three</Button>
+                    <Button variant="text" color='secondary' component={Link} to="/">One</Button>
+                    <Button variant="text" color='secondary' component={Link} to="/">Two</Button>
+                    <Button variant="text" color='secondary' component={Link} to="/">Three</Button>
 
                   </Grid>
+
                   {/* sx={{ border: 1 }} */}
                   <Grid item display="flex" >
-                    <Link href="/login">
+                    <NavLink to="/login" style={{ textDecoration: 'none', color: 'unset' }} >
                       <Button variant='contained' color='primary' startIcon={<AccountCircleIcon />} size="large"
                         sx={{ borderRadius: 2 }} > Login/Signup</Button>
-                    </Link>
-
+                    </NavLink>
 
                     <Badge badgeContent={4} color={"secondary"}  >
-
 
                       <IconButton color="secondary" size='large' >
                         <ShoppingCartOutlinedIcon />
@@ -141,7 +151,7 @@ const Mynavbar = () => {
 
                   <Grid item display='flex'>
 
-                    <a href='/' > <Img alt="complex" src="/images/OP.png" /></a>
+                    <a component={Link} to="/lo" > <Img alt="complex" src="/images/OP.png" /></a>
 
                   </Grid>
 
@@ -177,32 +187,29 @@ const Mynavbar = () => {
                     >
 
 
-                      <MenuItem>
-                        <Link href='/dashboard'>
+                      <MenuItem onClick={handleCloseUserMenu}>
+                        <NavLink to="/dashboard" style={{ textDecoration: 'none', color: 'unset' }} >
                           <ListItemIcon>
                             <Person fontSize="small" />
                           </ListItemIcon>
                           Dashboard
-                        </Link>
+                        </NavLink>
                       </MenuItem>
-                      <MenuItem>
-                        <Link href='/settings'>
+                      <MenuItem onClick={handleCloseUserMenu}>
+                        <NavLink to="/settings" style={{ textDecoration: 'none', color: 'unset' }} >
                           <ListItemIcon>
                             <Settings fontSize="small" />
                           </ListItemIcon>
                           Settings
-                        </Link>
+                        </NavLink>
                       </MenuItem>
-                      <MenuItem>
-                        <Link href='/' onClick={() => {
-                          dispatch(logout());
-                          alert.success('Logged out successfully.')
-                        }}>
+                      <MenuItem onClick={handleCloseUserMenu}>
+                        <NavLink to="/" style={{ textDecoration: 'none', color: 'unset' }} onClick={logoutHandler}>
                           <ListItemIcon>
                             <Logout fontSize="small" />
                           </ListItemIcon>
                           Logout
-                        </Link>
+                        </NavLink>
                       </MenuItem>
                     </Menu>
 
@@ -215,7 +222,7 @@ const Mynavbar = () => {
             </AppBar>
           }
         </ThemeProvider>
-      )}
+      {/* )} */}
     </>
   )
 }
