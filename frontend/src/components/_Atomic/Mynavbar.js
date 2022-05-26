@@ -56,25 +56,16 @@ const Mynavbar = () => {
     padding: 10
   });
 
-
-
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  
   const alert = useAlert();
   const dispatch = useDispatch();
 
@@ -87,7 +78,7 @@ const Mynavbar = () => {
 
   return (
     <>
-      {/* {!loading && ( */}
+      {!loading && (
         <ThemeProvider theme={theme}>
           {!user ? (
             <AppBar elevation={0} position='static' sx={{ backgroundColor: "#fff" }} >
@@ -103,7 +94,7 @@ const Mynavbar = () => {
                   <Grid item display='flex'>
 
                     <Link to="/">
-                    <a> <Img alt="complex" src="/images/OP.png" /></a>
+                      <a> <Img alt="complex" src="/images/OP.png" /></a>
                     </Link>
                     {/* <a href='/' > <Img alt="complex" src="/images/OP.png" /></a> */}
 
@@ -151,7 +142,10 @@ const Mynavbar = () => {
 
                   <Grid item display='flex'>
 
-                    <a component={Link} to="/lo" > <Img alt="complex" src="/images/OP.png" /></a>
+                    <Link to="/">
+                      <a> <Img alt="complex" src="/images/OP.png" /></a>
+                    </Link>
+                    {/* <a href='/' > <Img alt="complex" src="/images/OP.png" /></a> */}
 
                   </Grid>
 
@@ -222,7 +216,7 @@ const Mynavbar = () => {
             </AppBar>
           }
         </ThemeProvider>
-      {/* )} */}
+      )}
     </>
   )
 }
