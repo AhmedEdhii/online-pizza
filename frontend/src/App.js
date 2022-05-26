@@ -33,17 +33,17 @@ function App() {
   
   return (
     <Router>
+          <Route path="/" component={HeaderTest} />
 
+          <Route path="/login" component={login_signup} />
           {/* <Header/> */}
           {/* <Route path="/" component={Home} exact />
           <Route path="/search/:keyword" component={Home} />
-
-          <Route path="/login" component={login_signup} />
           
           <ProtectedRoute path="/profile" component={Profile} exact />
           <ProtectedRoute path="/profile/update" component={UpdateProfile} exact />
           <ProtectedRoute path="/profile/update/password" component={UpdatePassword} exact />
-          <ProtectedRoute path="/admin/dashboard" component={Dashboard} isAdmin={true} exact /> */}
+          <ProtectedRoute path="/admin/dashboard" component={Dashboard} isAdmin={true} exact /> 
 
           <Route path="/" component={Homepage} />
         {/* <Footer /> */}
