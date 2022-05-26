@@ -36,6 +36,7 @@ function App() {
           <Route path="/" component={HeaderTest} />
           {/* <HeaderTest/> */}
           <Route path="/login" component={login_signup} />
+          <Route path="/homepage" component={Homepage} />
           {/* <Header/> */}
           {/* <Route path="/" component={Home} exact />
           <Route path="/search/:keyword" component={Home} />

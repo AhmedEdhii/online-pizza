@@ -5,7 +5,7 @@ import ShowProducts from '../components/layout/ShowProducts'
 
 function Homepage() {
   return (
-      <><HeaderTest /><div>
+      <><div>
 
           <ShowProducts />
 
