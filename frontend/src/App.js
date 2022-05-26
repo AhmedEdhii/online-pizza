@@ -22,7 +22,7 @@ import { loadUser } from './actions/userActions'
 import store from './store'
 
 
-
+import Homepage from './Pages/Homepage';
 
 
 function App() {
@@ -45,7 +45,7 @@ function App() {
           <ProtectedRoute path="/profile/update/password" component={UpdatePassword} exact />
           <ProtectedRoute path="/admin/dashboard" component={Dashboard} isAdmin={true} exact /> */}
 
-          <Route path="/" component={HeaderTest} />
+          <Route path="/" component={Homepage} />
         {/* <Footer /> */}
         
     </Router>
