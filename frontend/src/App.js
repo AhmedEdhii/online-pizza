@@ -33,8 +33,8 @@ function App() {
   
   return (
     <Router>
-          <Route path="/" component={HeaderTest} />
-
+          {/* <Route path="/" component={HeaderTest} /> */}
+          <HeaderTest/>
           <Route path="/login" component={login_signup} />
           {/* <Header/> */}
           {/* <Route path="/" component={Home} exact />
