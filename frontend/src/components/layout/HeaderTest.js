@@ -2,10 +2,10 @@ import React from 'react'
 import Mynavbar from '../_Atomic/Mynavbar'
 
 
-export const Homepage = () => {
+const HeaderTest = () => {
   return (
-    <div><Mynavbar/></div>
-
-   
+    <Mynavbar/>
   )
 }
+
+export default HeaderTest

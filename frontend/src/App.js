@@ -3,6 +3,7 @@ import './App.css';
 
 import { useEffect } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
+import HeaderTest from './components/layout/HeaderTest';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Home from './components/Home';
@@ -20,9 +21,9 @@ import ProtectedRoute from './components/route/protectedRoute';
 import { loadUser } from './actions/userActions'
 import store from './store'
 
-import { Homepage } from './_Pages/Homepage';
 
-import Mynavbar from './_Atomic/Mynavbar';
+
+
 
 function App() {
 
@@ -32,23 +33,21 @@ function App() {
   
   return (
     <Router>
-      <div className="App">
-        {/* <Mynavbar /> */}
-        {/* <Header/> */}
-        <div className="container container-fluid">
-          <Route path="/" component={Home} exact />
+
+          {/* <Header/> */}
+          {/* <Route path="/" component={Home} exact />
           <Route path="/search/:keyword" component={Home} />
 
           <Route path="/login" component={login_signup} />
-          {/* <Route path="/signup" component={Register} /> */}
+          
           <ProtectedRoute path="/profile" component={Profile} exact />
           <ProtectedRoute path="/profile/update" component={UpdateProfile} exact />
           <ProtectedRoute path="/profile/update/password" component={UpdatePassword} exact />
-          <ProtectedRoute path="/admin/dashboard" component={Dashboard} isAdmin={true} exact />
-          {/* <Route path="/Homepage" component={Homepage} exact /> */}
-        </div>
-        <Footer />
-      </div>
+          <ProtectedRoute path="/admin/dashboard" component={Dashboard} isAdmin={true} exact /> */}
+
+          <Route path="/" component={HeaderTest} />
+        {/* <Footer /> */}
+        
     </Router>
   );
 }
