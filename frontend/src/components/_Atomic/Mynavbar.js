@@ -65,7 +65,7 @@ const Mynavbar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-  
+
   const alert = useAlert();
   const dispatch = useDispatch();
 
@@ -110,7 +110,7 @@ const Mynavbar = () => {
 
                   {/* sx={{ border: 1 }} */}
                   <Grid item display="flex" >
-                    <NavLink to="/login" style={{ textDecoration: 'none', color: 'unset' }} >
+                    <NavLink to="/mylogin" style={{ textDecoration: 'none', color: 'unset' }} >
                       <Button variant='contained' color='primary' startIcon={<AccountCircleIcon />} size="large"
                         sx={{ borderRadius: 2 }} > Login/Signup</Button>
                     </NavLink>
@@ -180,31 +180,32 @@ const Mynavbar = () => {
 
                     >
 
-
-                      <MenuItem onClick={handleCloseUserMenu}>
-                        <NavLink to="/dashboard" style={{ textDecoration: 'none', color: 'unset' }} >
+                      <NavLink to="/dashboard" style={{ textDecoration: 'none', color: 'unset' }} >
+                        <MenuItem onClick={handleCloseUserMenu}>
                           <ListItemIcon>
                             <Person fontSize="small" />
                           </ListItemIcon>
                           Dashboard
-                        </NavLink>
-                      </MenuItem>
-                      <MenuItem onClick={handleCloseUserMenu}>
-                        <NavLink to="/settings" style={{ textDecoration: 'none', color: 'unset' }} >
+                        </MenuItem>
+                      </NavLink>
+
+                      <NavLink to="/settings" style={{ textDecoration: 'none', color: 'unset' }} >
+                        <MenuItem onClick={handleCloseUserMenu}>
                           <ListItemIcon>
                             <Settings fontSize="small" />
                           </ListItemIcon>
                           Settings
-                        </NavLink>
-                      </MenuItem>
-                      <MenuItem onClick={handleCloseUserMenu}>
-                        <NavLink to="/" style={{ textDecoration: 'none', color: 'unset' }} onClick={logoutHandler}>
+                        </MenuItem>
+                      </NavLink>
+
+                      <NavLink to="/" style={{ textDecoration: 'none', color: 'unset' }} onClick={logoutHandler}>
+                        <MenuItem onClick={handleCloseUserMenu}>
                           <ListItemIcon>
                             <Logout fontSize="small" />
                           </ListItemIcon>
                           Logout
-                        </NavLink>
-                      </MenuItem>
+                        </MenuItem>
+                      </NavLink>
                     </Menu>
 
                   </Grid>
@@ -216,7 +217,8 @@ const Mynavbar = () => {
             </AppBar>
           }
         </ThemeProvider>
-      )}
+      )
+      }
     </>
   )
 }
