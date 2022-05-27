@@ -40,14 +40,14 @@ function App() {
           <Route path="/mylogin" component={LoginandSignup} />
           {/* <Header/> */}
           {/* <Route path="/" component={Home} exact />
-          <Route path="/search/:keyword" component={Home} />
+          <Route path="/search/:keyword" component={Home} /> */}
           
           <ProtectedRoute path="/profile" component={Profile} exact />
           <ProtectedRoute path="/profile/update" component={UpdateProfile} exact />
           <ProtectedRoute path="/profile/update/password" component={UpdatePassword} exact />
-          <ProtectedRoute path="/admin/dashboard" component={Dashboard} isAdmin={true} exact /> 
+          {/* <ProtectedRoute path="/admin/dashboard" component={Dashboard} isAdmin={true} exact /> 
 
-          <Route path="/" component={Homepage} />
+          <Route path="/" component={Homepage} /> */}
         {/* <Footer /> */}
         
     </Router>

@@ -16,8 +16,9 @@ const MySignup = ({ history }) => {
     });
 
     const [name, setName] = useState('')
-    const [phonenumber, setPhoneNumber] = useState('')
     const [email, setEmail] = useState('')
+    const [phonenumber, setPhoneNumber] = useState('')
+    const [deliveryaddress, setDeliveryAddress] = useState('')
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('')
 
@@ -53,6 +54,7 @@ const MySignup = ({ history }) => {
         else {
             alert.error("Passwords must Match");
         }
+        formData.set('deliveryaddress', deliveryaddress);
         formData.set('avatar', avatar);
         dispatch(register(formData))
     }
@@ -123,6 +125,8 @@ const MySignup = ({ history }) => {
                         placeholder='Enter Delivery Address'
                         multiline
                         fullWidth required
+                        value={deliveryaddress}
+                        onChange={(e) => setDeliveryAddress(e.target.value)}
                     />
 
                     {/* Password input */}

@@ -22,7 +22,7 @@ const generateToken = (user, statusCode, res) => {
     //     httpOnly: true
     // })
 
-    const { _id, name, email, phonenumber, role, createdAt, avatar } = user
+    const { _id, name, email, phonenumber, deliveryaddress, role, createdAt, avatar } = user
 
     res.status(statusCode).cookie('token', token, options).json({
         success: true,
@@ -32,6 +32,7 @@ const generateToken = (user, statusCode, res) => {
             name,
             email,
             phonenumber,
+            deliveryaddress,
             createdAt,
             avatar
         }

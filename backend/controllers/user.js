@@ -14,7 +14,7 @@ exports.signup = catchAsyncErrors(async (req, res) => {
         })
     }
 
-    const { name, phonenumber, email, password } = req.body;
+    const { name, phonenumber, deliveryaddress, email, password } = req.body;
     if (req.body.avatar !== '') {
         const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
             folder: 'avatars',
@@ -25,6 +25,7 @@ exports.signup = catchAsyncErrors(async (req, res) => {
             name,
             phonenumber,
             email,
+            deliveryaddress,
             password,
             avatar: {
                 public_id: result.public_id,
@@ -38,7 +39,7 @@ exports.signup = catchAsyncErrors(async (req, res) => {
                 })
             }
 
-            generateToken(user, 200, res)
+            generateToken(newuser, 200, res)
 
             // const { _id, name, email, phonenumber, role, createdAt, avatar } = newuser
             // // generate a token 
@@ -69,6 +70,7 @@ exports.signup = catchAsyncErrors(async (req, res) => {
         const user = new User({
             name,
             phonenumber,
+            deliveryaddress,
             email,
             password
         })
@@ -78,7 +80,7 @@ exports.signup = catchAsyncErrors(async (req, res) => {
                     error: "Error!"
                 })
             }
-            generateToken(user, 200, res)
+            generateToken(newuser, 200, res)
             // const { _id, name, email, phonenumber, role, createdAt, avatar } = newuser
             // // generate a token 
             // const token = jwt.sign({ _id: user._id, role: user.role }, process.env.TOKEN_KEY, {
@@ -180,9 +182,10 @@ exports.getprofile = catchAsyncErrors(async (req, res, next) => {
     //     user: user
     // })
 
-    if (req.user != null) {
+    if (req.user) {
+        console.log("heloooo get profile")
         User.findOne({ _id: req.user._id }, (err, user) => {
-            const { _id, name, email, phonenumber, role, createdAt, avatar } = user
+            const { _id, name, email, phonenumber, deliveryaddress, role, createdAt, avatar } = user
             return res.status(200).json({
                 message: "Route to User Profile Successful",
                 user: {
@@ -190,6 +193,7 @@ exports.getprofile = catchAsyncErrors(async (req, res, next) => {
                     name,
                     email,
                     phonenumber,
+                    deliveryaddress,
                     role,
                     createdAt,
                     avatar
@@ -203,23 +207,15 @@ exports.getprofile = catchAsyncErrors(async (req, res, next) => {
 exports.updateProfile = catchAsyncErrors(async (req, res) => {
     const newUserData = {
         name: req.body.name,
-        email: req.body.email
+        email: req.body.email,
+        phonenumber: req.body.phonenumber,
+        deliveryaddress: req.body.deliveryaddress
     }
 
     // Update avatar
     //if (req.body.avatar !== '') {
     const user = await User.findById(req.user._id)
 
-    var image_id = user.avatar.public_id;
-    if (image_id) {
-        console.log("Before: " + user.avatar.public_id)
-        // if (user.avatar.public_id) {
-        //     user.avatar.public_id = null;
-        //     user.avatar.url = null;
-        // }
-        console.log("After:" + user.avatar.public_id)
-        const resp = await cloudinary.v2.uploader.destroy(image_id);
-    }
     // cloudinary.v2.uploader.destroy(image_id, (err, res) => {
     //     console.log(err, res);
     // });
@@ -241,6 +237,14 @@ exports.updateProfile = catchAsyncErrors(async (req, res) => {
     //     throw error.error
     // }
     if (req.body.avatar) {
+
+        var image_id = user.avatar.public_id;
+        if (image_id) {
+            console.log("Before: " + user.avatar.public_id)
+            console.log("After:" + user.avatar.public_id)
+            const resp = await cloudinary.v2.uploader.destroy(image_id);
+        }
+
         const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
             folder: 'avatars',
             width: 150,
