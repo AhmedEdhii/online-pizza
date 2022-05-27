@@ -157,7 +157,7 @@ const Mynavbar = () => {
                     <Tooltip title="Open settings">
                       <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                         <Avatar alt="Avatar" src={(user.avatar && user.avatar.url) || '/images/default_avatar.jpg'}
-                          sx={{ height: 75, width: 75 }} />
+                          sx={{ height: 50, width: 50 }} />
                       </IconButton>
                     </Tooltip>
 

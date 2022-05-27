@@ -2,13 +2,17 @@ import {
     Typography, Card, CardMedia, CardHeader, CardContent, CardActions, Collapse, IconButton, Grid, Button, Box, Item
 } from '@mui/material'
 import React from 'react'
-
+import  { useState } from 'react'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-
+import ProductModal from '../_Atomic/ProductModal'
 
 
 function ProductCard() {
+
+    const [openPopup, setOpenPopup] = useState(false)
+    
     return (
+        <>
         <Card sx={{
             p: 2,
             margin: 'auto',
@@ -39,17 +43,14 @@ function ProductCard() {
                             </CardContent>
                             <CardContent >
                                 <Typography  variant="h6" component="div" >
-                                    Rs 299 <IconButton size='large' color='warning'  ><AddCircleIcon /></IconButton>
+                                    Rs 299 <IconButton size='large' color='warning'  
+                                     onClick={() => { setOpenPopup(true);}}
+                                     ><AddCircleIcon /></IconButton>
                                 </Typography>
                                 
 
                             </CardContent>
 
-
-                            {/* <CardActions>
-                                <Button size="small">Share</Button>
-                                <Button size="small">Learn More</Button>
-                            </CardActions> */}
                         </Grid>
                     </Grid>
                 </Grid>
@@ -74,6 +75,15 @@ function ProductCard() {
             </Grid>
 
         </Card>
+        <ProductModal
+        title="Employee Form"
+        openPopup={openPopup}
+        setOpenPopup={setOpenPopup}
+    >
+        <Typography variant='h2'>my anme is modal</Typography>
+
+    </ProductModal>
+    </>
                     
 
 
