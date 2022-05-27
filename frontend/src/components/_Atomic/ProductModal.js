@@ -60,7 +60,7 @@ function ProductModal(props) {
 
                                 <RadioGroup
                                     aria-labelledby="demo-radio-buttons-group-label"
-                                    defaultValue="female"
+                                    defaultValue="small"
                                     name="radio-buttons-group"
                                 >
                                     <FormControlLabel value="small" control={<Radio />} label="Small" />
