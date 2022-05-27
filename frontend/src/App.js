@@ -23,7 +23,7 @@ import store from './store'
 
 
 import Homepage from './Pages/Homepage';
-
+import LoginandSignup from './Pages/LoginandSignup';
 
 function App() {
 
@@ -37,6 +37,7 @@ function App() {
           {/* <HeaderTest/> */}
           <Route path="/login" component={login_signup} />
           <Route path="/homepage" component={Homepage} />
+          <Route path="/mylogin" component={LoginandSignup} />
           {/* <Header/> */}
           {/* <Route path="/" component={Home} exact />
           <Route path="/search/:keyword" component={Home} />

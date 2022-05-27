@@ -19,11 +19,14 @@ function ProductCard() {
         }}>
 
             <Grid container spacing={2} sx={{ alignItems: 'center' }}>
+            
 
                 <Grid item xs={12} sm container >
                     <Grid item xs container direction="column" spacing={2}>
-                        <Grid item xs>
+                    
+                        <Grid item xs sx={{paddingBottom: 0}}>
                             <CardContent>
+                            
                                 <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
                                     Fajita Chicken Supreme
                                 </Typography>
@@ -34,15 +37,14 @@ function ProductCard() {
                                 </Typography>
 
                             </CardContent>
-                            <CardContent>
-                                <Typography gutterBottom variant="h6" component="div" >
-                                    Rs 299
+                            <CardContent >
+                                <Typography  variant="h6" component="div" >
+                                    Rs 299 <IconButton size='large' color='warning'  ><AddCircleIcon /></IconButton>
                                 </Typography>
+                                
 
                             </CardContent>
 
-                            <IconButton size='large' color='warning' ><AddCircleIcon />
-                            </IconButton>
 
                             {/* <CardActions>
                                 <Button size="small">Share</Button>
@@ -55,6 +57,7 @@ function ProductCard() {
                 <Grid item sx={{ height: '100%', margin: 'auto', p: 2, }}>
 
 
+     
 
                     <CardMedia
                         component="img"
@@ -66,10 +69,13 @@ function ProductCard() {
 
 
                 </Grid>
+                
 
             </Grid>
 
         </Card>
+                    
+
 
 
 

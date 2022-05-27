@@ -8,39 +8,39 @@ function ShowProducts() {
       
     <>
     <Container display="flex" sx={{margin: 'auto'}}>
-        <Typography variant='h2' sx={{ fontWeight: 'bold', marginBottom:5 }}>Pizzas</Typography>
+        <Typography variant='h4' sx={{ fontWeight: 'bold', marginBottom:2, marginTop:2 }}>Pizzas</Typography>
         <Divider sx={{ marginBottom:5}} />
 
      <Grid  display="flex" container rowSpacing={5} columnSpacing={{ xs: 1, sm: 3, md: 3 }} sx={{marginBottom: 8}}>
-         <Grid item xs={6}>
+     <Grid item xs={12} sm={6}>
          <ProductCard />
          </Grid>
-         <Grid item xs={6}>
+         <Grid item xs={12} sm={6}>
          <ProductCard />
          </Grid>
-         <Grid item xs={6}>
+         <Grid item xs={12} sm={6}>
          <ProductCard />
          </Grid>
-         <Grid item xs={6}>
+         <Grid item xs={12} sm={6}>
          <ProductCard />
          </Grid>
         
     </Grid>
 
-    <Typography variant='h2' sx={{ fontWeight: 'bold', marginBottom:5 }}>Drinks</Typography>
+    <Typography variant='h4' sx={{ fontWeight: 'bold', marginBottom:2 }}>Drinks</Typography>
         <Divider sx={{ marginBottom:5}} />
 
      <Grid  display="flex" container rowSpacing={5} columnSpacing={{ xs: 1, sm: 3, md: 3 }} sx={{marginBottom: 8}}>
-         <Grid item xs={6}>
+         <Grid item xs={12} sm={6}>
          <ProductCard />
          </Grid>
-         <Grid item xs={6}>
+         <Grid item xs={12} sm={6}>
          <ProductCard />
          </Grid>
-         <Grid item xs={6}>
+         <Grid item xs={12} sm={6}>
          <ProductCard />
          </Grid>
-         <Grid item xs={6}>
+         <Grid item xs={12} sm={6}>
          <ProductCard />
          </Grid>
         
