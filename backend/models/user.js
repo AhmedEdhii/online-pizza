@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema({
         maxlength: 11,
         trim: true
     },
+    deliveryaddress: {
+        type: String,
+        required: true,
+    },
     role: {
         type: String,
         default: "user",
