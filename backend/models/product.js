@@ -55,16 +55,16 @@ const productSchema = new mongoose.Schema({
         }
     },
     BeverageDetails: {
-        size: {
-            type: String,
-            //required: true,
-            enum: {
-                values: [
-                    'Large Drink',
-                    "Small Drink"
-                ]
-            }
-        },
+        // size: {
+        //     type: String,
+        //     //required: true,
+        //     enum: {
+        //         values: [
+        //             'Large Drink',
+        //             "Small Drink"
+        //         ]
+        //     }
+        // },
         price: {
             type: Number,
             //required: true
