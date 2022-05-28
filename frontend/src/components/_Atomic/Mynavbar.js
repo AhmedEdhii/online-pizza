@@ -5,6 +5,8 @@ import { useAlert } from 'react-alert'
 import { logout } from '../../actions/userActions'
 import { NavLink } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { useState } from 'react'
+
 
 import {
   AppBar, createTheme, styled, Grid, Toolbar, Typography, ThemeProvider, Avatar, IconButton,
@@ -15,6 +17,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { PersonAdd, Settings, Logout, Person } from '@mui/icons-material';
+import Cart from './Cart';
 
 const Mynavbar = () => {
 
@@ -55,6 +58,8 @@ const Mynavbar = () => {
     height: 60,
     padding: 10
   });
+
+  const [openDrawer, setOpenDrawer] = React.useState(false);
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -99,25 +104,30 @@ const Mynavbar = () => {
                     {/* <a href='/' > <Img alt="complex" src="/images/OP.png" /></a> */}
 
                   </Grid>
-
+{/* 
                   <Grid sx={{ display: { xs: 'none', md: 'flex' } }}>
 
                     <Button variant="text" color='secondary' component={Link} to="/">One</Button>
                     <Button variant="text" color='secondary' component={Link} to="/">Two</Button>
                     <Button variant="text" color='secondary' component={Link} to="/">Three</Button>
 
-                  </Grid>
+                  </Grid> */}
 
                   {/* sx={{ border: 1 }} */}
                   <Grid item display="flex" >
                     <NavLink to="/mylogin" style={{ textDecoration: 'none', color: 'unset' }} >
-                      <Button variant='contained' color='primary' startIcon={<AccountCircleIcon />} size="large"
-                        sx={{ borderRadius: 2 }} > Login/Signup</Button>
+
+                      <Button variant='contained'
+                        color='primary'
+                        startIcon={<AccountCircleIcon />}
+                        size="large"
+                        sx={{ borderRadius: 2 }}
+                      > Login/Signup</Button>
                     </NavLink>
 
                     <Badge badgeContent={4} color={"secondary"}  >
 
-                      <IconButton color="secondary" size='large' >
+                      <IconButton color="secondary" size='large' onClick={() => { setOpenDrawer(true); }}>
                         <ShoppingCartOutlinedIcon />
                       </IconButton>
                     </Badge>
@@ -215,10 +225,28 @@ const Mynavbar = () => {
               </Toolbar>
 
             </AppBar>
+
+
+            //     <ProductModal
+            //     title="Employee Form"
+            //     openPopup={openPopup}
+            //     setOpenPopup={setOpenPopup}
+            // >
+            //     <Typography variant='h2'>my anme is modal</Typography>
+
+            // </ProductModal>
           }
+               <Cart
+              openDrawer={openDrawer}
+              setOpenDrawer={setOpenDrawer}>
+              
+              </Cart>
         </ThemeProvider>
+
+
       )
       }
+
     </>
   )
 }
