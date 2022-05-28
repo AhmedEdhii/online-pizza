@@ -170,7 +170,7 @@ const Mynavbar = () => {
                           sx={{ height: 45, width: 45 }} />
                       </IconButton>
                     </Tooltip>
-                    <Typography variant='body1'   sx={{ marginLeft: 2, marginRight:2, color:'#0e0e0e' }}>Ebrahim</Typography>
+                    <Typography variant='body1'   sx={{ marginLeft: 2, marginRight:2, color:'#0e0e0e' }}>{user.name}</Typography>
 
 
                     <Menu

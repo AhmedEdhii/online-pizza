@@ -2,15 +2,29 @@ import {
     Typography, Dialog, DialogTitle, DialogContent, Fab, Grid, Box, IconButton, Divider, Radio, FormLabel,
     FormControlLabel, RadioGroup, FormControl, Checkbox, Button, styled,
 } from '@mui/material'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import CloseIcon from '@mui/icons-material/Close';
-import Cart from './Cart';
+import { useDispatch, useSelector } from 'react-redux'
+import { useAlert } from 'react-alert'
+import { getToppings } from '../../actions/toppingActions';
 
-function ProductModal(props) {
+function ProductModal({ title, openPopup, setOpenPopup, product }) {
 
-    const { title, children, product, openPopup, setOpenPopup } = props;
+    // const { title, children, product, openPopup, setOpenPopup } = props;
 
+    const alert = useAlert();
+    const dispatch = useDispatch();
+
+    const { loading, toppings, error, toppingsCount } = useSelector(state => state.toppings)
+
+    useEffect(() => {
+        if (error) {
+            return alert.error(error)
+        }
+        dispatch(getToppings());
+        //alert.success('Success')
+    }, [alert, error])
 
     const Img = styled('img')({
 
@@ -21,16 +35,7 @@ function ProductModal(props) {
         padding: 10,
         margin: 4
     });
-
-    const [openDrawer, setOpenDrawer] = React.useState(false);
-    const ATCbuttonHandler = () => {
-        setOpenDrawer(true);
-         setOpenPopup(false);
-       
-      }
-    
     return (
-        <>
         <Dialog open={openPopup} maxWidth="md" sx={{ borderRadius: '1.5rem', }} onClose={() => { setOpenPopup(false) }}>
 
             <Grid spacing={2} sx={{ p: 2, alignItems: 'center', }}>
@@ -113,35 +118,20 @@ function ProductModal(props) {
                                 <Grid item sx={{ marginRight: 7 }}>
 
                                     <FormControl>
-
-
-                                        <FormControlLabel value="cheese" control={<Checkbox />} label="Cheese" />
-                                        <FormControlLabel value="olives" control={<Checkbox />} label="Olives" />
-                                        <FormControlLabel value="mushrooms" control={<Checkbox />} label="Mushrooms" />
-                                        <FormControlLabel value="chicken" control={<Checkbox />} label="Chicken" />
-
-
+                                        {toppings && toppings.map(topping => (
+                                            <FormControlLabel
+                                                value="cheese"
+                                                control={<Checkbox />}
+                                                label={topping.name} />
+                                        ))}
                                     </FormControl>
                                 </Grid>
                                 <Grid item display='flex' sx={{ flexDirection: 'column' }}>
-
-                                    <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, paddingTop: 1 }}>
-                                        Rs. 80
-                                    </Typography>
-                                    
-                                    <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, paddingTop: 1 }}>
-                                        Rs. 80
-                                    </Typography>
-                                    
-                                    <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, paddingTop: 1 }}>
-                                        Rs. 80
-                                    </Typography>
-                                    
-                                    <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, paddingTop: 1 }}>
-                                        Rs. 80
-                                    </Typography>
-                                    
-                                    
+                                    {toppings && toppings.map(topping => (
+                                        <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, paddingTop: 1 }}>
+                                            Rs. {topping.price}
+                                        </Typography>
+                                    ))}
                                 </Grid>
                             </Grid>
 
@@ -160,11 +150,11 @@ function ProductModal(props) {
                         {/* {children} */}
                         <Img alt="complex" src="images/pizza.jpg" />
                         <div align='center'>
-                            <Typography variant="h5"  sx={{ flexGrow: 1, fontWeight: 'bold', }}> Cart Price</Typography>
-                            <Typography variant="h5"  sx={{ flexGrow: 1,  }}> Rs. 299</Typography>
-                            </div>
+                            <Typography variant="h5" sx={{ flexGrow: 1, fontWeight: 'bold', }}> Cart Price</Typography>
+                            <Typography variant="h5" sx={{ flexGrow: 1, }}> Rs. 299</Typography>
+                        </div>
                         <Button type='submit' color='primary' variant="contained" fullWidth
-                            sx={{ m: 1, height: 50 }}  onClick={ATCbuttonHandler}>Add To Cart</Button>
+                            sx={{ m: 1, height: 50 }} >Add To Cart</Button>
                     </Grid>
 
                 </Grid>
@@ -175,13 +165,6 @@ function ProductModal(props) {
             {/* <IconButton size='large' color='warning' onClick={() => { setOpenPopup(false) }}><CloseIcon /></IconButton> */}
 
         </Dialog>
-                       <Cart
-                       openDrawer={openDrawer}
-                       setOpenDrawer={setOpenDrawer}>
-                       
-                       </Cart>
-                       </>
-        
 
     )
 }
