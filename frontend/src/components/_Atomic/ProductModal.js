@@ -5,6 +5,7 @@ import {
 import React from 'react'
 
 import CloseIcon from '@mui/icons-material/Close';
+import Cart from './Cart';
 
 function ProductModal(props) {
 
@@ -20,7 +21,16 @@ function ProductModal(props) {
         padding: 10,
         margin: 4
     });
+
+    const [openDrawer, setOpenDrawer] = React.useState(false);
+    const ATCbuttonHandler = () => {
+        setOpenDrawer(true);
+         setOpenPopup(false);
+       
+      }
+    
     return (
+        <>
         <Dialog open={openPopup} maxWidth="md" sx={{ borderRadius: '1.5rem', }} onClose={() => { setOpenPopup(false) }}>
 
             <Grid spacing={2} sx={{ p: 2, alignItems: 'center', }}>
@@ -154,7 +164,7 @@ function ProductModal(props) {
                             <Typography variant="h5"  sx={{ flexGrow: 1,  }}> Rs. 299</Typography>
                             </div>
                         <Button type='submit' color='primary' variant="contained" fullWidth
-                            sx={{ m: 1, height: 50 }} >Add To Cart</Button>
+                            sx={{ m: 1, height: 50 }}  onClick={ATCbuttonHandler}>Add To Cart</Button>
                     </Grid>
 
                 </Grid>
@@ -165,6 +175,13 @@ function ProductModal(props) {
             {/* <IconButton size='large' color='warning' onClick={() => { setOpenPopup(false) }}><CloseIcon /></IconButton> */}
 
         </Dialog>
+                       <Cart
+                       openDrawer={openDrawer}
+                       setOpenDrawer={setOpenDrawer}>
+                       
+                       </Cart>
+                       </>
+        
 
     )
 }

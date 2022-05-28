@@ -55,7 +55,7 @@ const Mynavbar = () => {
 
     alignItems: "center",
     maxwidth: "100%",
-    height: 60,
+    height: 50,
     padding: 10
   });
 
@@ -140,7 +140,7 @@ const Mynavbar = () => {
             :
             !loading &&
 
-            <AppBar elevation={0} position='static' sx={{ backgroundColor: "#fff" }} >
+            <AppBar elevation={1} position='static' sx={{ backgroundColor: "#fff" }} >
 
               <Toolbar >
 
@@ -161,15 +161,16 @@ const Mynavbar = () => {
 
 
                   {/* sx={{ border: 1 }} */}
-                  <Grid item display="flex" >
+                  <Grid item display="flex" sx={{alignItems: 'center'}} >
 
-
+                    
                     <Tooltip title="Open settings">
                       <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                         <Avatar alt="Avatar" src={(user.avatar && user.avatar.url) || '/images/default_avatar.jpg'}
-                          sx={{ height: 50, width: 50 }} />
+                          sx={{ height: 45, width: 45 }} />
                       </IconButton>
                     </Tooltip>
+                    <Typography variant='body1'   sx={{ marginLeft: 2, marginRight:2, color:'#0e0e0e' }}>Ebrahim</Typography>
 
 
                     <Menu
@@ -236,11 +237,11 @@ const Mynavbar = () => {
 
             // </ProductModal>
           }
-               <Cart
-              openDrawer={openDrawer}
-              setOpenDrawer={setOpenDrawer}>
-              
-              </Cart>
+                <Cart
+                openDrawer={openDrawer}
+                setOpenDrawer={setOpenDrawer}>
+                
+                </Cart>
         </ThemeProvider>
 
 

@@ -24,6 +24,8 @@ import store from './store'
 
 import Homepage from './Pages/Homepage';
 import LoginandSignup from './Pages/LoginandSignup';
+import TestPage from './Pages/TestPage';
+
 
 
 
@@ -40,6 +42,12 @@ function App() {
           <Route path="/login" component={login_signup} />
           <Route path="/homepage" component={Homepage} />
           <Route path="/mylogin" component={LoginandSignup} />
+
+          <Route path="/dashboard" component={Dashboard} />
+
+
+          {/* Test Page */}
+          <Route path="/testPage" component={TestPage} />
 
           
           {/* <Header/> */}
