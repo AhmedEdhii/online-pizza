@@ -92,11 +92,11 @@ const Product = ({ product }) => {
                             {/* </div> */}
                             {/* <div> */}
                                 {/* <h1>Extra Toppings</h1> */}
-                                {/* {toppings && toppings.map(topping => ( */}
-                                    {/* <h1> */}
-                                        {/* {topping.name} */}
-                                    {/* </h1> */}
-                                {/* ))} */}
+                                {/* {toppings && toppings.map(topping => (
+                                    <h1>
+                                        {topping.name}
+                                    </h1>
+                                ))} */}
                             {/* </div> */}
                         {/* </Modal.Body> */}
                         {/* <Modal.Footer> */}

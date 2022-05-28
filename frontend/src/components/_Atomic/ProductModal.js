@@ -8,9 +8,8 @@ import CloseIcon from '@mui/icons-material/Close';
 
 function ProductModal(props) {
 
+    const { title, children, product, openPopup, setOpenPopup } = props;
 
-
-    const { title, children, openPopup, setOpenPopup } = props;
 
     const Img = styled('img')({
 
@@ -39,7 +38,7 @@ function ProductModal(props) {
 
                                 <Typography variant="h5" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
                                     {/* {title} */}
-                                    Fajita Chicken Supreme
+                                    {product.name}
                                 </Typography>
                             </Grid>
 
@@ -52,7 +51,7 @@ function ProductModal(props) {
                             <Grid item sx={{ p: 2 }}></Grid>
                             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                                 {/* {title} */}
-                                Flavors
+                                Sizes
                             </Typography>
                             <Divider sx={{ marginBottom: 1 }} />
                             <Grid display='flex' fullWidth >

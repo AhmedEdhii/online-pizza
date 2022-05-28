@@ -94,6 +94,7 @@ function ProductCard({ product }) {
                 title="Employee Form"
                 openPopup={openPopup}
                 setOpenPopup={setOpenPopup}
+                product={product}
             >
                 <Typography variant='h2'>my anme is modal</Typography>
 
