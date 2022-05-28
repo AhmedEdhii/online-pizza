@@ -78,7 +78,7 @@ const productSchema = new mongoose.Schema({
             //default: 0
         }
     },
-    image_url: {
+    url: {
         type: String,
         //required: true
     },

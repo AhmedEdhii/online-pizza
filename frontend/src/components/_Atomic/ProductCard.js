@@ -1,7 +1,7 @@
 import {
     Typography, Card, CardMedia, CardHeader, CardContent, CardActions, Collapse, IconButton, Grid, Button, Box, Item
 } from '@mui/material'
-import React from 'react'
+import React, { Fragment} from 'react'
 import { useState } from 'react'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import ProductModal from '../_Atomic/ProductModal'
@@ -35,9 +35,7 @@ function ProductCard({ product }) {
                                         {product.name}
                                     </Typography>
                                     <Typography variant="body2" color="text.secondary">
-                                        Buffalo Chicken, Tikka, Sweet Corns, Green
-                                        Onions, Jalapenos ,BBQ Ranch Sauce And
-                                        Mozzarella
+                                        {product.description}
                                     </Typography>
 
                                 </CardContent>
@@ -79,7 +77,7 @@ function ProductCard({ product }) {
                             component="img"
                             alt="green iguana"
                             height="170"
-                            image="images/pizza.jpg"
+                            image= {product.url}
                         />
 
 
@@ -94,7 +92,7 @@ function ProductCard({ product }) {
                 title="Employee Form"
                 openPopup={openPopup}
                 setOpenPopup={setOpenPopup}
-                product = {product}
+                product={product}
             >
                 <Typography variant='h2'>my anme is modal</Typography>
 
