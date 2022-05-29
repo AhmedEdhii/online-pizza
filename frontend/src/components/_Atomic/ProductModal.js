@@ -23,9 +23,22 @@ function ProductModal({ title, openPopup, setOpenPopup, product, toppings }) {
 
     const [openDrawer, setOpenDrawer] = React.useState(false);
 
-    const[selectSize, setSelectSize] = useState('')
+    const[selectSize, setSelectSize] = useState('');
+    const[sizePrice, setsizePrice] = useState('');
 
-    const [selectToppings, setSelectToppings] = useState('')
+    const setSizeHandler =(value) => {
+         setSelectSize(value);
+         if (value === 'Small')
+         setsizePrice(product.PizzaDetails.size.small)
+         else if (value === 'Medium')
+         setsizePrice(product.PizzaDetails.size.regular)
+         else if (value === 'Large')
+         setsizePrice(product.PizzaDetails.size.large)
+         else if (value === 'Jumbo')
+         setsizePrice(product.PizzaDetails.size.jumbo)
+    }
+
+    const [selectToppings, setSelectToppings] = useState('');
 
     const handleToggle = (value) => () => {
       const currentIndex = selectToppings.indexOf(value);
@@ -38,24 +51,26 @@ function ProductModal({ title, openPopup, setOpenPopup, product, toppings }) {
       }
   
       setSelectToppings(newChecked);
+      
     };
 
-    console.log(selectToppings);
+   
 
     const ATCbuttonHandler = () => {
         // console.log(product._id)
         //removeItemFromCart(product._id)
-        dispatch(addItemToCart(product._id, quantity, 400, selectSize, ["623c3eafd3b63a766ce3c506", "623c3ed6d3b63a766ce3c508"]));
+        dispatch(addItemToCart(product._id, quantity, sizePrice, selectSize, selectToppings));
         // dispatch(addItemToCart(product._id, quantity, 400, "small", [{name: "Mushrooms", price: 50}, {name: "Olives", price: 30}]));
         alert.success('Item Added to Cart')
         setOpenDrawer(true);
         setOpenPopup(false);
-        console.log(selectSize);
-        console.log(selectToppings);
+     
+
+        
     }
 
-
-
+    
+    
     const alert = useAlert();
     const dispatch = useDispatch();
     
@@ -124,11 +139,11 @@ function ProductModal({ title, openPopup, setOpenPopup, product, toppings }) {
                                             <FormControl>
                                                 <RadioGroup
                                                     aria-labelledby="demo-radio-buttons-group-label"
-                                                    defaultValue="small"
+                                                    defaultValue="Small"
                                                     name="radio-buttons-group"
-                                                    onChange={(e) => setSelectSize(e.target.value)}
+                                                    onChange={(e) => setSizeHandler(e.target.value)}
                                                 >
-                                                    <FormControlLabel value="Small" control={<Radio />} label="Small" />
+                                                    <FormControlLabel value="Small"  control={<Radio  s/>} label="Small" />
                                                     <FormControlLabel value="Medium" control={<Radio />} label="Medium" />
                                                     <FormControlLabel value="Large" control={<Radio />} label="Large" />
                                                     <FormControlLabel value="Jumbo" control={<Radio />} label="Jumbo" />
@@ -192,8 +207,8 @@ function ProductModal({ title, openPopup, setOpenPopup, product, toppings }) {
                                                     <FormControlLabel
                                                         value={topping.name}
                                                         control={<Checkbox />}
-                                                        onChange={handleToggle(topping)}
-                                                        checked={selectToppings.indexOf(topping) !== -1}
+                                                        onChange={handleToggle(topping._id)}
+                                                        checked={selectToppings.indexOf(topping._id) !== -1}
                                                         label={topping.name} />
                                                 ))}
                                             </FormControl>
