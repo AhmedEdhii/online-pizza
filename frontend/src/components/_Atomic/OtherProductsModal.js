@@ -18,7 +18,7 @@ function OtherProductsModal({ title, openPopup, setOpenPopup, product, toppings 
     const alert = useAlert();
     const dispatch = useDispatch();
     const [quantity, setQuantity] = useState(1)
-    const [price, setPrice] = useState('');
+    // const [price, setPrice] = useState('');
 
     const Img = styled('img')({
         alignItems: "center",
@@ -30,19 +30,26 @@ function OtherProductsModal({ title, openPopup, setOpenPopup, product, toppings 
     });
 
     const [openDrawer, setOpenDrawer] = React.useState(false);
+
+    // const handlePrice = () => {
+    //     if (product.category === 'Beverages') {
+    //         setPrice(product.BeverageDetails.price)
+    //     }
+    //     else if (product.category === 'Sauces') {
+    //         setPrice(product.SauceDetails.price)
+    //     }
+    // }
+
     const ATCbuttonHandler = () => {
         if (product.category === 'Beverages') {
-            setPrice(product.BeverageDetails.price)
+            dispatch(addItemToCart(product._id, quantity, product.BeverageDetails.price, "", {}));
         }
-        else {
-            setPrice(product.SauceDetails.price)
+        else if (product.category === 'Sauces') {
+            dispatch(addItemToCart(product._id, quantity, product.SauceDetails.price, "", {}));
         }
-        dispatch(addItemToCart(product._id, quantity, price, "", {}));
-        // dispatch(addItemToCart(product._id, quantity, 400, "small", [{name: "Mushrooms", price: 50}, {name: "Olives", price: 30}]));
         alert.success('Item Added to Cart')
         setOpenDrawer(true);
         setOpenPopup(false);
-
     }
 
     return (
