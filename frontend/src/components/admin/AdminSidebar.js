@@ -36,10 +36,6 @@ function AdminSidebar() {
     { id: 'users', state: false, color: '#f30c1c' }
   ];
 
-  // console.log(sidebarNav);
-
-  // var colorchange = '#f30c1c';
-  // console.log(colorchange)
 
   const sidebarHandler = (navLabel) => {
 
@@ -73,12 +69,12 @@ function AdminSidebar() {
 
     <Drawer
       sx={{
-
+        position: 'absolute',
         width: drawerWidth,
         flexShrink: 0,
 
         '& .MuiDrawer-paper': {
-          marginTop: '86px',
+          
           zIndex: '0',
           width: drawerWidth,
           boxSizing: 'border-box',
