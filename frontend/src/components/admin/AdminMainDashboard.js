@@ -8,7 +8,7 @@ function AdminMainDashboard() {
     return (
         <>
             <Grid>
-                <Typography variant="h4" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, paddingTop: 1 }}>
+                <Typography variant="h4" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, paddingTop: 2 }}>
                     Dashboard
                 </Typography>
                 <Typography variant="body1" component="div" sx={{ flexGrow: 1, paddingTop: 1 }}>
