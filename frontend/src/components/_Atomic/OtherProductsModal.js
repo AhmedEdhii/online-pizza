@@ -2,35 +2,25 @@ import {
     Typography, Dialog, DialogTitle, DialogContent, Fab, Grid, Box, IconButton, Divider, Radio, FormLabel,
     FormControlLabel, RadioGroup, FormControl, Checkbox, Button, styled,
 } from '@mui/material'
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import CloseIcon from '@mui/icons-material/Close';
 import Cart from './Cart';
 import { useDispatch, useSelector } from 'react-redux'
 import { useAlert } from 'react-alert'
-import { getToppings } from '../../actions/toppingActions';
+import { addItemToCart, removeItemFromCart } from '../../actions/cartActions'
 // import { borderRadius } from '@mui/material/node_modules/@mui/system';
 
-function OldStaticProductModal({ title, openPopup, setOpenPopup, product }) {
+function OtherProductsModal({ title, openPopup, setOpenPopup, product, toppings }) {
 
     // const { title, children, product, openPopup, setOpenPopup } = props;
 
     const alert = useAlert();
     const dispatch = useDispatch();
-
-    const { loading, toppings, error, toppingsCount } = useSelector(state => state.toppings)
-
-    useEffect(() => {
-        if (error) {
-            return alert.error(error)
-        }
-        dispatch(getToppings());
-        //alert.success('Success')
-    }, [alert, error])
+    const [quantity, setQuantity] = useState(1)
+    const [price, setPrice] = useState('');
 
     const Img = styled('img')({
-
-
         alignItems: "center",
         maxwidth: "100%",
         height: 300,
@@ -41,6 +31,15 @@ function OldStaticProductModal({ title, openPopup, setOpenPopup, product }) {
 
     const [openDrawer, setOpenDrawer] = React.useState(false);
     const ATCbuttonHandler = () => {
+        if (product.category === 'Beverages') {
+            setPrice(product.BeverageDetails.price)
+        }
+        else {
+            setPrice(product.SauceDetails.price)
+        }
+        dispatch(addItemToCart(product._id, quantity, price, "", {}));
+        // dispatch(addItemToCart(product._id, quantity, 400, "small", [{name: "Mushrooms", price: 50}, {name: "Olives", price: 30}]));
+        alert.success('Item Added to Cart')
         setOpenDrawer(true);
         setOpenPopup(false);
 
@@ -75,14 +74,22 @@ function OldStaticProductModal({ title, openPopup, setOpenPopup, product }) {
                                 </Typography>
 
                                 <Grid item sx={{ p: 2 }}></Grid>
+
                                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                                     {/* {title} */}
                                     Price
                                 </Typography>
                                 <Divider sx={{ marginBottom: 1 }} />
-                                <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, paddingTop: 1 }}>
-                                            Rs. 1199
-                                        </Typography>
+                                {product.category === 'Beverages' && (
+                                    <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, paddingTop: 1 }}>
+                                        Rs. {product.BeverageDetails.price}
+                                    </Typography>
+                                )}
+                                {product.category === 'Sauces' && (
+                                    <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, paddingTop: 1 }}>
+                                        Rs. {product.SauceDetails.price}
+                                    </Typography>
+                                )}
                             </Grid>
                         </Grid>
 
@@ -97,7 +104,7 @@ function OldStaticProductModal({ title, openPopup, setOpenPopup, product }) {
                                 <Typography variant="h5" sx={{ flexGrow: 1, }}> Rs. 299</Typography>
                             </div>
                             <Button type='submit' color='primary' variant="contained" fullWidth
-                                sx={{ m: 1, height: 50 }} onClick={ATCbuttonHandler}>Add To Cart</Button>
+                                sx={{ m: 1, height: 50 }} onClick={() => ATCbuttonHandler()}>Add To Cart</Button>
                         </Grid>
 
                     </Grid>
@@ -114,4 +121,4 @@ function OldStaticProductModal({ title, openPopup, setOpenPopup, product }) {
     )
 }
 
-export default OldStaticProductModal
+export default OtherProductsModal

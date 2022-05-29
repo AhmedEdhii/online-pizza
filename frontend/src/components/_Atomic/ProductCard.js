@@ -1,10 +1,11 @@
 import {
     Typography, Card, CardMedia, CardHeader, CardContent, CardActions, Collapse, IconButton, Grid, Button, Box, Item
 } from '@mui/material'
-import React, { Fragment} from 'react'
+import React, { Fragment } from 'react'
 import { useState } from 'react'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import ProductModal from '../_Atomic/ProductModal'
+import OtherProductsModal from './OtherProductsModal';
 
 
 function ProductCard({ product, toppings }) {
@@ -77,7 +78,7 @@ function ProductCard({ product, toppings }) {
                             component="img"
                             alt="green iguana"
                             height="170"
-                            image= {product.url}
+                            image={product.url}
                         />
 
 
@@ -88,16 +89,28 @@ function ProductCard({ product, toppings }) {
                 </Grid>
 
             </Card>
-            <ProductModal
-                title="Employee Form"
-                openPopup={openPopup}
-                setOpenPopup={setOpenPopup}
-                product={product}
-                toppings = {toppings}
-            >
-                <Typography variant='h2'>my anme is modal</Typography>
-
-            </ProductModal>
+            {product.category === 'Pizzas' && (
+                <ProductModal
+                    title="Employee Form"
+                    openPopup={openPopup}
+                    setOpenPopup={setOpenPopup}
+                    product={product}
+                    toppings={toppings}
+                >
+                    <Typography variant='h2'>my anme is modal</Typography>
+                </ProductModal>
+            )}
+            {(product.category === 'Beverages' || product.category === 'Sauces') && (
+                <OtherProductsModal
+                    title="Employee Form"
+                    openPopup={openPopup}
+                    setOpenPopup={setOpenPopup}
+                    product={product}
+                    toppings={toppings}
+                >
+                    <Typography variant='h2'>my anme is modal</Typography>
+                </OtherProductsModal>
+            )}
         </>
     )
 }

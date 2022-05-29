@@ -20,6 +20,7 @@ export const addItemToCart = (id, quantity, price, size, toppingids) => async (d
 
     const { data } = await axios.get(`/api/product/${id}`)
 
+    // if(data.product.category === 'Pizzas')
     dispatch({
         type: ADD_TO_CART,
         payload: {
