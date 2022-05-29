@@ -26,7 +26,8 @@ import Homepage from './Pages/Homepage';
 import LoginandSignup from './Pages/LoginandSignup';
 import TestPage from './Pages/TestPage';
 
-
+import AdminMainDashboard from './components/admin/AdminMainDashboard';
+import AdminDashboardMenu from './components/admin/AdminDashboardMenu';
 
 
 function App() {
@@ -43,8 +44,8 @@ function App() {
           <Route path="/homepage" component={Homepage} />
           <Route path="/mylogin" component={LoginandSignup} />
 
-          <Route path="/AdminDashboard" component={AdminDashboard} />
-
+          <Route path="/AdminDashboard" component={AdminMainDashboard} />
+          <Route path="/AdminDashboardMenu" component={AdminDashboardMenu} />
 
           {/* Test Page */}
           <Route path="/testPage" component={TestPage} />

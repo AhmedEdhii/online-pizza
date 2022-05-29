@@ -68,78 +68,80 @@ function AdminSidebar() {
   return (
 
     <Drawer
-      sx={{
-        position: 'absolute',
-        width: drawerWidth,
-        flexShrink: 0,
+                    sx={{
+                        position: 'sticky',
+                        width: drawerWidth,
+                        flexShrink: 0,
 
-        '& .MuiDrawer-paper': {
-          
-          zIndex: '0',
-          width: drawerWidth,
-          boxSizing: 'border-box',
-          backgroundColor: '#f30c1c',
-        },
-      }}
-      variant="permanent"
-      anchor="left"
-    >
+                        '& .MuiDrawer-paper': {
+                            paddingTop:'86px',
+                            zIndex: '0',
+                            width: drawerWidth,
+                            boxSizing: 'border-box',
+                            backgroundColor: '#f30c1c',
+                        },
+                    }}
+                    variant="permanent"
+                    anchor="left"
+                >
 
-      <List>
+                    <List>
 
+                    <NavLink to="/AdminDashboard" style={{ textDecoration: 'none', color: 'unset' }} >
+                        <ListItem sx={{ color: '#fff' }}>
+                            <ListItemButton onClick={() => sidebarHandler(0)}   sx={{ backgroundColor: sidebarNav[0].color }} >
+                                <ListItemIcon sx={{ color: '#fff' }}>
+                                    <DashboardIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Dashboard" />
+                            </ListItemButton>
+                        </ListItem>
+                        </NavLink>
 
-        <ListItem sx={{ color: '#fff' }}>
-          <ListItemButton onClick={() => sidebarHandler(0)} sx={{ backgroundColor: sidebarNav[0].color }} >
-            <ListItemIcon sx={{ color: '#fff' }}>
-              <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText primary="Dashboard" />
-          </ListItemButton>
-        </ListItem>
-
-
-
-        <ListItem sx={{ color: '#fff' }}>
-          <ListItemButton onClick={() => sidebarHandler(1)} sx={{ backgroundColor: colorchange }} >
-            <ListItemIcon sx={{ color: '#fff' }}>
-              <RestaurantMenuIcon />
-            </ListItemIcon>
-            <ListItemText primary="Menu" />
-          </ListItemButton>
-        </ListItem>
-
-        <ListItem sx={{ color: '#fff' }}>
-          <ListItemButton onClick={() => sidebarHandler(2)} sx={{ backgroundColor: colorchange }} >
-            <ListItemIcon sx={{ color: '#fff' }}>
-              <RestaurantMenuIcon />
-            </ListItemIcon>
-            <ListItemText primary="Toppings" />
-          </ListItemButton>
-        </ListItem>
-
-        <ListItem sx={{ color: '#fff' }}>
-          <ListItemButton onClick={() => sidebarHandler(3)} sx={{ backgroundColor: colorchange }} >
-            <ListItemIcon sx={{ color: '#fff' }}>
-              <ListAltIcon />
-            </ListItemIcon>
-            <ListItemText primary="Orders" />
-          </ListItemButton>
-        </ListItem>
-
-        <ListItem sx={{ color: '#fff' }}>
-          <ListItemButton onClick={() => sidebarHandler(4)} sx={{ backgroundColor: colorchange }} >
-            <ListItemIcon sx={{ color: '#fff' }}>
-              <GroupIcon />
-            </ListItemIcon>
-            <ListItemText primary="Users" />
-          </ListItemButton>
-        </ListItem>
+                        <NavLink to="/AdminDashboardMenu" style={{ textDecoration: 'none', color: 'unset' }} >
+                        <ListItem sx={{ color: '#fff' }}>
+                            <ListItemButton onClick={() => sidebarHandler(1)}>
+                                <ListItemIcon sx={{ color: '#fff' }}>
+                                    <RestaurantMenuIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Menu" />
+                            </ListItemButton>
+                        </ListItem>
+                        </NavLink>
 
 
+                        <ListItem sx={{ color: '#fff' }}>
+                            <ListItemButton onClick={() => sidebarHandler(2)}  >
+                                <ListItemIcon sx={{ color: '#fff' }}>
+                                    <RestaurantMenuIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Toppings" />
+                            </ListItemButton>
+                        </ListItem>
+
+                        <ListItem sx={{ color: '#fff' }}>
+                            <ListItemButton onClick={() => sidebarHandler(3)}  >
+                                <ListItemIcon sx={{ color: '#fff' }}>
+                                    <ListAltIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Orders" />
+                            </ListItemButton>
+                        </ListItem>
+
+                        <ListItem sx={{ color: '#fff' }}>
+                            <ListItemButton onClick={() => sidebarHandler(4)} >
+                                <ListItemIcon sx={{ color: '#fff' }}>
+                                    <GroupIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Users" />
+                            </ListItemButton>
+                        </ListItem>
 
 
-      </List>
-    </Drawer>
+
+
+                    </List>
+                </Drawer>
 
   );
 };
