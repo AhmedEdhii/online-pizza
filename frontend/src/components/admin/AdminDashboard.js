@@ -6,7 +6,7 @@ import AdminSidebar from './AdminSidebar'
 import AdminMainDashboard from './AdminMainDashboard';
 import AdminDashboardMenu from './AdminDashboardMenu';
 
-function Dashboard({ navState }) {
+function AdminDashboard({ navState }) {
         
 
     return (
@@ -33,4 +33,4 @@ function Dashboard({ navState }) {
     )
 }
 
-export default Dashboard
+export default AdminDashboard

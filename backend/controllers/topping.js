@@ -42,12 +42,10 @@ exports.getSingleTopping = catchAsyncErrors(async (req, res, next) => {
         const topping = await Topping.findById(req.params.id);
         if (!topping) {
             return res.status(404).json({
-                success: false,
-                message: 'Topping not found'
+                error: 'Topping not found'
             })
         }
         res.status(200).json({
-            success: true,
             topping
         })
     }
@@ -55,12 +53,10 @@ exports.getSingleTopping = catchAsyncErrors(async (req, res, next) => {
         const topping = await Topping.findOne({ $and: [{ _id: req.params.id }, { topping_status: "active" }] })
         if (!topping) {
             return res.status(404).json({
-                success: false,
-                message: 'Topping not found'
+                error: 'Topping not found'
             })
         }
         res.status(200).json({
-            success: true,
             topping
         })
     }
@@ -74,7 +70,7 @@ exports.updateTopping = catchAsyncErrors(async (req, res, next) => {
     if (!topping) {
         return res.status(404).json({
             success: false,
-            message: 'Topping not found'
+            error: 'Topping not found'
         })
     }
 
@@ -100,7 +96,7 @@ exports.inactivateTopping = catchAsyncErrors(async (req, res, next) => {
     if (!topping) {
         return res.status(404).json({
             success: false,
-            message: 'Topping not found'
+            error: 'Topping not found'
         })
     }
 

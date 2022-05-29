@@ -37,14 +37,14 @@ function AdminSidebar() {
   const sidebarHandler = (navLabel) => {
 
     const checkTrue = sidebarNav.find(nav => nav.state === true);
-
     checkTrue.state = false;
+
     sidebarNav[navLabel].state = true;
-
- 
+    const check = sidebarNav.find(nav => nav.state === true);
+    console.log(check)
     console.log(sidebarNav);
-
   }
+
   return (
 
     <Drawer
@@ -69,7 +69,7 @@ function AdminSidebar() {
 
 
         <ListItem sx={{ color: '#fff' }}>
-          <ListItemButton onClick={sidebarHandler(0)} >
+          <ListItemButton onClick={() => sidebarHandler(0)} >
             <ListItemIcon sx={{ color: '#fff' }}>
               <DashboardIcon />
             </ListItemIcon>
@@ -78,19 +78,27 @@ function AdminSidebar() {
         </ListItem>
 
 
-    
-          <ListItem sx={{ color: '#fff' }}>
-            <ListItemButton onClick={sidebarHandler(1)} >
-              <ListItemIcon sx={{ color: '#fff' }}>
-                <RestaurantMenuIcon />
-              </ListItemIcon>
-              <ListItemText primary="Menu" />
-            </ListItemButton>
-          </ListItem>
-
 
         <ListItem sx={{ color: '#fff' }}>
-          <ListItemButton onClick={sidebarHandler(3)} >
+          <ListItemButton onClick={() => sidebarHandler(1)} >
+            <ListItemIcon sx={{ color: '#fff' }}>
+              <RestaurantMenuIcon />
+            </ListItemIcon>
+            <ListItemText primary="Menu" />
+          </ListItemButton>
+        </ListItem>
+
+        <ListItem sx={{ color: '#fff' }}>
+          <ListItemButton onClick={() => sidebarHandler(2)} >
+            <ListItemIcon sx={{ color: '#fff' }}>
+              <RestaurantMenuIcon />
+            </ListItemIcon>
+            <ListItemText primary="Toppings" />
+          </ListItemButton>
+        </ListItem>
+
+        <ListItem sx={{ color: '#fff' }}>
+          <ListItemButton onClick={() => sidebarHandler(3)} >
             <ListItemIcon sx={{ color: '#fff' }}>
               <ListAltIcon />
             </ListItemIcon>
@@ -99,7 +107,7 @@ function AdminSidebar() {
         </ListItem>
 
         <ListItem sx={{ color: '#fff' }}>
-          <ListItemButton onClick={sidebarHandler(4)} >
+          <ListItemButton onClick={() => sidebarHandler(4)} >
             <ListItemIcon sx={{ color: '#fff' }}>
               <GroupIcon />
             </ListItemIcon>

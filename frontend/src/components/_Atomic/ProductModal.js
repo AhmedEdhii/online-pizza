@@ -9,9 +9,9 @@ import Cart from './Cart';
 import { useDispatch, useSelector } from 'react-redux'
 import { useAlert } from 'react-alert'
 import { getToppings } from '../../actions/toppingActions';
-import { addItemToCart } from '../../actions/cartActions'
+import { addItemToCart, removeItemFromCart } from '../../actions/cartActions'
 
-function ProductModal({ title, openPopup, setOpenPopup, product }) {
+function ProductModal({ title, openPopup, setOpenPopup, product, toppings }) {
 
     const Img = styled('img')({
         alignItems: "center",
@@ -24,7 +24,9 @@ function ProductModal({ title, openPopup, setOpenPopup, product }) {
     const [openDrawer, setOpenDrawer] = React.useState(false);
     const ATCbuttonHandler = () => {
         console.log(product._id)
-        dispatch(addItemToCart(product._id, quantity, 400, "small", {name: "Mushrooms", price: 50}));
+        //removeItemFromCart(product._id)
+        dispatch(addItemToCart(product._id, quantity, 400, "small", ["623c3eafd3b63a766ce3c506", "623c3ed6d3b63a766ce3c508"]));
+        // dispatch(addItemToCart(product._id, quantity, 400, "small", [{name: "Mushrooms", price: 50}, {name: "Olives", price: 30}]));
         alert.success('Item Added to Cart')
         setOpenDrawer(true);
         setOpenPopup(false);
@@ -37,15 +39,15 @@ function ProductModal({ title, openPopup, setOpenPopup, product }) {
     
     const [quantity, setQuantity] = useState(1)
 
-    const { loading, toppings, error, toppingsCount } = useSelector(state => state.toppings)
+    // const { loading, toppings, error, toppingsCount } = useSelector(state => state.toppings)
 
-    useEffect(() => {
-        if (error) {
-            return alert.error(error)
-        }
-        dispatch(getToppings());
-        //alert.success('Success')
-    }, [alert, error])
+    // useEffect(() => {
+    //     if (error) {
+    //         return alert.error(error)
+    //     }
+    //     // dispatch(getToppings());
+    //     //alert.success('Success')
+    // }, [alert, error])
 
     // const addToCart = () => {
     //     dispatch(addItemToCart(product._id, quantity, 400, "small", {name: "Mushrooms", price: 40}));

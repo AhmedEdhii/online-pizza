@@ -8,6 +8,8 @@ const {verifyToken, authorizeRoles} = require("../middlewares/authentication");
 
 router.get('/toppings', getallToppings)
 
+router.get('/topping/:id', getSingleTopping)
+
 // admin routes
 router.get('/admin/toppings', verifyToken, authorizeRoles("admin"), getallToppings)
 

@@ -4,7 +4,7 @@ import { useAlert } from 'react-alert';
 import ProductCard from '../_Atomic/ProductCard'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProducts } from '../../actions/productActions'
-
+import { getToppings } from '../../actions/toppingActions';
 
 function ShowProducts() {
 
@@ -12,6 +12,7 @@ function ShowProducts() {
   const dispatch = useDispatch();
 
   const { loading, products, error, productsCount } = useSelector(state => state.products)
+  const { toppings, toppingsCount } = useSelector(state => state.toppings)
 
 
   useEffect(() => {
@@ -19,6 +20,7 @@ function ShowProducts() {
       return alert.error(error)
     }
     //alert.success('Success')
+    dispatch(getToppings());
     dispatch(getProducts());
   }, [dispatch, alert, error])
 
@@ -34,7 +36,7 @@ function ShowProducts() {
             {products && products.map(product => {
               return (product.category === 'Pizzas' && (product)) ?
                 <Grid item xs={12} sm={6}>
-                  <ProductCard key={product._id} product={product} />
+                  <ProductCard key={product._id} product={product} toppings= {toppings} />
                 </Grid>
                 : null;
             })}

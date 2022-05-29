@@ -7,7 +7,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import ProductModal from '../_Atomic/ProductModal'
 
 
-function ProductCard({ product }) {
+function ProductCard({ product, toppings }) {
 
     const [openPopup, setOpenPopup] = useState(false)
 
@@ -93,6 +93,7 @@ function ProductCard({ product }) {
                 openPopup={openPopup}
                 setOpenPopup={setOpenPopup}
                 product={product}
+                toppings = {toppings}
             >
                 <Typography variant='h2'>my anme is modal</Typography>
 
