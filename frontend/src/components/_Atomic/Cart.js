@@ -45,20 +45,20 @@ const Cart = (props) => {
             anchor='right'
             open={openDrawer}
             onClose={() => { setOpenDrawer(false) }}
-
+            
         >
             <Fragment>
                 <MetaData title={'Your Cart'} />
                 {cartItems.length === 0 ?
                     <Fragment>
-                        <Box p={2} width='350px' height='1200px' display='flex' sx={{ flexDirection: 'column' }}>
+                        <Box p={2} width='350px' height='1200px' display='flex' sx={{ flexDirection: 'column',}}>
                             <Typography variant="h6" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
                                 Your Cart is Empty</Typography>
                         </Box>
                     </Fragment>
                     : (
                         <Fragment>
-                            <Box p={2} width='350px' height='1200px' display='flex' sx={{ flexDirection: 'column' }}>
+                            <Box p={2} width='350px' height='1200px' display='flex' sx={{ flexDirection: 'column',  m:4 }}>
 
                                 <Grid spacing={2} >
 
@@ -79,26 +79,32 @@ const Cart = (props) => {
                                                         <Fragment>
                                                             <Grid display='flex' sx={{ justifyContent: 'space-between', }}>
                                                                 <Grid sx={{ columnDirection: 'column' }}>
-                                                                    <Typography variant="body1" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
-                                                                        1x {item.name}</Typography>
-                                                                    <Typography variant="body1" component="div" sx={{ flexGrow: 1 }}>
+                                                                    <Typography variant="body1"  component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
+                                                                        {item.name}</Typography>
+                                                                    <Typography variant="body1" gutterBottom component="div" sx={{ flexGrow: 1 }}>
                                                                         {item.size}</Typography>
 
-                                                                    <Typography variant="body1" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
+                                                                    <Typography variant="body2" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
                                                                         Extra Toppings
                                                                     </Typography>
                                                                     {item.toppings && item.toppings.map(topping => (
                                                                         <Grid sx={{ columnDirection: 'column' }}>
-                                                                            <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, paddingTop: 1 }}>
+                                                                            <Typography variant="body2" color= 'text.secondary' component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
                                                                                 {topping.name}
                                                                             </Typography>
                                                                         </Grid>
                                                                     ))}
                                                                 </Grid>
                                                                 <Grid item display='flex' alignContent='right' sx={{ flexDirection: 'column', alignItems: 'flex-end' }}>
-                                                                    <Typography variant="body1" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
+                                                                    <Typography variant="body1" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1, paddingBottom:5 }}>
                                                                         Rs. {item.price}</Typography>
-                                                                    <IconButton sx={{ p: 0 }} onClick={() => removeCartItemHandler(item.product)} ><DeleteIcon color='primary' sx={{ width: "20px", height: "20px" }} /></IconButton>
+
+{/* Toppings price */}
+                                                                        <Typography variant="body2" color= 'text.secondary'  component="div" sx={{ flexGrow: 1 }}>
+                                                                        Rs. {item.price}</Typography>
+
+
+                                                                    <IconButton sx={{ p: 0 }} onClick={() => removeCartItemHandler(item.product)} ><DeleteIcon color='primary' sx={{ width: "20px", height: "20px", paddingTop:2 }} /></IconButton>
                                                                 </Grid>
                                                             </Grid>
                                                             <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
@@ -132,22 +138,7 @@ const Cart = (props) => {
                                                 })}
                                                 {/* End of Loop */}
 
-                                                {/* Start of Loop */}
-                                                {/* <Grid display='flex' sx={{ justifyContent: 'space-between', }}>
-                                                    <Grid sx={{ columnDirection: 'column' }}>
-                                                        <Typography variant="body1" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
-                                                            1x Chicken Fajita</Typography>
-                                                        <Typography variant="body1" component="div" sx={{ flexGrow: 1 }}>
-                                                            Small</Typography>
-                                                    </Grid>
-                                                    <Grid item display='flex' alignContent='right' sx={{ flexDirection: 'column', alignItems: 'flex-end' }}>
-                                                        <Typography variant="body1" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
-                                                            Rs. 299</Typography>
-                                                        <IconButton sx={{ p: 0 }}  ><DeleteIcon color='primary' sx={{ width: "20px", height: "20px" }} /></IconButton>
-                                                    </Grid>
-                                                </Grid>
-                                                <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
-                                                End of Loop */}
+  
 
                                             </Grid>
 
