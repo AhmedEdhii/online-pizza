@@ -75,6 +75,7 @@ const Mynavbar = () => {
   const dispatch = useDispatch();
 
   const { user, loading } = useSelector(state => state.auth)
+  const { cartItems } = useSelector(state => state.cart)
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -125,8 +126,7 @@ const Mynavbar = () => {
                       > Login/Signup</Button>
                     </NavLink>
 
-                    <Badge badgeContent={4} color={"secondary"}  >
-
+                    <Badge badgeContent={cartItems.length} color={"secondary"}  >
                       <IconButton color="secondary" size='large' onClick={() => { setOpenDrawer(true); }}>
                         <ShoppingCartOutlinedIcon />
                       </IconButton>

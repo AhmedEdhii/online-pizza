@@ -45,8 +45,12 @@ exports.getSingleTopping = catchAsyncErrors(async (req, res, next) => {
                 error: 'Topping not found'
             })
         }
+        const { _id, name, price, category } = toppings;
         res.status(200).json({
-            topping
+            _id,
+            name, 
+            price,
+            category
         })
     }
     else {
@@ -56,8 +60,12 @@ exports.getSingleTopping = catchAsyncErrors(async (req, res, next) => {
                 error: 'Topping not found'
             })
         }
+        const { _id, name, price, category } = topping;
         res.status(200).json({
-            topping
+            _id,
+            name, 
+            price,
+            category
         })
     }
 })

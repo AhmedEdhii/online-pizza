@@ -22,6 +22,8 @@ const toppings = []
         payload: { 
             product: data.product._id,
             name: data.product.name,
+            category: data.product.category,
+            description: data.product.description,
             price: price,
             size: size,
             toppings: toppings,
