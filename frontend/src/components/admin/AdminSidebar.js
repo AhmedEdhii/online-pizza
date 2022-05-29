@@ -22,6 +22,12 @@ import {
 import React from "react";
 const drawerWidth = 240;
 
+
+
+
+
+
+
 function AdminSidebar() {
 
   let sidebarNav = [
@@ -34,15 +40,29 @@ function AdminSidebar() {
   ];
   // console.log(sidebarNav);
 
+  var colorchange = '#f30c1c';
+  console.log(colorchange)
+
   const sidebarHandler = (navLabel) => {
 
+    //change true value to false first
     const checkTrue = sidebarNav.find(nav => nav.state === true);
     checkTrue.state = false;
 
+    //changes the selected nav item to true
     sidebarNav[navLabel].state = true;
     const check = sidebarNav.find(nav => nav.state === true);
-    console.log(check)
-    console.log(sidebarNav);
+
+
+    for (let i = 0; i < sidebarNav.length; i++) {
+      if (sidebarNav[i].state == true)
+      colorchange = '#db0b19';
+      
+    }
+    
+
+    // console.log(check)
+    // console.log(sidebarNav);
   }
 
   return (
@@ -69,7 +89,7 @@ function AdminSidebar() {
 
 
         <ListItem sx={{ color: '#fff' }}>
-          <ListItemButton onClick={() => sidebarHandler(0)} >
+          <ListItemButton onClick={() => sidebarHandler(0)} sx={{ backgroundColor: colorchange }} >
             <ListItemIcon sx={{ color: '#fff' }}>
               <DashboardIcon />
             </ListItemIcon>
@@ -80,7 +100,7 @@ function AdminSidebar() {
 
 
         <ListItem sx={{ color: '#fff' }}>
-          <ListItemButton onClick={() => sidebarHandler(1)} >
+          <ListItemButton onClick={() => sidebarHandler(1)} sx={{ backgroundColor: colorchange }} >
             <ListItemIcon sx={{ color: '#fff' }}>
               <RestaurantMenuIcon />
             </ListItemIcon>
@@ -89,7 +109,7 @@ function AdminSidebar() {
         </ListItem>
 
         <ListItem sx={{ color: '#fff' }}>
-          <ListItemButton onClick={() => sidebarHandler(2)} >
+          <ListItemButton onClick={() => sidebarHandler(2)} sx={{ backgroundColor: colorchange }} >
             <ListItemIcon sx={{ color: '#fff' }}>
               <RestaurantMenuIcon />
             </ListItemIcon>
@@ -98,7 +118,7 @@ function AdminSidebar() {
         </ListItem>
 
         <ListItem sx={{ color: '#fff' }}>
-          <ListItemButton onClick={() => sidebarHandler(3)} >
+          <ListItemButton onClick={() => sidebarHandler(3)} sx={{ backgroundColor: colorchange }} >
             <ListItemIcon sx={{ color: '#fff' }}>
               <ListAltIcon />
             </ListItemIcon>
@@ -107,7 +127,7 @@ function AdminSidebar() {
         </ListItem>
 
         <ListItem sx={{ color: '#fff' }}>
-          <ListItemButton onClick={() => sidebarHandler(4)} >
+          <ListItemButton onClick={() => sidebarHandler(4)} sx={{ backgroundColor: colorchange }} >
             <ListItemIcon sx={{ color: '#fff' }}>
               <GroupIcon />
             </ListItemIcon>
