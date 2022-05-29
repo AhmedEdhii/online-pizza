@@ -14,7 +14,7 @@ import Profile from './components/user/Profile';
 import UpdateProfile from './components/user/UpdateProfile';
 import UpdatePassword from './components/user/UpdatePassword';
 
-import Dashboard from './components/admin/Dashboard';
+import AdminDashboard from './components/admin/AdminDashboard';
 
 import ProtectedRoute from './components/route/protectedRoute';
 
@@ -43,7 +43,7 @@ function App() {
           <Route path="/homepage" component={Homepage} />
           <Route path="/mylogin" component={LoginandSignup} />
 
-          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/AdminDashboard" component={AdminDashboard} />
 
 
           {/* Test Page */}
