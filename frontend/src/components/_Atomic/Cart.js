@@ -16,16 +16,18 @@ const Cart = (props) => {
     const [sum, setSum] = useState(5)
 
     const removeCartItemHandler = (id) => {
+        //console.log(id)
         dispatch(removeItemFromCart(id))
     }
 
     const handleTotal = () => {
         cartItems.map(item => {
-                item.toppings && item.toppings.map(topping => (
-                    sum = sum + (topping.price)
-                ))  
+            console.log(item.toppings)
+            item.toppings && item.toppings.map(topping => (
+                sum = sum + parseInt(topping.price)
+            ))
         })
-        // console.log(sum)
+        console.log(sum)
         setSum(sum)
     }
 
@@ -45,20 +47,20 @@ const Cart = (props) => {
             anchor='right'
             open={openDrawer}
             onClose={() => { setOpenDrawer(false) }}
-            
+
         >
             <Fragment>
                 <MetaData title={'Your Cart'} />
                 {cartItems.length === 0 ?
                     <Fragment>
-                        <Box p={2} width='350px' height='1200px' display='flex' sx={{ flexDirection: 'column',}}>
+                        <Box p={2} width='350px' height='1200px' display='flex' sx={{ flexDirection: 'column', }}>
                             <Typography variant="h6" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
                                 Your Cart is Empty</Typography>
                         </Box>
                     </Fragment>
                     : (
                         <Fragment>
-                            <Box p={2} width='350px' height='1200px' display='flex' sx={{ flexDirection: 'column',  m:4 }}>
+                            <Box p={2} width='350px' height='1200px' display='flex' sx={{ flexDirection: 'column', m: 4 }}>
 
                                 <Grid spacing={2} >
 
@@ -74,37 +76,42 @@ const Cart = (props) => {
                                                 <Divider sx={{ marginBottom: 2 }} />
 
                                                 {/* Start of Loop */}
-                                                {cartItems.map(item => {
+                                                {cartItems.map((item, index) => {
                                                     return (item.category === 'Pizzas' && (item)) ?
                                                         <Fragment>
                                                             <Grid display='flex' sx={{ justifyContent: 'space-between', }}>
                                                                 <Grid sx={{ columnDirection: 'column' }}>
-                                                                    <Typography variant="body1"  component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
+                                                                    <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
                                                                         {item.name}</Typography>
-                                                                    <Typography variant="body1" gutterBottom component="div" sx={{ flexGrow: 1 }}>
+                                                                    <Typography variant="body1" color='text.secondary' component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
                                                                         {item.size}</Typography>
 
-                                                                    <Typography variant="body2" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
-                                                                        Extra Toppings
-                                                                    </Typography>
+                                                                    {(item.toppings.length > 0) && (
+                                                                        <Typography variant="body2" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
+                                                                            Extra Toppings
+                                                                        </Typography>
+                                                                    )}
                                                                     {item.toppings && item.toppings.map(topping => (
                                                                         <Grid sx={{ columnDirection: 'column' }}>
-                                                                            <Typography variant="body2" color= 'text.secondary' component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
+                                                                            <Typography variant="body2" color='text.secondary' component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
                                                                                 {topping.name}
                                                                             </Typography>
                                                                         </Grid>
                                                                     ))}
                                                                 </Grid>
                                                                 <Grid item display='flex' alignContent='right' sx={{ flexDirection: 'column', alignItems: 'flex-end' }}>
-                                                                    <Typography variant="body1" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1, paddingBottom:5 }}>
-                                                                        Rs. {item.price}</Typography>
+                                                                    <Typography variant="body1" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1, paddingBottom: 5 }}>
+                                                                        Rs. {item.price}
+                                                                    </Typography>
 
-{/* Toppings price */}
-                                                                        <Typography variant="body2" color= 'text.secondary'  component="div" sx={{ flexGrow: 1 }}>
-                                                                        Rs. {item.price}</Typography>
+                                                                    {/* Toppings price */}
+                                                                    {item.toppings && item.toppings.map(topping => (
+                                                                        <Typography variant="body2" color='text.secondary' component="div" sx={{ flexGrow: 1 }}>
+                                                                            Rs. {topping.price}
+                                                                        </Typography>
+                                                                    ))}
 
-
-                                                                    <IconButton sx={{ p: 0 }} onClick={() => removeCartItemHandler(item.product)} ><DeleteIcon color='primary' sx={{ width: "20px", height: "20px", paddingTop:2 }} /></IconButton>
+                                                                    <IconButton sx={{ p: 0 }} onClick={() => removeCartItemHandler(index)} ><DeleteIcon color='primary' sx={{ width: "20px", height: "20px", paddingTop: 2 }} /></IconButton>
                                                                 </Grid>
                                                             </Grid>
                                                             <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
@@ -114,13 +121,13 @@ const Cart = (props) => {
                                                 {/* End of Loop */}
 
                                                 {/* Start of Loop */}
-                                                {cartItems.map(item => {
+                                                {cartItems.map((item, index) => {
                                                     return ((item.category === 'Beverages' || item.category === 'Sauces') && (item)) ?
                                                         <Fragment>
                                                             <Grid display='flex' sx={{ justifyContent: 'space-between', }}>
                                                                 <Grid sx={{ columnDirection: 'column' }}>
                                                                     <Typography variant="body1" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
-                                                                        1x {item.name}
+                                                                        {item.name}
                                                                     </Typography>
                                                                     <Typography variant="body1" component="div" sx={{ flexGrow: 1 }}>
                                                                         {item.description}
@@ -129,7 +136,7 @@ const Cart = (props) => {
                                                                 <Grid item display='flex' alignContent='right' sx={{ flexDirection: 'column', alignItems: 'flex-end' }}>
                                                                     <Typography variant="body1" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
                                                                         Rs. {item.price}</Typography>
-                                                                    <IconButton sx={{ p: 0 }} onClick={() => removeCartItemHandler(item.product)} ><DeleteIcon color='primary' sx={{ width: "20px", height: "20px" }} /></IconButton>
+                                                                    <IconButton sx={{ p: 0 }} onClick={() => removeCartItemHandler(index)} ><DeleteIcon color='primary' sx={{ width: "20px", height: "20px" }} /></IconButton>
                                                                 </Grid>
                                                             </Grid>
                                                             <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
@@ -138,7 +145,7 @@ const Cart = (props) => {
                                                 })}
                                                 {/* End of Loop */}
 
-  
+
 
                                             </Grid>
 

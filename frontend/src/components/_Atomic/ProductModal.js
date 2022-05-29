@@ -23,57 +23,64 @@ function ProductModal({ title, openPopup, setOpenPopup, product, toppings }) {
 
     const [openDrawer, setOpenDrawer] = React.useState(false);
 
-    const[selectSize, setSelectSize] = useState('');
-    const[sizePrice, setsizePrice] = useState('');
+    const [selectSize, setSelectSize] = useState('Small');
+    const [sizePrice, setsizePrice] = useState('400');
 
-    const setSizeHandler =(value) => {
-         setSelectSize(value);
-         if (value === 'Small')
-         setsizePrice(product.PizzaDetails.size.small)
-         else if (value === 'Medium')
-         setsizePrice(product.PizzaDetails.size.regular)
-         else if (value === 'Large')
-         setsizePrice(product.PizzaDetails.size.large)
-         else if (value === 'Jumbo')
-         setsizePrice(product.PizzaDetails.size.jumbo)
+    const setSizeHandler = (value) => {
+        // console.log(value)
+        setSelectSize(value);
+        if (value === 'Small') {
+            setsizePrice(product.PizzaDetails.size.small)
+        }
+        else if (value === 'Medium') {
+            setsizePrice(product.PizzaDetails.size.regular)
+        }
+        else if (value === 'Large') {
+            setsizePrice(product.PizzaDetails.size.large)
+        }
+        else if (value === 'Jumbo') {
+            setsizePrice(product.PizzaDetails.size.jumbo)
+        }
     }
 
     const [selectToppings, setSelectToppings] = useState('');
 
     const handleToggle = (value) => () => {
-      const currentIndex = selectToppings.indexOf(value);
-      const newChecked = [...selectToppings];
-  
-      if (currentIndex === -1) {
-        newChecked.push(value);
-      } else {
-        newChecked.splice(selectToppings, 1);
-      }
-  
-      setSelectToppings(newChecked);
-      
+        const currentIndex = selectToppings.indexOf(value);
+        const newChecked = [...selectToppings];
+
+        if (currentIndex === -1) {
+            newChecked.push(value);
+        } else {
+            newChecked.splice(selectToppings, 1);
+        }
+
+        setSelectToppings(newChecked);
+
     };
 
-   
+
 
     const ATCbuttonHandler = () => {
         // console.log(product._id)
         //removeItemFromCart(product._id)
+        // console.log(sizePrice)
+        // console.log(selectSize)
         dispatch(addItemToCart(product._id, quantity, sizePrice, selectSize, selectToppings));
         // dispatch(addItemToCart(product._id, quantity, 400, "small", [{name: "Mushrooms", price: 50}, {name: "Olives", price: 30}]));
         alert.success('Item Added to Cart')
         setOpenDrawer(true);
         setOpenPopup(false);
-     
 
-        
+
+
     }
 
-    
-    
+
+
     const alert = useAlert();
     const dispatch = useDispatch();
-    
+
     const [quantity, setQuantity] = useState(1)
 
     // const { loading, toppings, error, toppingsCount } = useSelector(state => state.toppings)
@@ -91,7 +98,7 @@ function ProductModal({ title, openPopup, setOpenPopup, product, toppings }) {
     //     alert.success('Item Added to Cart')
     // }
 
-    return ( 
+    return (
         <>
             <Dialog open={openPopup} maxWidth="md" sx={{ borderRadius: '1.5rem', }} onClose={() => { setOpenPopup(false) }}>
 
@@ -143,7 +150,7 @@ function ProductModal({ title, openPopup, setOpenPopup, product, toppings }) {
                                                     name="radio-buttons-group"
                                                     onChange={(e) => setSizeHandler(e.target.value)}
                                                 >
-                                                    <FormControlLabel value="Small"  control={<Radio  s/>} label="Small" />
+                                                    <FormControlLabel value="Small" control={<Radio />} label="Small" />
                                                     <FormControlLabel value="Medium" control={<Radio />} label="Medium" />
                                                     <FormControlLabel value="Large" control={<Radio />} label="Large" />
                                                     <FormControlLabel value="Jumbo" control={<Radio />} label="Jumbo" />
@@ -188,7 +195,7 @@ function ProductModal({ title, openPopup, setOpenPopup, product, toppings }) {
 
 
                                 <Grid item sx={{ p: 1 }}></Grid>
-                                
+
                                 {product.category === 'Pizzas' && (
                                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                                         {/* {title} */}
@@ -201,17 +208,17 @@ function ProductModal({ title, openPopup, setOpenPopup, product, toppings }) {
                                 {product.category === 'Pizzas' && (
                                     <Grid display='flex' fullwidth="true" >
                                         <Grid item sx={{ marginRight: 7 }}>
-                                        <FormGroup>
-                                            <FormControl>
-                                                {toppings && toppings.map(topping => (
-                                                    <FormControlLabel
-                                                        value={topping.name}
-                                                        control={<Checkbox />}
-                                                        onChange={handleToggle(topping._id)}
-                                                        checked={selectToppings.indexOf(topping._id) !== -1}
-                                                        label={topping.name} />
-                                                ))}
-                                            </FormControl>
+                                            <FormGroup>
+                                                <FormControl>
+                                                    {toppings && toppings.map(topping => (
+                                                        <FormControlLabel
+                                                            value={topping.name}
+                                                            control={<Checkbox />}
+                                                            onChange={handleToggle(topping._id)}
+                                                            checked={selectToppings.indexOf(topping._id) !== -1}
+                                                            label={topping.name} />
+                                                    ))}
+                                                </FormControl>
                                             </FormGroup>
                                         </Grid>
                                         <Grid item display='flex' sx={{ flexDirection: 'column' }}>

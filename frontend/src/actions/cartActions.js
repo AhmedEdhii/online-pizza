@@ -1,11 +1,14 @@
 import axios from 'axios'
 import { ADD_TO_CART, REMOVE_ITEM_CART } from '../constants/cartConstants'
+import { useDispatch, useSelector } from 'react-redux'
 
 export const addItemToCart = (id, quantity, price, size, toppingids) => async (dispatch, getState) => {
 
-const toppings = []
+    // const { cartItems } = useSelector(state => state.cart)
 
-    if(toppingids.length != 0) {
+    const toppings = []
+
+    if (toppingids.length != 0) {
         for (let i = 0; i < toppingids.length; i++) {
             console.log(toppingids[i]);
             const { data } = await axios.get(`/api/topping/${toppingids[i]}`)
@@ -19,7 +22,7 @@ const toppings = []
 
     dispatch({
         type: ADD_TO_CART,
-        payload: { 
+        payload: {
             product: data.product._id,
             name: data.product.name,
             category: data.product.category,
