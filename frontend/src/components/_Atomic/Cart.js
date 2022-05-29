@@ -47,6 +47,7 @@ const Cart = (props) => {
             anchor='right'
             open={openDrawer}
             onClose={() => { setOpenDrawer(false) }}
+            sx={{zIndex: 1500}}
 
         >
             <Fragment>
