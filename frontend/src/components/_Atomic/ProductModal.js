@@ -2,20 +2,40 @@ import {
     Typography, Dialog, DialogTitle, DialogContent, Fab, Grid, Box, IconButton, Divider, Radio, FormLabel,
     FormControlLabel, RadioGroup, FormControl, Checkbox, Button, styled,
 } from '@mui/material'
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 
 import CloseIcon from '@mui/icons-material/Close';
 import Cart from './Cart';
 import { useDispatch, useSelector } from 'react-redux'
 import { useAlert } from 'react-alert'
 import { getToppings } from '../../actions/toppingActions';
+import { addItemToCart } from '../../actions/cartActions'
 
 function ProductModal({ title, openPopup, setOpenPopup, product }) {
+
+    const Img = styled('img')({
+        alignItems: "center",
+        maxwidth: "100%",
+        height: 300,
+        padding: 10,
+        margin: 4
+    });
+
+    const [openDrawer, setOpenDrawer] = React.useState(false);
+    const ATCbuttonHandler = () => {
+        console.log(product._id)
+        dispatch(addItemToCart(product._id, quantity, 400, "small", {name: "Mushrooms", price: 50}));
+        alert.success('Item Added to Cart')
+        setOpenDrawer(true);
+        setOpenPopup(false);
+    }
 
     // const { title, children, product, openPopup, setOpenPopup } = props;
 
     const alert = useAlert();
     const dispatch = useDispatch();
+    
+    const [quantity, setQuantity] = useState(1)
 
     const { loading, toppings, error, toppingsCount } = useSelector(state => state.toppings)
 
@@ -27,24 +47,12 @@ function ProductModal({ title, openPopup, setOpenPopup, product }) {
         //alert.success('Success')
     }, [alert, error])
 
-    const Img = styled('img')({
+    // const addToCart = () => {
+    //     dispatch(addItemToCart(product._id, quantity, 400, "small", {name: "Mushrooms", price: 40}));
+    //     alert.success('Item Added to Cart')
+    // }
 
-
-        alignItems: "center",
-        maxwidth: "100%",
-        height: 300,
-        padding: 10,
-        margin: 4
-    });
-
-    const [openDrawer, setOpenDrawer] = React.useState(false);
-    const ATCbuttonHandler = () => {
-        setOpenDrawer(true);
-        setOpenPopup(false);
-
-    }
-
-    return (
+    return ( 
         <>
             <Dialog open={openPopup} maxWidth="md" sx={{ borderRadius: '1.5rem', }} onClose={() => { setOpenPopup(false) }}>
 
