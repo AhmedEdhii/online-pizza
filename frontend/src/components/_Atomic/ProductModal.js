@@ -1,6 +1,6 @@
 import {
     Typography, Dialog, DialogTitle, DialogContent, Fab, Grid, Box, IconButton, Divider, Radio, FormLabel,
-    FormControlLabel, RadioGroup, FormControl, Checkbox, Button, styled,
+    FormControlLabel, RadioGroup, FormControl, Checkbox, Button, styled, FormGroup
 } from '@mui/material'
 import React, { Fragment, useEffect, useState } from 'react'
 
@@ -22,6 +22,26 @@ function ProductModal({ title, openPopup, setOpenPopup, product, toppings }) {
     });
 
     const [openDrawer, setOpenDrawer] = React.useState(false);
+
+    const[selectSize, setSelectSize] = useState('')
+
+    const [selectToppings, setSelectToppings] = React.useState([1]);
+
+    const handleToggle = (value) => () => {
+      const currentIndex = selectToppings.indexOf(value);
+      const newChecked = [...selectToppings];
+  
+      if (currentIndex === -1) {
+        newChecked.push(value);
+      } else {
+        newChecked.splice(selectToppings, 1);
+      }
+  
+      setSelectToppings(newChecked);
+    };
+
+    console.log(selectToppings);
+
     const ATCbuttonHandler = () => {
         console.log(product._id)
         //removeItemFromCart(product._id)
@@ -30,9 +50,11 @@ function ProductModal({ title, openPopup, setOpenPopup, product, toppings }) {
         alert.success('Item Added to Cart')
         setOpenDrawer(true);
         setOpenPopup(false);
+        console.log(selectSize);
+        console.log(selectToppings);
     }
 
-    // const { title, children, product, openPopup, setOpenPopup } = props;
+
 
     const alert = useAlert();
     const dispatch = useDispatch();
@@ -95,7 +117,7 @@ function ProductModal({ title, openPopup, setOpenPopup, product, toppings }) {
 
                                 <Divider sx={{ marginBottom: 1 }} />
 
-                                <Grid display='flex' fullWidth >
+                                <Grid display='flex' fullwidth="true" >
 
                                     {product.category === 'Pizzas' && (
                                         <Grid item sx={{ marginRight: 10 }}>
@@ -104,11 +126,12 @@ function ProductModal({ title, openPopup, setOpenPopup, product, toppings }) {
                                                     aria-labelledby="demo-radio-buttons-group-label"
                                                     defaultValue="small"
                                                     name="radio-buttons-group"
+                                                    onChange={(e) => setSelectSize(e.target.value)}
                                                 >
-                                                    <FormControlLabel value="small" control={<Radio />} label="Small" />
-                                                    <FormControlLabel value="medium" control={<Radio />} label="Medium" />
-                                                    <FormControlLabel value="large" control={<Radio />} label="Large" />
-                                                    <FormControlLabel value="jumbo" control={<Radio />} label="Jumbo" />
+                                                    <FormControlLabel value="Small" control={<Radio />} label="Small" />
+                                                    <FormControlLabel value="Medium" control={<Radio />} label="Medium" />
+                                                    <FormControlLabel value="Large" control={<Radio />} label="Large" />
+                                                    <FormControlLabel value="Jumbo" control={<Radio />} label="Jumbo" />
                                                 </RadioGroup>
                                             </FormControl>
                                         </Grid>
@@ -150,6 +173,7 @@ function ProductModal({ title, openPopup, setOpenPopup, product, toppings }) {
 
 
                                 <Grid item sx={{ p: 1 }}></Grid>
+                                
                                 {product.category === 'Pizzas' && (
                                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                                         {/* {title} */}
@@ -160,16 +184,20 @@ function ProductModal({ title, openPopup, setOpenPopup, product, toppings }) {
                                     <Divider sx={{ marginBottom: 1 }} />
                                 )}
                                 {product.category === 'Pizzas' && (
-                                    <Grid display='flex' fullWidth >
+                                    <Grid display='flex' fullwidth="true" >
                                         <Grid item sx={{ marginRight: 7 }}>
+                                        <FormGroup>
                                             <FormControl>
                                                 {toppings && toppings.map(topping => (
                                                     <FormControlLabel
-                                                        value="cheese"
+                                                        value={topping.name}
                                                         control={<Checkbox />}
+                                                        onChange={handleToggle(topping)}
+                                                        checked={selectToppings.indexOf(topping) !== -1}
                                                         label={topping.name} />
                                                 ))}
                                             </FormControl>
+                                            </FormGroup>
                                         </Grid>
                                         <Grid item display='flex' sx={{ flexDirection: 'column' }}>
                                             {toppings && toppings.map(topping => (
@@ -189,11 +217,11 @@ function ProductModal({ title, openPopup, setOpenPopup, product, toppings }) {
 
                             {/* {children} */}
                             <Img alt="complex" src={product.url} />
-                            <div align='center'>
+                            {/* <div align='center'>
                                 <Typography variant="h5" sx={{ flexGrow: 1, fontWeight: 'bold', }}> Cart Price</Typography>
                                 <Typography variant="h5" sx={{ flexGrow: 1, }}> Rs. 299</Typography>
-                            </div>
-                            <Button type='submit' color='primary' variant="contained" fullWidth
+                            </div> */}
+                            <Button type='submit' color='primary' variant="contained" fullwidth="true"
                                 sx={{ m: 1, height: 50 }} onClick={ATCbuttonHandler}>Add To Cart</Button>
                         </Grid>
 
