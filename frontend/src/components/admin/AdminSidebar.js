@@ -22,23 +22,29 @@ import {
 import React from "react";
 const drawerWidth = 240;
 
-const AdminSidebar = () => {
+function AdminSidebar() {
 
-  let  sidebarNav = {
+  let sidebarNav = [
 
-    dashboard: true,
-    menu: false,
-    toppings: false,
-    orders: false,
-    users: false,
-  };
-    
+    { id: 'dashboard', state: true },
+    { id: 'menu', state: false },
+    { id: 'toppings', state: false },
+    { id: 'orders', state: false },
+    { id: 'users', state: false }
+  ];
+  // console.log(sidebarNav);
+
   const sidebarHandler = (navLabel) => {
-    
-    sidebarNav = Object.assign(...Object.keys(sidebarNav).map(k => ({ [k]: false })));
-    sidebarHandler['dashboard']=true;
-   console.log(sidebarNav);
-}
+
+    const checkTrue = sidebarNav.find(nav => nav.state === true);
+
+    checkTrue.state = false;
+    sidebarNav[navLabel].state = true;
+
+ 
+    console.log(sidebarNav);
+
+  }
   return (
 
     <Drawer
@@ -61,30 +67,30 @@ const AdminSidebar = () => {
 
       <List>
 
-        
-          <ListItem sx={{ color: '#fff' }}>
-            <ListItemButton onClick={sidebarHandler("dashboard")} >
-              <ListItemIcon sx={{ color: '#fff' }}>
-                <DashboardIcon />
-              </ListItemIcon>
-              <ListItemText primary="Dashboard" />
-            </ListItemButton>
-          </ListItem>
-        
 
-      <NavLink to="/AdminDashboardMenu" style={{ textDecoration: 'none', color: 'unset' }} >
         <ListItem sx={{ color: '#fff' }}>
-          <ListItemButton component="a" href="#home" >
+          <ListItemButton onClick={sidebarHandler(0)} >
             <ListItemIcon sx={{ color: '#fff' }}>
-              <RestaurantMenuIcon />
+              <DashboardIcon />
             </ListItemIcon>
-            <ListItemText primary="Menu" />
+            <ListItemText primary="Dashboard" />
           </ListItemButton>
         </ListItem>
-      </NavLink>
+
+
+    
+          <ListItem sx={{ color: '#fff' }}>
+            <ListItemButton onClick={sidebarHandler(1)} >
+              <ListItemIcon sx={{ color: '#fff' }}>
+                <RestaurantMenuIcon />
+              </ListItemIcon>
+              <ListItemText primary="Menu" />
+            </ListItemButton>
+          </ListItem>
+
 
         <ListItem sx={{ color: '#fff' }}>
-          <ListItemButton component="a" href="#home" >
+          <ListItemButton onClick={sidebarHandler(3)} >
             <ListItemIcon sx={{ color: '#fff' }}>
               <ListAltIcon />
             </ListItemIcon>
@@ -93,7 +99,7 @@ const AdminSidebar = () => {
         </ListItem>
 
         <ListItem sx={{ color: '#fff' }}>
-          <ListItemButton component="a" href="#home" >
+          <ListItemButton onClick={sidebarHandler(4)} >
             <ListItemIcon sx={{ color: '#fff' }}>
               <GroupIcon />
             </ListItemIcon>
