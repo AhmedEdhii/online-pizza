@@ -25,7 +25,7 @@ function ProductModal({ title, openPopup, setOpenPopup, product, toppings }) {
 
     const[selectSize, setSelectSize] = useState('')
 
-    const [selectToppings, setSelectToppings] = React.useState([1]);
+    const [selectToppings, setSelectToppings] = useState('')
 
     const handleToggle = (value) => () => {
       const currentIndex = selectToppings.indexOf(value);
@@ -45,7 +45,7 @@ function ProductModal({ title, openPopup, setOpenPopup, product, toppings }) {
     const ATCbuttonHandler = () => {
         console.log(product._id)
         //removeItemFromCart(product._id)
-        dispatch(addItemToCart(product._id, quantity, 400, "small", ["623c3eafd3b63a766ce3c506", "623c3ed6d3b63a766ce3c508"]));
+        dispatch(addItemToCart(product._id, quantity, 400, selectSize, ["623c3eafd3b63a766ce3c506", "623c3ed6d3b63a766ce3c508"]));
         // dispatch(addItemToCart(product._id, quantity, 400, "small", [{name: "Mushrooms", price: 50}, {name: "Olives", price: 30}]));
         alert.success('Item Added to Cart')
         setOpenDrawer(true);
