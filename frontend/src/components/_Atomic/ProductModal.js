@@ -43,7 +43,7 @@ function ProductModal({ title, openPopup, setOpenPopup, product, toppings }) {
     console.log(selectToppings);
 
     const ATCbuttonHandler = () => {
-        console.log(product._id)
+        // console.log(product._id)
         //removeItemFromCart(product._id)
         dispatch(addItemToCart(product._id, quantity, 400, selectSize, ["623c3eafd3b63a766ce3c506", "623c3ed6d3b63a766ce3c508"]));
         // dispatch(addItemToCart(product._id, quantity, 400, "small", [{name: "Mushrooms", price: 50}, {name: "Olives", price: 30}]));
@@ -221,8 +221,8 @@ function ProductModal({ title, openPopup, setOpenPopup, product, toppings }) {
                                 <Typography variant="h5" sx={{ flexGrow: 1, fontWeight: 'bold', }}> Cart Price</Typography>
                                 <Typography variant="h5" sx={{ flexGrow: 1, }}> Rs. 299</Typography>
                             </div> */}
-                            <Button type='submit' color='primary' variant="contained" fullwidth="true"
-                                sx={{ m: 1, height: 50 }} onClick={ATCbuttonHandler}>Add To Cart</Button>
+                            <Button type='submit' color='primary' variant="contained" fullWidth
+                                sx={{ m: 1, height: 50 }} onClick={() => ATCbuttonHandler()}>Add To Cart</Button>
                         </Grid>
 
                     </Grid>

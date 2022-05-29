@@ -7,6 +7,7 @@ const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 exports.newTopping = catchAsyncErrors(async (req, res, next) => {
         req.body.createdBy = req.user._id;
         const topping = await Topping.create(req.body);
+        const { _id, name, price, category } = toppings;
         res.status(201).json({
             success: true,
             topping
