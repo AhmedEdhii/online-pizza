@@ -1,6 +1,7 @@
 
 import { NavLink } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import React, { useState } from 'react'
 
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import ListAltIcon from '@mui/icons-material/ListAlt';
@@ -8,7 +9,6 @@ import GroupIcon from '@mui/icons-material/Group';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LocalPizzaIcon from '@mui/icons-material/LocalPizza';
-
 
 import {
   Box,
@@ -19,29 +19,27 @@ import {
   ListItemText,
   Drawer
 } from "@mui/material";
-import React from "react";
+
 const drawerWidth = 240;
-
-
-
-
-
 
 
 function AdminSidebar() {
 
+  const [colorchange, setColorChange] = useState('#f30c1c')
+  const [nav, setNav] = useState('')
+  
   let sidebarNav = [
-
-    { id: 'dashboard', state: true },
-    { id: 'menu', state: false },
-    { id: 'toppings', state: false },
-    { id: 'orders', state: false },
-    { id: 'users', state: false }
+    { id: 'dashboard', state: true, color: '#f30c1c' },
+    { id: 'menu', state: false, color: '#f30c1c' },
+    { id: 'toppings', state: false, color: '#f30c1c' },
+    { id: 'orders', state: false, color: '#f30c1c' },
+    { id: 'users', state: false, color: '#f30c1c' }
   ];
+
   // console.log(sidebarNav);
 
-  var colorchange = '#f30c1c';
-  console.log(colorchange)
+  // var colorchange = '#f30c1c';
+  // console.log(colorchange)
 
   const sidebarHandler = (navLabel) => {
 
@@ -51,15 +49,21 @@ function AdminSidebar() {
 
     //changes the selected nav item to true
     sidebarNav[navLabel].state = true;
+
     const check = sidebarNav.find(nav => nav.state === true);
-
-
-    for (let i = 0; i < sidebarNav.length; i++) {
-      if (sidebarNav[i].state == true)
-      colorchange = '#db0b19';
-      
+    if (sidebarNav[navLabel].state === true) {
+      sidebarNav[navLabel].color = '#db0b19'
+      console.log(sidebarNav[navLabel])
+      // setColorChange('#db0b19')
     }
-    
+
+    // for (let i = 0; i < sidebarNav.length; i++) {
+    //   if (sidebarNav[i].state === true){
+    //     setColorChange('#db0b19')
+    //   }
+    //   colorchange = '#db0b19'; 
+    // }
+
 
     // console.log(check)
     // console.log(sidebarNav);
@@ -89,7 +93,7 @@ function AdminSidebar() {
 
 
         <ListItem sx={{ color: '#fff' }}>
-          <ListItemButton onClick={() => sidebarHandler(0)} sx={{ backgroundColor: colorchange }} >
+          <ListItemButton onClick={() => sidebarHandler(0)} sx={{ backgroundColor: sidebarNav[0].color }} >
             <ListItemIcon sx={{ color: '#fff' }}>
               <DashboardIcon />
             </ListItemIcon>

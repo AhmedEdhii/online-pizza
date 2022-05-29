@@ -6,7 +6,7 @@ import AdminSidebar from './AdminSidebar'
 import AdminMainDashboard from './AdminMainDashboard';
 import AdminDashboardMenu from './AdminDashboardMenu';
 
-function AdminDashboard({ navState }) {
+function AdminDashboard() {
         
 
     return (
