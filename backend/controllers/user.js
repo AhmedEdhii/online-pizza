@@ -183,7 +183,7 @@ exports.getprofile = catchAsyncErrors(async (req, res, next) => {
     // })
 
     if (req.user) {
-        console.log("heloooo get profile")
+        // console.log("hello get profile")
         User.findOne({ _id: req.user._id }, (err, user) => {
             const { _id, name, email, phonenumber, deliveryaddress, role, createdAt, avatar } = user
             return res.status(200).json({

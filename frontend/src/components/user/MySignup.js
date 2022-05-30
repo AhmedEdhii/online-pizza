@@ -32,7 +32,7 @@ const MySignup = ({ history }) => {
 
     useEffect(() => {
         if (isAuthenticated) {
-            history.push('/')
+            history.push('/homepage')
         }
 
         if (error) {

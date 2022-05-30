@@ -2,7 +2,7 @@ import './App.css';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { useEffect } from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import HeaderTest from './components/layout/HeaderTest';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
@@ -39,42 +39,50 @@ function App() {
   useEffect(() => {
     store.dispatch(loadUser())
   }, [])
-  
+
   return (
     <Router>
-          <Route path="/" component={HeaderTest} />
-          {/* <HeaderTest/> */}
-          <Route path="/login" component={login_signup} />
-          <Route path="/homepage" component={Homepage} />
-          <Route path="/mylogin" component={LoginandSignup} />
+      <Route
+        exact
+        path="/"
+        render={() => {
+          return (
+            <Redirect to="/homepage" component={Homepage} />
+          )
+        }}
+      />
+      <Route path="/" component={HeaderTest} />
+      {/* <HeaderTest/> */}
+      {/* <Route path="/login" component={login_signup} /> */}
+      <Route path="/homepage" component={Homepage} />
+      <Route path="/login" component={LoginandSignup} />
 
-          <Route path="/AdminDashboard" component={AdminDashboard} />
-          <Route path="/AdminDashboardMenu" component={AdminDashboardMenu} />
-          {/* <Route path="/Admin_ManageUsers" component={Admin_ManageUsers} />
-          <Route path="/AdminDashboardMenu" component={AdminDashboardMenu} />
-          <Route path="/AdminDashboardMenu" component={AdminDashboardMenu} /> */}
+      <ProtectedRoute path="/AdminDashboard" component={AdminDashboard} isAdmin={true} />
+      <ProtectedRoute path="/AdminDashboardMenu" component={AdminDashboardMenu} isAdmin={true} />
 
-          <Route path="/UserDashboard" component={UserDashboard} />
-          <Route path="/UserProfile" component={UserProfile} />
-          <Route path="/userorders" component={UserOrders} />
+      {/* <Route path="/Admin_ManageUsers" component={Admin_ManageUsers} />*/}
+
+      <Route path="/UserDashboard" component={UserDashboard} />
+      <Route path="/UserProfile" component={UserProfile} />
+      <Route path="/userorders" component={UserOrders} />
 
 
-          {/* Test Page */}
-          <Route path="/testPage" component={TestPage} />
+      {/* Test Page */}
+      <Route path="/testPage" component={TestPage} />
 
-          
-          {/* <Header/> */}
-          {/* <Route path="/" component={Home} exact />
+
+      {/* <Header/> */}
+      {/* <Route path="/" component={Home} exact />
           <Route path="/search/:keyword" component={Home} /> */}
-          
-          <ProtectedRoute path="/profile" component={Profile} exact />
-          <ProtectedRoute path="/profile/update" component={UpdateProfile} exact />
-          <ProtectedRoute path="/profile/update/password" component={UpdatePassword} exact />
-          {/* <ProtectedRoute path="/admin/dashboard" component={Dashboard} isAdmin={true} exact /> 
+
+      <ProtectedRoute path="/profile" component={Profile} exact />
+      <ProtectedRoute path="/profile/update" component={UpdateProfile} exact />
+      <ProtectedRoute path="/profile/update/password" component={UpdatePassword} exact />
+      {/* <ProtectedRoute path="/admin/dashboard" component={Dashboard} isAdmin={true} exact /> 
 
           <Route path="/" component={Homepage} /> */}
-        {/* <Footer /> */}
-        
+      {/* <Footer /> */}
+
     </Router>
   );
 }

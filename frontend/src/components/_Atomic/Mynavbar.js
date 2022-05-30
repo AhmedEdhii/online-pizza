@@ -116,7 +116,7 @@ const Mynavbar = () => {
 
                   {/* sx={{ border: 1 }} */}
                   <Grid item display="flex" >
-                    <NavLink to="/mylogin" style={{ textDecoration: 'none', color: 'unset' }} >
+                    <NavLink to="/login" style={{ textDecoration: 'none', color: 'unset' }} >
 
                       <Button variant='contained'
                         color='primary'
@@ -152,7 +152,7 @@ const Mynavbar = () => {
 
                   <Grid item display='flex'>
 
-                    <Link to="/">
+                    <Link to="/homepage">
                       <a> <Img alt="complex" src="/images/OP.png" /></a>
                     </Link>
                     {/* <a href='/' > <Img alt="complex" src="/images/OP.png" /></a> */}
@@ -191,7 +191,7 @@ const Mynavbar = () => {
 
                     >
 
-                      <NavLink to="/dashboard" style={{ textDecoration: 'none', color: 'unset' }} >
+                      <NavLink to="/UserDashboard" style={{ textDecoration: 'none', color: 'unset' }} >
                         <MenuItem onClick={handleCloseUserMenu}>
                           <ListItemIcon>
                             <Person fontSize="small" />
@@ -200,7 +200,7 @@ const Mynavbar = () => {
                         </MenuItem>
                       </NavLink>
 
-                      <NavLink to="/settings" style={{ textDecoration: 'none', color: 'unset' }} >
+                      <NavLink to="/UserProfile" style={{ textDecoration: 'none', color: 'unset' }} >
                         <MenuItem onClick={handleCloseUserMenu}>
                           <ListItemIcon>
                             <Settings fontSize="small" />
@@ -209,7 +209,7 @@ const Mynavbar = () => {
                         </MenuItem>
                       </NavLink>
 
-                      <NavLink to="/" style={{ textDecoration: 'none', color: 'unset' }} onClick={logoutHandler}>
+                      <NavLink to="/homepage" style={{ textDecoration: 'none', color: 'unset' }} onClick={logoutHandler}>
                         <MenuItem onClick={handleCloseUserMenu}>
                           <ListItemIcon>
                             <Logout fontSize="small" />
