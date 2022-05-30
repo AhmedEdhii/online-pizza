@@ -2,16 +2,25 @@ import {
     Typography, Dialog, DialogTitle, DialogContent, Fab, Grid, Box, IconButton, Divider, Radio, FormLabel,
     FormControlLabel, RadioGroup, FormControl, Checkbox, Button, styled, FormGroup, TextField, Select, MenuItem, InputLabel, Switch
 } from '@mui/material'
-import React, { Fragment, useEffect, useState } from 'react'
 
 import CloseIcon from '@mui/icons-material/Close';
-
-import { useDispatch, useSelector } from 'react-redux'
-import { useAlert } from 'react-alert'
-import { getToppings } from '../../actions/toppingActions';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 
+import React, { Fragment, useState, useEffect } from 'react'
+
+import MetaData from '../layout/MetaData'
+import { useAlert } from 'react-alert'
+import { useDispatch, useSelector } from 'react-redux'
+import { newProduct, clearErrors } from '../../actions/productActions'
+import { NEW_PRODUCT_RESET } from '../../constants/productConstants'
+import { getToppings } from '../../actions/toppingActions';
+
+
 function MenuItemModal({ title, openPopup, setOpenPopup, }) {
+
+    const Input = styled('input')({
+        display: 'none',
+    });
 
     const Img = styled('img')({
         alignItems: "center",
@@ -33,9 +42,7 @@ function MenuItemModal({ title, openPopup, setOpenPopup, }) {
     const [largePrice, setLargePrice] = useState('')
     const [jumboPrice, setJumboPrice] = useState('')
 
-
-
-    const [category, setCategory] = useState('')
+    const [category, setCategory] = useState('Pizzas')
 
     const [activeState, setActiveState] = useState('true');
     const [confirmPassword, setConfirmPassword] = useState('')
@@ -44,20 +51,72 @@ function MenuItemModal({ title, openPopup, setOpenPopup, }) {
     const [avatarPreview, setAvatarPreview] = useState('/images/default_avatar.jpg')
 
     const UploadHandler = () => {
-
-        alert.success('Item Added to Cart')
-        setOpenPopup(false)
+        alert.success('Picture Uploaded')
+        const reader = new FileReader();
+        reader.onload = () => {
+            console.log(reader.readyState)
+            if (reader.readyState === 2) {
+                setAvatarPreview(reader.result)
+                setAvatar(reader.result)
+            }
+        }
+        // reader.readAsDataURL(e.target.files[0])
+        // setOpenPopup(false)
     }
-
-
 
     const alert = useAlert();
     const dispatch = useDispatch();
 
+    const { loading, error, success } = useSelector(state => state.newProduct);
+
+    useEffect(() => {
+        if (error) {
+            alert.error(error);
+            dispatch(clearErrors())
+        }
+
+        if (success) {
+            alert.success('Product added successfully');
+            dispatch({ type: NEW_PRODUCT_RESET })
+        }
+
+    }, [dispatch, alert, error, success])
+
     console.log(openPopup)
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+        setOpenPopup(false)
+        const formData = new FormData();
+        formData.set('name', name);
+        formData.set('description', description);
+        formData.set('small', smallPrice);
+        formData.set('regular', mediumPrice);
+        formData.set('large', largePrice);
+        formData.set('jumbo', jumboPrice);
+        formData.set('avatar', avatar);
+        dispatch(newProduct(formData))
+    }
+
+    const onChange = e => {
+        if (e.target.name === 'avatar') {
+            const reader = new FileReader();
+            console.log("444" + e.target.value)
+            reader.onload = () => {
+                console.log(reader.readyState)
+                if (reader.readyState === 2) {
+                    setAvatarPreview(reader.result)
+                    setAvatar(reader.result)
+                }
+            }
+            reader.readAsDataURL(e.target.files[0])
+        }
+    }
+
 
     return (
         <>
+            <MetaData title={'New Product'} />
             <Dialog open={openPopup} maxWidth="md" sx={{ borderRadius: '1.5rem', zIndex: 1200 }} onClose={() => { setOpenPopup(false) }}>
 
                 <Grid display='flex' sm={12} sx={{ p: 2, }}>
@@ -89,7 +148,7 @@ function MenuItemModal({ title, openPopup, setOpenPopup, }) {
 
                             <TextField
                                 label='Description'
-                                placeholder='Enter Email' fullWidth required multiline
+                                placeholder='Enter Description' fullWidth required multiline
 
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
@@ -139,36 +198,53 @@ function MenuItemModal({ title, openPopup, setOpenPopup, }) {
                                 defaultValue={jumboPrice}
                                 onChange={(e) => setJumboPrice(e.target.value)}
                             />
-
-
-
-
-                            
-
                         </Box>
                     </Grid>
 
 
 
-                    <Grid display='flex' sx={{ m: 1, p: 1,marginLeft:3, width: "80%", flexDirection: "column", alignItems: 'center', justifyContent: 'center '}}>
+                    <Grid display='flex' sx={{ m: 1, p: 1, marginLeft: 3, width: "80%", flexDirection: "column", alignItems: 'center', justifyContent: 'center ' }}>
 
-                        <Img alt="complex" src='/images/default.png'/>
-                        <Button fullWidth variant='contained' startIcon={<PhotoCamera />}
-                            sx={{ marginTop: 2,marginBottom: 2, }} onClick={UploadHandler}>Upload Picture</Button>
-                         <Typography
-                         variant='body1'
-                         sx={{ fontWeight: 'bold', textAlign:'left' }}>Set Product Active</Typography>
-                         <Switch
-                                    defaultChecked={true} size='medium'
-                                    checked={activeState}
-                                    onChange={(e) => setActiveState(e.target.checked)}
-                          
+                        <Img alt="complex" src={avatarPreview} />
+
+                        <Fragment>
+                        <Input name='avatar' accept="image/*" id="contained-button-file" type="file"
+                            onChange={(e) => {
+                                if (e.target.name === 'avatar') {
+                                    const reader = new FileReader();
+                                    console.log("444" + e.target.value)
+                                    reader.onload = () => {
+                                        console.log(reader.readyState)
+                                        if (reader.readyState === 2) {
+                                            setAvatarPreview(reader.result)
+                                            setAvatar(reader.result)
+                                        }
+                                    }
+                                    reader.readAsDataURL(e.target.files[0])
+                                    alert.success('Picture Uploaded')
+                                }
+                            }}
+                        /> 
+                        <label htmlFor="contained-button-file" >
+                            <Button fullWidth variant='contained' startIcon={<PhotoCamera />}
+                                sx={{ marginTop: 2, marginBottom: 2, }}>Upload Picture</Button>
+                        </label>
+                        </Fragment>
+
+                        <Typography
+                            variant='body1'
+                            sx={{ fontWeight: 'bold', textAlign: 'left' }}>Set Product Active</Typography>
+                        <Switch
+                            defaultChecked={true} size='medium'
+                            checked={activeState}
+                            onChange={(e) => setActiveState(e.target.checked)}
+
                         />
 
-                                <Button fullWidth variant='contained' sx={{ marginTop: 2,  marginLeft: 1, marginBottom: 1, }}
-                                onClick={UploadHandler}>Add Item</Button>
-                        
-                        
+                        <Button fullWidth variant='contained' sx={{ marginTop: 2, marginLeft: 1, marginBottom: 1, }}
+                            onClick={submitHandler}>Add Item</Button>
+
+
                     </Grid>
 
                 </Grid>

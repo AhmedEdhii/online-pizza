@@ -5,7 +5,15 @@ import MetaData from '../layout/MetaData'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import AdminSidebar from './AdminSidebar';
 
-function AdminMainDashboard() {
+function AdminMainDashboard({ products }) {
+
+    let activeproducts = 0;
+    products.forEach(product => {
+        if (product.product_status === 'active') {
+            activeproducts += 1;
+        }
+    })
+
     return (
         <>
             <Grid>
@@ -79,26 +87,21 @@ function AdminMainDashboard() {
                             <Divider sx={{ marginTop: 1, marginBottom: 2 }} />
                             <Grid display='flex' sx={{ justifyContent: 'space-between' }}>
                                 <Grid sx={{ flexDirection: "column" }}>
-                                    <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', }}>
+                                    <Typography variant="body1" component="div" sx={{ fontWeight: 'bold' }}>
                                         Total Products
                                     </Typography>
-                                    <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', color: '#fff' }}>
-                                        50
+                                    <Typography variant="body1" component="div" sx={{ fontWeight: 'bold' }}>
+                                        Active Products
                                     </Typography>
 
                                 </Grid>
                                 <Grid sx={{ flexDirection: "column" }}>
-                                    <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', }}>
-                                        50
+                                    <Typography variant="body1" component="div" sx={{ fontWeight: 'bold' }}>
+                                        {products && products.length}
                                     </Typography>
-                                    <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', color: '#fff' }}>
-
+                                    <Typography variant="body1" component="div" sx={{ fontWeight: 'bold' }}>
+                                        {activeproducts}
                                     </Typography>
-
-
-
-
-
                                 </Grid>
                             </Grid>
                             <Divider sx={{ marginTop: 2, marginBottom: 1 }} />

@@ -2,15 +2,59 @@ import {
     ALL_PRODUCTS_REQUEST,
     ALL_PRODUCTS_SUCCESS,
     ALL_PRODUCTS_FAIL,
-    ADMIN_PRODUCTS_REQUEST,
-    ADMIN_PRODUCTS_SUCCESS,
-    ADMIN_PRODUCTS_FAIL,
     PRODUCT_DETAILS_REQUEST,
     PRODUCT_DETAILS_SUCCESS,
     PRODUCT_DETAILS_FAIL,
+    ADMIN_PRODUCTS_REQUEST,
+    ADMIN_PRODUCTS_SUCCESS,
+    ADMIN_PRODUCTS_FAIL,
+    NEW_PRODUCT_REQUEST,
+    NEW_PRODUCT_SUCCESS,
+    NEW_PRODUCT_RESET,
+    NEW_PRODUCT_FAIL,
     CLEAR_ERRORS
 
 } from '../constants/productConstants'
+
+export const newProductReducer = (state = { product: {} }, action) => {
+    switch (action.type) {
+
+        case NEW_PRODUCT_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+
+        case NEW_PRODUCT_SUCCESS:
+            return {
+                loading: false,
+                success: action.payload.success,
+                product: action.payload.product
+            }
+
+        case NEW_PRODUCT_FAIL:
+            return {
+                ...state,
+                error: action.payload
+            }
+
+        case NEW_PRODUCT_RESET:
+            return {
+                ...state,
+                success: false
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
 
 export const productDetailsReducer = (state = { product: {} }, action) => {
     switch (action.type) {

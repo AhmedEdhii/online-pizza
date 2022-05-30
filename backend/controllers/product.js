@@ -2,12 +2,22 @@ const Product = require('../models/product')
 const User = require("../models/user")
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const APIFeatures = require('../utils/apiFeatures')
+const cloudinary = require('cloudinary')
 
 
 //Add new product -- For Admins
 exports.newProduct = catchAsyncErrors(async (req, res, next) => {
 
     req.body.createdBy = req.user._id;
+    if (req.body.avatar !== '') {
+        const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+            folder: 'avatars',
+            width: 150,
+            crop: "scale"
+        })  
+        req.body.url = result.secure_url
+    }
+    const { name, phonenumber, deliveryaddress, email, password } = req.body;
     const product = await Product.create(req.body);
 
     res.status(201).json({
@@ -32,15 +42,15 @@ exports.getallProducts = catchAsyncErrors(async (req, res, next) => {
         //const products = await Product.find({ product_status: "active" });
         //const resPerPage = 6;
         const productsCount = await Product.countDocuments();
-    
+
         const apiFeatures = new APIFeatures(Product.find({ product_status: "active" }), req.query)
             .search()
-    
+
         let products = await apiFeatures.query;
-    
+
         //apiFeatures.pagination(resPerPage)
         products = await apiFeatures.query;
-    
+
         res.status(200).json({
             success: true,
             count: productsCount,

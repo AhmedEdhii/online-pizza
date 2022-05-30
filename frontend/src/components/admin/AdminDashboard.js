@@ -30,16 +30,15 @@ const drawerWidth = 240;
 
 function AdminDashboard() {
 
-
     const [colorchange, setColorChange] = useState('#f30c1c')
     const [dashboard, setDashboard] = useState(true)
     const [menu, setMenu] = useState(false)
     const [topping, setTopping] = useState(false)
     const [order, setOrder] = useState(false)
     const [user, setUser] = useState(false)
-
-    const { loading, error, products } = useSelector(state => state.products);
+    
     const dispatch = useDispatch();
+    const { loading, error, products } = useSelector(state => state.products);
 
     useEffect(() => {
         dispatch(getAdminProducts());
@@ -47,7 +46,7 @@ function AdminDashboard() {
             alert.error(error);
             dispatch(clearErrors())
         }
-    }, [])
+    }, [dispatch])
 
     var sidebarNav = [
         { id: 'dashboard', state: true, color: '#f30c1c' },
@@ -194,7 +193,7 @@ function AdminDashboard() {
 
                 <Grid display='flex' sx={{ m: 5, marginTop: 2, width: "80%", flexDirection: "column" }}>
                     {(dashboard === true) && (
-                        <AdminMainDashboard />
+                        <AdminMainDashboard products={products} />
                     )}
                     {(menu === true) && (
                         <AdminDashboardMenu products={products} />
