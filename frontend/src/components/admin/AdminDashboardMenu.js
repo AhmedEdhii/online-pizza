@@ -114,6 +114,7 @@ function AdminDashboardMenu({ products }) {
   products.forEach(product => {
     if (product.category === 'Pizzas') {
       rows.push({
+        id: product._id,
         name: product.name,
         small: product.PizzaDetails.size.small,
         regular: product.PizzaDetails.size.regular,
@@ -128,6 +129,7 @@ function AdminDashboardMenu({ products }) {
     }
     else if (product.category === 'Beverages') {
       rows.push({
+        id: product._id,
         name: product.name,
         price: product.BeverageDetails.price,
         category: product.category,
@@ -137,6 +139,7 @@ function AdminDashboardMenu({ products }) {
     }
     else if (product.category === 'Sauces') {
       rows.push({
+        id: product._id,
         name: product.name,
         price: product.SauceDetails.price,
         category: product.category,

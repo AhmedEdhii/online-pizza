@@ -8,7 +8,7 @@ import {
 } from '@mui/material'
 
 
-
+import MetaData from '../components/layout/MetaData';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { NavLink } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -29,12 +29,12 @@ function UserProfile() {
 
     return (
         <>
+            <MetaData title={'User Profile'} />
+            {/* <Grid display='flex'>
 
-            <Grid display='flex'>
+                <UserSidebar /> */}
 
-                <UserSidebar />
-
-                <Grid display='flex' sx={{ m: 5, marginTop: 2, width: "80%", flexDirection: "column" }}>
+                {/* <Grid display='flex' sx={{ m: 5, marginTop: 2, width: "80%", flexDirection: "column" }}> */}
                     <Grid>
                         <Typography variant="h4" component="div" sx={{ flexGrow: 1, paddingTop: 2 }}>
                             Your Profile
@@ -50,10 +50,8 @@ function UserProfile() {
                         </Typography>
                         </Grid>
                     </Grid>
-                </Grid>
-            </Grid>
-
-
+                {/* </Grid>
+            </Grid> */}
 
         </>
     )

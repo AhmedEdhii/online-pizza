@@ -7,11 +7,17 @@ import {
     Drawer, Button, Container, Divider
 } from '@mui/material'
 
-
-
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ListAltIcon from '@mui/icons-material/ListAlt';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import MetaData from '../components/layout/MetaData';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { NavLink } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+
+import UserDashboardMain from './UserDashboardMain';
+import UserProfile from './UserProfile';
+import UserOrders from './UserOrders';
 
 import React, { useState } from 'react'
 
@@ -24,97 +30,94 @@ const drawerWidth = 240;
 
 function UserDashboard() {
 
+    const [dashboard, setDashboard] = useState(true)
+    const [profile, setProfile] = useState(false)
+    const [order, setOrder] = useState(false)
 
+    const sidebarHandler = (navLabel) => {
 
+        if (navLabel === 0) {
+            setDashboard(true)
+            setProfile(false)
+            setOrder(false)
+        }
+        else if (navLabel === 1) {
+            setProfile(true)
+            setDashboard(false)
+            setOrder(false)
+        }
+        else if (navLabel === 2) {
+            setOrder(true)
+            setDashboard(false)
+            setProfile(false)
+        }
+    }
 
     return (
         <>
-
+            <MetaData title={'User Dashboard'} />
             <Grid display='flex'>
+                <Drawer
+                    sx={{
+                        position: 'sticky',
+                        width: drawerWidth,
+                        flexShrink: 0,
 
-                <UserSidebar />
+                        '& .MuiDrawer-paper': {
+                            paddingTop: '86px',
+                            zIndex: '0',
+                            width: drawerWidth,
+                            boxSizing: 'border-box',
+                            backgroundColor: '#f30c1c',
+                        },
+                    }}
+                    variant="permanent"
+                    anchor="left"
+                >
+
+                    <List>
+
+                        <ListItem sx={{ color: '#fff' }}>
+                            <ListItemButton onClick={() => sidebarHandler(0)}>
+                                <ListItemIcon sx={{ color: '#fff' }}>
+                                    <DashboardIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Dashboard" />
+                            </ListItemButton>
+                        </ListItem>
+
+                        <ListItem sx={{ color: '#fff' }}>
+                            <ListItemButton onClick={() => sidebarHandler(1)}>
+                                <ListItemIcon sx={{ color: '#fff' }}>
+                                    <AccountCircleIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Profile" />
+                            </ListItemButton>
+                        </ListItem>
+
+                        <ListItem sx={{ color: '#fff' }}>
+                            <ListItemButton onClick={() => sidebarHandler(2)}>
+                                <ListItemIcon sx={{ color: '#fff' }}>
+                                    <ListAltIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="My Orders" />
+                            </ListItemButton>
+                        </ListItem>
+
+                    </List>
+                </Drawer>
+
 
                 <Grid display='flex' sx={{ m: 5, marginTop: 2, width: "80%", flexDirection: "column" }}>
-                    <Grid>
-                        <Typography variant="h4" component="div" sx={{ flexGrow: 1, paddingTop: 2 }}>
-                            Welcome, <Typography variant="h4" component="span" sx={{ color: '#f30c1c', fontWeight: 'bold', flexGrow: 1, paddingTop: 1 }}>
-                                Ebrahim Baig
-                            </Typography>
-                        </Typography>
-
-
-                    </Grid>
-                    <Divider sx={{ marginTop: 1, marginBottom: 3 }} />
-                    <Grid display='flex' container rowSpacing={5} columnSpacing={8} sx={{ marginBottom: 8, width: "100%" }}>
-                        <Grid item xs={12} sm={5}>
-
-
-                            <Card sx={{
-                                p: 1,
-
-                                maxWidth: "100%",
-                                flexGrow: 1,
-                                borderRadius: '1.5rem',
-                                boxShadow: '0 18px 24px 0 rgba(0,0,0,0.05)',
-                                backgroundColor: "#E9E9EB"
-                            }}>
-
-                                <CardContent sx={{ paddingBottom: 0, marginBottom: 0 }}>
-                                    <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#f30c1c' }} gutterBottom>
-                                        Order Again
-                                    </Typography>
-                                    <Divider sx={{ marginTop: 1, marginBottom: 2 }} />
-
-                                    <Grid display='flex' sx={{ justifyContent: 'space-between', }}>
-                                        <Grid sx={{ columnDirection: 'column' }}>
-                                            <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
-                                                Chicken Fajita</Typography>
-                                            <Typography variant="body1" gutterBottom color='text.secondary' component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
-                                                Small</Typography>
-
-
-                                            <Typography variant="body2" component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
-                                                Extra Toppings
-                                            </Typography>
-
-
-                                            <Grid sx={{ columnDirection: 'column' }}>
-                                                <Typography variant="body2" color='text.secondary' component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
-                                                    Cheese
-                                                </Typography>
-                                            </Grid>
-
-                                        </Grid>
-                                        <Grid item display='flex' alignContent='right' sx={{ flexDirection: 'column', alignItems: 'flex-end' }}>
-                                            <Typography variant="body1" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1, paddingBottom: 5 }}>
-                                                Rs. 4000
-                                            </Typography>
-
-                                            <Typography variant="body2" color='text.secondary' component="div" sx={{ flexGrow: 1 }}>
-                                                Rs. 80
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
-
-
-                                    <Divider sx={{ marginTop: 2, marginBottom: 1 }} />
-                                </CardContent>
-                                <CardActions>
-                                    <Button fullWidth size="large" endIcon={<ChevronRightIcon />} variant='contained'
-                                    sx={{    borderRadius: '0.5rem',
-                                    boxShadow: '0 18px 24px 0 rgba(0,0,0,0.05)',
-                                    backgroundColor: '#f30c1c',
-                                    '&:hover': {
-                                        backgroundColor: '#FCAB04',
-                                        boxShadow: 'none',
-                                      },
-                                      }}>
-                                        Order Now</Button>
-                                </CardActions>
-                            </Card>
-                        </Grid>
-
-                    </Grid>
+                    {(dashboard === true) && (
+                        <UserDashboardMain />
+                    )}
+                    {(profile === true) && (
+                        <UserProfile />
+                    )}
+                    {(order === true) && (
+                        <UserOrders />
+                    )}
                 </Grid>
             </Grid>
 

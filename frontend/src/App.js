@@ -63,8 +63,8 @@ function App() {
       {/* <Route path="/Admin_ManageUsers" component={Admin_ManageUsers} />*/}
 
       <Route path="/UserDashboard" component={UserDashboard} />
-      <Route path="/UserProfile" component={UserProfile} />
-      <Route path="/userOrders" component={UserOrders} />
+      {/* <Route path="/UserProfile" component={UserProfile} />
+      <Route path="/userOrders" component={UserOrders} /> */}
 
 
       {/* Test Page */}
