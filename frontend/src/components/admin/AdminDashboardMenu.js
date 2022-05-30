@@ -38,16 +38,6 @@ import AdminSidebar from './AdminSidebar';
 
 const rows = [
   []
-// createData('Pizza 1', 380, 'Pizza'),
-// createData('Pizza 2', 380, 'Pizza'),
-// createData('Pizza 3', 380, 'Pizza'),
-// createData('Pizza 4', 380, 'Pizza'),
-// createData('Pizza 5', 380, 'Pizza'),
-// createData('Pizza 6', 380, 'Pizza'),
-// createData('Pizza 7', 380, 'Drinks'),
-// createData('Pizza 8', 450, 'Pizza'),
-// createData('Pizza 9', 185, 'Pizza'),
-
 ];
 
 
@@ -105,36 +95,54 @@ function TablePaginationActions(props) {
   );
 }
 
-function AdminDashboardMenu(props) {
+function AdminDashboardMenu({ products }) {
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const { loading, error, products } = useSelector(state => state.products);
+  // const { loading, error, products } = useSelector(state => state.products);
 
 
-  /*function createData(id, name, category, url, price, small, regular, large, jumbo) {
-    return { id, name, category, url, price, small, regular, large, jumbo };
-  }
-  
+  // function createData(id, name, category, url, price, small, regular, large, jumbo) {
+  //   return { id, name, category, url, price, small, regular, large, jumbo };
+  // }
+
   // need to pass products in this using props
-  const rows = [
-    products.forEach(product => {
-      if (product.category === 'Pizzas') {
-        createData(product._id, product.name, product.category, product.url, product.PizzaDetails.size.small, product.PizzaDetails.size.small,
-          product.PizzaDetails.size.regular, product.PizzaDetails.size.large, product.PizzaDetails.size.jumbo
-        )
-      }
-      else if (product.category === 'Beverages') {
-        createData(product._id, product.name, product.category, product.url, product.BeverageDetails.price)
-      }
-      else if (product.category === 'Sauces') {
-        createData(product._id, product.name, product.category, product.url, product.SauceDetails.price)
-      }
-    })
-  ]; */
-
-  const alert = useAlert();
-  const dispatch = useDispatch();
+  // const rows = [
+  products.forEach(product => {
+    if (product.category === 'Pizzas') {
+      rows.push({
+        name: product.name,
+        small: product.PizzaDetails.size.small,
+        regular: product.PizzaDetails.size.regular,
+        large: product.PizzaDetails.size.large,
+        jumbo: product.PizzaDetails.size.jumbo,
+        category: product.category,
+        url: product.url
+      })
+      // createData(product._id, product.name, product.category, product.url, product.PizzaDetails.size.small, product.PizzaDetails.size.small,
+      //   product.PizzaDetails.size.regular, product.PizzaDetails.size.large, product.PizzaDetails.size.jumbo
+      // )
+    }
+    else if (product.category === 'Beverages') {
+      rows.push({
+        name: product.name,
+        price: product.BeverageDetails.price,
+        category: product.category,
+        url: product.url
+      })
+      // createData(product._id, product.name, product.category, product.url, product.BeverageDetails.price)
+    }
+    else if (product.category === 'Sauces') {
+      rows.push({
+        name: product.name,
+        price: product.SauceDetails.price,
+        category: product.category,
+        url: product.url
+      })
+      // createData(product._id, product.name, product.category, product.url, product.SauceDetails.price)
+    }
+  })
+  // ];
 
   const Img = styled('img')({
     alignItems: "center",
@@ -143,51 +151,51 @@ function AdminDashboardMenu(props) {
     padding: 1,
     margin: 1
   });
-  
 
 
-  const setProducts = () => {
-    products.forEach(product => {
-      if (product.category === 'Pizzas') {
-        rows.push({
-          name: product.name,
-          small: product.PizzaDetails.size.small,
-          regular: product.PizzaDetails.size.regular,
-          large: product.PizzaDetails.size.large,
-          jumbo: product.PizzaDetails.size.jumbo,
-          category: product.category,
-          url: product.url
-        })
-      }
-      else if (product.category === 'Beverages') {
-        rows.push({
-          name: product.name,
-          price: product.BeverageDetails.price,
-          category: product.category,
-          url: product.url
-        })
-      }
-      else if (product.category === 'Sauces') {
-        rows.push({
-          name: product.name,
-          price: product.SauceDetails.price,
-          category: product.category,
-          url: product.url
-        })
-      }
-    })
-    return rows;
-  }
-  console.log(rows);
+
+  // const setProducts = () => {
+  //   products.forEach(product => {
+  //     if (product.category === 'Pizzas') {
+  //       rows.push({
+  //         name: product.name,
+  //         small: product.PizzaDetails.size.small,
+  //         regular: product.PizzaDetails.size.regular,
+  //         large: product.PizzaDetails.size.large,
+  //         jumbo: product.PizzaDetails.size.jumbo,
+  //         category: product.category,
+  //         url: product.url
+  //       })
+  //     }
+  //     else if (product.category === 'Beverages') {
+  //       rows.push({
+  // name: product.name,
+  // price: product.BeverageDetails.price,
+  // category: product.category,
+  // url: product.url
+  //       })
+  //     }
+  //     else if (product.category === 'Sauces') {
+  // rows.push({
+  //   name: product.name,
+  //   price: product.SauceDetails.price,
+  //   category: product.category,
+  //   url: product.url
+  // })
+  //     }
+  //   })
+  //   return rows;
+  // }
+  // console.log(rows);
 
   useEffect(() => {
-    dispatch(getAdminProducts());
-    setProducts();
-    if (error) {
-      alert.error(error);
-      dispatch(clearErrors())
-    }
-  }, [])
+    // dispatch(getAdminProducts());
+    // setProducts();
+    // const dup = [...rows];
+    // dup.splice(0, dup.length)
+    // rows = [...dup]; 
+    rows.splice(0, rows.length)
+  }, [rows])
 
 
 
@@ -210,152 +218,147 @@ function AdminDashboardMenu(props) {
     <>
 
       <MetaData title={'All Products'} />
-     
 
-        
-
-          <Grid display='flex' sx={{ alignItems: 'center', paddingTop: 2 }}>
-            <Typography variant="h4" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
-              Menu
-            </Typography>
-            <Grid item sx={{ paddingRight: 9 }}>
-              <Button variant='contained' startIcon={<AddCircleIcon />}>Add New Item</Button>
-            </Grid>
-          </Grid>
-          <Divider sx={{ marginTop: 2, marginBottom: 3 }} /><Grid display='flex' container rowSpacing={5} columnSpacing={8} sx={{ marginBottom: 8, width: "100%" }}>
-            <Grid item xs={12} >
+      <Grid display='flex' sx={{ alignItems: 'center', paddingTop: 2 }}>
+        <Typography variant="h4" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
+          Menu
+        </Typography>
+        <Grid item sx={{ paddingRight: 9 }}>
+          <Button variant='contained' startIcon={<AddCircleIcon />}>Add New Item</Button>
+        </Grid>
+      </Grid>
+      <Divider sx={{ marginTop: 2, marginBottom: 3 }} /><Grid display='flex' container rowSpacing={5} columnSpacing={8} sx={{ marginBottom: 8, width: "100%" }}>
+        <Grid item xs={12} >
 
 
-              <Box sx={{ width: '100%' }}>
-                <Paper sx={{ width: '100%', mb: 2 }}>
-                  <Table >
+          <Box sx={{ width: '100%' }}>
+            <Paper sx={{ width: '100%', mb: 2 }}>
+              <Table >
 
-                    <TableHead>
-                      <TableRow sx={{ backgroundColor: "#E5E4E2" }}>
+                <TableHead>
+                  <TableRow sx={{ backgroundColor: "#E5E4E2" }}>
 
-                        <TableCell align="left" sx={{ width: "200px", fontWeight: 'bold', }}>Name</TableCell>
-                        <TableCell align="left" ></TableCell>
-                        <TableCell align="left" sx={{ fontWeight: 'bold', }}>Prices</TableCell>
-                        <TableCell align="left" sx={{ fontWeight: 'bold', }}>Category</TableCell>
-                        <TableCell align="center" sx={{ fontWeight: 'bold', }}>Actions</TableCell>
-                      </TableRow>
-                    </TableHead>
+                    <TableCell align="left" sx={{ width: "200px", fontWeight: 'bold', }}>Name</TableCell>
+                    <TableCell align="left" ></TableCell>
+                    <TableCell align="left" sx={{ fontWeight: 'bold', }}>Prices</TableCell>
+                    <TableCell align="left" sx={{ fontWeight: 'bold', }}>Category</TableCell>
+                    <TableCell align="center" sx={{ fontWeight: 'bold', }}>Actions</TableCell>
+                  </TableRow>
+                </TableHead>
 
-                    {!loading && (
+                <Fragment>
+                  <TableBody>
+                    {(rowsPerPage > 0
+                      ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                      : rows
+                    ).map((row) => (
                       <Fragment>
-                        <TableBody>
-                          {(rowsPerPage > 0
-                            ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            : rows
-                          ).map((row) => (
-                            <Fragment>
-                              {row.category === 'Pizzas' && (
-                                <TableRow key={row.name}>
-                                  <TableCell component="th" scope="row">
-                                    {row.name}
-                                  </TableCell>
-                                  <TableCell component="th" scope="row">
-                                    <Img alt="complex" src={row.url} />
-                                  </TableCell>
-                                  <TableCell align="left">
-                                    <TableCell align="left" sx={{ borderBottom: 0, m: 0, paddingLeft: 0, }}>
-                                      Small <br></br> Medium <br></br> Large <br></br> Jumbo
-                                    </TableCell>
-                                    <TableCell align="right " sx={{ borderBottom: 0, m: 0, fontWeight: 'bold', }}>
-                                      Rs. {row.small} <br></br> Rs. {row.regular} <br></br> Rs. {row.large} <br></br> Rs. {row.jumbo}
-                                    </TableCell>
-                                  </TableCell>
-                                  <TableCell component="th" scope="row">
-                                    {row.category}
-                                  </TableCell>
-                                  <TableCell align="center" component="th" scope="row">
-                                    <IconButton
-                                      onClick={console.log('success')}>
-                                      <EditIcon color='success' />
-                                    </IconButton>
-                                    <IconButton
-                                      onClick={console.log('success')}>
-                                      <DeleteOutlineIcon color='error' />
-                                    </IconButton>
-                                  </TableCell>
-                                </TableRow>
-                              )}
-                              {(row.category === 'Beverages' || row.category === 'Sauces') && (
-                                <TableRow key={row.name}>
-                                  <TableCell component="th" scope="row">
-                                    {row.name}
-                                  </TableCell>
-                                  <TableCell component="th" scope="row">
-                                    <Img alt="complex" src={row.url} />
-                                  </TableCell>
-                                  <TableCell align="left">
-                                    <TableCell align="left" sx={{ borderBottom: 0, m: 0, paddingLeft: 0, }}>
-                                      Price
-                                    </TableCell>
-                                    <TableCell align="right " sx={{ borderBottom: 0, m: 0, fontWeight: 'bold', }}>
-                                      Rs. {row.price}
-                                    </TableCell>
-                                  </TableCell>
+                        {row.category === 'Pizzas' && (
+                          <TableRow key={row.name}>
+                            <TableCell component="th" scope="row">
+                              {row.name}
+                            </TableCell>
+                            <TableCell component="th" scope="row">
+                              <Img alt="complex" src={row.url} />
+                            </TableCell>
+                            <TableCell align="left">
+                              <TableCell align="left" sx={{ borderBottom: 0, m: 0, paddingLeft: 0, }}>
+                                Small <br></br> Medium <br></br> Large <br></br> Jumbo
+                              </TableCell>
+                              <TableCell align="right " sx={{ borderBottom: 0, m: 0, fontWeight: 'bold', }}>
+                                Rs. {row.small} <br></br> Rs. {row.regular} <br></br> Rs. {row.large} <br></br> Rs. {row.jumbo}
+                              </TableCell>
+                            </TableCell>
+                            <TableCell component="th" scope="row">
+                              {row.category}
+                            </TableCell>
+                            <TableCell align="center" component="th" scope="row">
+                              <IconButton
+                                onClick={console.log('success')}>
+                                <EditIcon color='success' />
+                              </IconButton>
+                              <IconButton
+                                onClick={console.log('success')}>
+                                <DeleteOutlineIcon color='error' />
+                              </IconButton>
+                            </TableCell>
+                          </TableRow>
+                        )}
+                        {(row.category === 'Beverages' || row.category === 'Sauces') && (
+                          <TableRow key={row.name}>
+                            <TableCell component="th" scope="row">
+                              {row.name}
+                            </TableCell>
+                            <TableCell component="th" scope="row">
+                              <Img alt="complex" src={row.url} />
+                            </TableCell>
+                            <TableCell align="left">
+                              <TableCell align="left" sx={{ borderBottom: 0, m: 0, paddingLeft: 0, }}>
+                                Price
+                              </TableCell>
+                              <TableCell align="right " sx={{ borderBottom: 0, m: 0, fontWeight: 'bold', }}>
+                                Rs. {row.price}
+                              </TableCell>
+                            </TableCell>
 
-                                  <TableCell component="th" scope="row">
-                                    {row.category}
-                                  </TableCell>
-                                  <TableCell align="center" component="th" scope="row">
-                                    <IconButton
-                                      onClick={console.log('success')}>
-                                      <EditIcon color='success' />
-                                    </IconButton>
-                                    <IconButton
-                                      onClick={console.log('success')}>
-                                      <DeleteOutlineIcon color='error' />
-                                    </IconButton>
-                                  </TableCell>
-                                </TableRow>
-                              )
-                              }
-                            </Fragment>
-                          ))}
-
-
-
-                          {emptyRows > 0 && (
-                            <TableRow style={{ height: 53 * emptyRows }}>
-                              <TableCell colSpan={6} />
-                            </TableRow>
-                          )}
-                        </TableBody>
+                            <TableCell component="th" scope="row">
+                              {row.category}
+                            </TableCell>
+                            <TableCell align="center" component="th" scope="row">
+                              <IconButton
+                                onClick={console.log('success')}>
+                                <EditIcon color='success' />
+                              </IconButton>
+                              <IconButton
+                                onClick={console.log('success')}>
+                                <DeleteOutlineIcon color='error' />
+                              </IconButton>
+                            </TableCell>
+                          </TableRow>
+                        )
+                        }
                       </Fragment>
-                    )}
+                    ))}
 
-                    <TableFooter>
-                      <TableRow>
-                        <TablePagination
-                          rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                          colSpan={3}
-                          count={rows.length}
-                          rowsPerPage={rowsPerPage}
-                          page={page}
-                          SelectProps={{
-                            inputProps: {
-                              'aria-label': 'rows per page',
-                            },
-                            native: true,
-                          }}
-                          onPageChange={handleChangePage}
-                          onRowsPerPageChange={handleChangeRowsPerPage}
-                          ActionsComponent={TablePaginationActions}
-                        />
+
+
+                    {emptyRows > 0 && (
+                      <TableRow style={{ height: 53 * emptyRows }}>
+                        <TableCell colSpan={6} />
                       </TableRow>
-                    </TableFooter>
+                    )}
+                  </TableBody>
+                </Fragment>
 
-                  </Table>
+                <TableFooter>
+                  <TableRow>
+                    <TablePagination
+                      rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                      colSpan={3}
+                      count={rows.length}
+                      rowsPerPage={rowsPerPage}
+                      page={page}
+                      SelectProps={{
+                        inputProps: {
+                          'aria-label': 'rows per page',
+                        },
+                        native: true,
+                      }}
+                      onPageChange={handleChangePage}
+                      onRowsPerPageChange={handleChangeRowsPerPage}
+                      ActionsComponent={TablePaginationActions}
+                    />
+                  </TableRow>
+                </TableFooter>
 
-                </Paper>
-              </Box>
-            </Grid>
-          </Grid>
-   
-     
+              </Table>
+
+            </Paper>
+          </Box>
+        </Grid>
+      </Grid>
+
+
 
 
     </>
