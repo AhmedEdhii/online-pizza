@@ -25,7 +25,6 @@ import AdminDashboardMenu from './AdminDashboardMenu';
 
 const drawerWidth = 240;
 
-
 function AdminDashboard() {
 
     const [colorchange, setColorChange] = useState('#f30c1c')

@@ -26,27 +26,27 @@ import AdminSidebar from './AdminSidebar';
 
 
 // yeh nhi baanana abb
-function createData(name, prices, category, actions) {
-  return {
-    name,
-    prices,
-    category,
-    actions,
-  };
-}
+// function createData(name, prices, category, actions) {
+//   return {
+//     name,
+//     prices,
+//     category,
+//     actions,
+//   };
+// }
 
 
 const rows = [
   []
-  // createData('Pizza 1', 380, 'Pizza'),
-  // createData('Pizza 2', 380, 'Pizza'),
-  // createData('Pizza 3', 380, 'Pizza'),
-  // createData('Pizza 4', 380, 'Pizza'),
-  // createData('Pizza 5', 380, 'Pizza'),
-  // createData('Pizza 6', 380, 'Pizza'),
-  // createData('Pizza 7', 380, 'Drinks'),
-  // createData('Pizza 8', 450, 'Pizza'),
-  // createData('Pizza 9', 185, 'Pizza'),
+// createData('Pizza 1', 380, 'Pizza'),
+// createData('Pizza 2', 380, 'Pizza'),
+// createData('Pizza 3', 380, 'Pizza'),
+// createData('Pizza 4', 380, 'Pizza'),
+// createData('Pizza 5', 380, 'Pizza'),
+// createData('Pizza 6', 380, 'Pizza'),
+// createData('Pizza 7', 380, 'Drinks'),
+// createData('Pizza 8', 450, 'Pizza'),
+// createData('Pizza 9', 185, 'Pizza'),
 
 ];
 
@@ -105,12 +105,36 @@ function TablePaginationActions(props) {
   );
 }
 
-
-
 function AdminDashboardMenu(props) {
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const { loading, error, products } = useSelector(state => state.products);
+
+
+  /*function createData(id, name, category, url, price, small, regular, large, jumbo) {
+    return { id, name, category, url, price, small, regular, large, jumbo };
+  }
+  
+  // need to pass products in this using props
+  const rows = [
+    products.forEach(product => {
+      if (product.category === 'Pizzas') {
+        createData(product._id, product.name, product.category, product.url, product.PizzaDetails.size.small, product.PizzaDetails.size.small,
+          product.PizzaDetails.size.regular, product.PizzaDetails.size.large, product.PizzaDetails.size.jumbo
+        )
+      }
+      else if (product.category === 'Beverages') {
+        createData(product._id, product.name, product.category, product.url, product.BeverageDetails.price)
+      }
+      else if (product.category === 'Sauces') {
+        createData(product._id, product.name, product.category, product.url, product.SauceDetails.price)
+      }
+    })
+  ]; */
+
+  const alert = useAlert();
+  const dispatch = useDispatch();
 
   const Img = styled('img')({
     alignItems: "center",
@@ -119,9 +143,9 @@ function AdminDashboardMenu(props) {
     padding: 1,
     margin: 1
   });
+  
 
-  const alert = useAlert();
-  const dispatch = useDispatch();
+
   const setProducts = () => {
     products.forEach(product => {
       if (product.category === 'Pizzas') {
@@ -156,7 +180,6 @@ function AdminDashboardMenu(props) {
   }
   console.log(rows);
 
-  const { loading, error, products } = useSelector(state => state.products);
   useEffect(() => {
     dispatch(getAdminProducts());
     setProducts();
@@ -164,8 +187,7 @@ function AdminDashboardMenu(props) {
       alert.error(error);
       dispatch(clearErrors())
     }
-
-  }, [dispatch, alert, error,])
+  }, [])
 
 
 
@@ -186,43 +208,43 @@ function AdminDashboardMenu(props) {
 
   return (
     <>
-     
-          <MetaData title={'All Products'} />
-          <Grid display='flex'>
 
-            <AdminSidebar />
+      <MetaData title={'All Products'} />
+      <Grid display='flex'>
 
-            <Grid display='flex' sx={{ m: 5, marginTop: 2, width: "80%", flexDirection: "column" }}>
+        <AdminSidebar />
 
-              <Grid display='flex' sx={{ alignItems: 'center', paddingTop: 2 }}>
-                <Typography variant="h4" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
-                  Menu
-                </Typography>
-                <Grid item sx={{ paddingRight: 9 }}>
-                  <Button variant='contained' startIcon={<AddCircleIcon />}>Add New Item</Button>
-                </Grid>
-              </Grid>
-              <Divider sx={{ marginTop: 2, marginBottom: 3 }} /><Grid display='flex' container rowSpacing={5} columnSpacing={8} sx={{ marginBottom: 8, width: "100%" }}>
-                <Grid item xs={12} >
+        <Grid display='flex' sx={{ m: 5, marginTop: 2, width: "80%", flexDirection: "column" }}>
+
+          <Grid display='flex' sx={{ alignItems: 'center', paddingTop: 2 }}>
+            <Typography variant="h4" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
+              Menu
+            </Typography>
+            <Grid item sx={{ paddingRight: 9 }}>
+              <Button variant='contained' startIcon={<AddCircleIcon />}>Add New Item</Button>
+            </Grid>
+          </Grid>
+          <Divider sx={{ marginTop: 2, marginBottom: 3 }} /><Grid display='flex' container rowSpacing={5} columnSpacing={8} sx={{ marginBottom: 8, width: "100%" }}>
+            <Grid item xs={12} >
 
 
-                  <Box sx={{ width: '100%' }}>
-                    <Paper sx={{ width: '100%', mb: 2 }}>
-                      <Table >
+              <Box sx={{ width: '100%' }}>
+                <Paper sx={{ width: '100%', mb: 2 }}>
+                  <Table >
 
-                        <TableHead>
-                          <TableRow sx={{ backgroundColor: "#E5E4E2" }}>
+                    <TableHead>
+                      <TableRow sx={{ backgroundColor: "#E5E4E2" }}>
 
-                            <TableCell align="left" sx={{ width: "200px", fontWeight: 'bold', }}>Name</TableCell>
-                            <TableCell align="left" ></TableCell>
-                            <TableCell align="left" sx={{ fontWeight: 'bold', }}>Prices</TableCell>
-                            <TableCell align="left" sx={{ fontWeight: 'bold', }}>Category</TableCell>
-                            <TableCell align="center" sx={{ fontWeight: 'bold', }}>Actions</TableCell>
-                          </TableRow>
-                        </TableHead>
-                        
-                        {!loading && (
-                          <Fragment>
+                        <TableCell align="left" sx={{ width: "200px", fontWeight: 'bold', }}>Name</TableCell>
+                        <TableCell align="left" ></TableCell>
+                        <TableCell align="left" sx={{ fontWeight: 'bold', }}>Prices</TableCell>
+                        <TableCell align="left" sx={{ fontWeight: 'bold', }}>Category</TableCell>
+                        <TableCell align="center" sx={{ fontWeight: 'bold', }}>Actions</TableCell>
+                      </TableRow>
+                    </TableHead>
+
+                    {!loading && (
+                      <Fragment>
                         <TableBody>
                           {(rowsPerPage > 0
                             ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -304,40 +326,40 @@ function AdminDashboardMenu(props) {
                             </TableRow>
                           )}
                         </TableBody>
-                            </Fragment>
-                        )}
+                      </Fragment>
+                    )}
 
-                        <TableFooter>
-                          <TableRow>
-                            <TablePagination
-                              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                              colSpan={3}
-                              count={rows.length}
-                              rowsPerPage={rowsPerPage}
-                              page={page}
-                              SelectProps={{
-                                inputProps: {
-                                  'aria-label': 'rows per page',
-                                },
-                                native: true,
-                              }}
-                              onPageChange={handleChangePage}
-                              onRowsPerPageChange={handleChangeRowsPerPage}
-                              ActionsComponent={TablePaginationActions}
-                            />
-                          </TableRow>
-                        </TableFooter>
+                    <TableFooter>
+                      <TableRow>
+                        <TablePagination
+                          rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                          colSpan={3}
+                          count={rows.length}
+                          rowsPerPage={rowsPerPage}
+                          page={page}
+                          SelectProps={{
+                            inputProps: {
+                              'aria-label': 'rows per page',
+                            },
+                            native: true,
+                          }}
+                          onPageChange={handleChangePage}
+                          onRowsPerPageChange={handleChangeRowsPerPage}
+                          ActionsComponent={TablePaginationActions}
+                        />
+                      </TableRow>
+                    </TableFooter>
 
-                      </Table>
+                  </Table>
 
-                    </Paper>
-                  </Box>
-                </Grid>
-              </Grid>
+                </Paper>
+              </Box>
             </Grid>
           </Grid>
-       
-     
+        </Grid>
+      </Grid>
+
+
     </>
   )
 }
