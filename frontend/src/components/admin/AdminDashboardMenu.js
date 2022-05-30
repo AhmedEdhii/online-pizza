@@ -180,159 +180,161 @@ function AdminDashboardMenu(props) {
 
   return (
     <>
-      <MetaData title={'All Products'} />
-      <Grid display='flex'>
+      {!loading && (
+        <Fragment>
+          <MetaData title={'All Products'} />
+          <Grid display='flex'>
 
-        <AdminSidebar />
+            <AdminSidebar />
 
-        <Grid display='flex' sx={{ m: 5, marginTop: 2, width: "80%", flexDirection: "column" }}>
+            <Grid display='flex' sx={{ m: 5, marginTop: 2, width: "80%", flexDirection: "column" }}>
 
-          <Grid display='flex' sx={{ alignItems: 'center', paddingTop: 2 }}>
-            <Typography variant="h4" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
-              Menu
-            </Typography>
-            <Grid item sx={{ paddingRight: 9 }}>
-              <Button variant='contained' startIcon={<AddCircleIcon />}>Add New Item</Button>
-            </Grid>
-          </Grid>
-          <Divider sx={{ marginTop: 2, marginBottom: 3 }} /><Grid display='flex' container rowSpacing={5} columnSpacing={8} sx={{ marginBottom: 8, width: "100%" }}>
-            <Grid item xs={12} >
+              <Grid display='flex' sx={{ alignItems: 'center', paddingTop: 2 }}>
+                <Typography variant="h4" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
+                  Menu
+                </Typography>
+                <Grid item sx={{ paddingRight: 9 }}>
+                  <Button variant='contained' startIcon={<AddCircleIcon />}>Add New Item</Button>
+                </Grid>
+              </Grid>
+              <Divider sx={{ marginTop: 2, marginBottom: 3 }} /><Grid display='flex' container rowSpacing={5} columnSpacing={8} sx={{ marginBottom: 8, width: "100%" }}>
+                <Grid item xs={12} >
 
 
-              <Box sx={{ width: '100%' }}>
-                <Paper sx={{ width: '100%', mb: 2 }}>
-                  <Table >
+                  <Box sx={{ width: '100%' }}>
+                    <Paper sx={{ width: '100%', mb: 2 }}>
+                      <Table >
 
-                    <TableHead>
-                      <TableRow sx={{ backgroundColor: "#E5E4E2" }}>
+                        <TableHead>
+                          <TableRow sx={{ backgroundColor: "#E5E4E2" }}>
 
-                        <TableCell align="left" sx={{ width: "200px", fontWeight: 'bold', }}>Name</TableCell>
-                        <TableCell align="left" ></TableCell>
-                        <TableCell align="left" sx={{ fontWeight: 'bold', }}>Prices</TableCell>
-                        <TableCell align="left" sx={{ fontWeight: 'bold', }}>Category</TableCell>
-                        <TableCell align="center" sx={{ fontWeight: 'bold', }}>Actions</TableCell>
-                      </TableRow>
-                    </TableHead>
+                            <TableCell align="left" sx={{ width: "200px", fontWeight: 'bold', }}>Name</TableCell>
+                            <TableCell align="left" ></TableCell>
+                            <TableCell align="left" sx={{ fontWeight: 'bold', }}>Prices</TableCell>
+                            <TableCell align="left" sx={{ fontWeight: 'bold', }}>Category</TableCell>
+                            <TableCell align="center" sx={{ fontWeight: 'bold', }}>Actions</TableCell>
+                          </TableRow>
+                        </TableHead>
 
-                    <TableBody>
-                      {(rowsPerPage > 0
-                        ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                        : rows
-                      ).map((row) => (
-                        <Fragment>
-                          {row.category === 'Pizzas' && (
-                            <TableRow key={row.name}>
-                              <TableCell component="th" scope="row">
-                                {row.name}
-                              </TableCell>
-                              <TableCell component="th" scope="row">
-                                <Img alt="complex" src={row.url} />
-                              </TableCell>
-                              <TableCell align="left">
-                                <TableCell align="left" sx={{ borderBottom: 0, m: 0, paddingLeft: 0, }}>
-                                  Small <br></br> Medium <br></br> Large <br></br> Jumbo
-                                </TableCell>
-                                <TableCell align="right " sx={{ borderBottom: 0, m: 0, fontWeight: 'bold', }}>
-                                  Rs. {row.small} <br></br> Rs. {row.regular} <br></br> Rs. {row.large} <br></br> Rs. {row.jumbo}
-                                </TableCell>
-                              </TableCell>
-                              <TableCell component="th" scope="row">
-                                {row.category}
-                              </TableCell>
-                              <TableCell align="center" component="th" scope="row">
-                                <IconButton
-                                  onClick={console.log('success')}>
-                                  <EditIcon color='success' />
-                                </IconButton>
-                                <IconButton
-                                  onClick={console.log('success')}>
-                                  <DeleteOutlineIcon color='error' />
-                                </IconButton>
-                              </TableCell>
+                        <TableBody>
+                          {(rowsPerPage > 0
+                            ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                            : rows
+                          ).map((row) => (
+                            <Fragment>
+                              {row.category === 'Pizzas' && (
+                                <TableRow key={row.name}>
+                                  <TableCell component="th" scope="row">
+                                    {row.name}
+                                  </TableCell>
+                                  <TableCell component="th" scope="row">
+                                    <Img alt="complex" src={row.url} />
+                                  </TableCell>
+                                  <TableCell align="left">
+                                    <TableCell align="left" sx={{ borderBottom: 0, m: 0, paddingLeft: 0, }}>
+                                      Small <br></br> Medium <br></br> Large <br></br> Jumbo
+                                    </TableCell>
+                                    <TableCell align="right " sx={{ borderBottom: 0, m: 0, fontWeight: 'bold', }}>
+                                      Rs. {row.small} <br></br> Rs. {row.regular} <br></br> Rs. {row.large} <br></br> Rs. {row.jumbo}
+                                    </TableCell>
+                                  </TableCell>
+                                  <TableCell component="th" scope="row">
+                                    {row.category}
+                                  </TableCell>
+                                  <TableCell align="center" component="th" scope="row">
+                                    <IconButton
+                                      onClick={console.log('success')}>
+                                      <EditIcon color='success' />
+                                    </IconButton>
+                                    <IconButton
+                                      onClick={console.log('success')}>
+                                      <DeleteOutlineIcon color='error' />
+                                    </IconButton>
+                                  </TableCell>
+                                </TableRow>
+                              )}
+                              {(row.category === 'Beverages' || row.category === 'Sauces') && (
+                                <TableRow key={row.name}>
+                                  <TableCell component="th" scope="row">
+                                    {row.name}
+                                  </TableCell>
+                                  <TableCell component="th" scope="row">
+                                    <Img alt="complex" src={row.url} />
+                                  </TableCell>
+                                  <TableCell align="left">
+                                    <TableCell align="left" sx={{ borderBottom: 0, m: 0, paddingLeft: 0, }}>
+                                      Price
+                                    </TableCell>
+                                    <TableCell align="right " sx={{ borderBottom: 0, m: 0, fontWeight: 'bold', }}>
+                                      Rs. {row.price}
+                                    </TableCell>
+                                  </TableCell>
+
+                                  <TableCell component="th" scope="row">
+                                    {row.category}
+                                  </TableCell>
+                                  <TableCell align="center" component="th" scope="row">
+                                    <IconButton
+                                      onClick={console.log('success')}>
+                                      <EditIcon color='success' />
+                                    </IconButton>
+                                    <IconButton
+                                      onClick={console.log('success')}>
+                                      <DeleteOutlineIcon color='error' />
+                                    </IconButton>
+                                  </TableCell>
+                                </TableRow>
+                              )
+                              }
+                            </Fragment>
+                          ))}
+
+
+
+                          {emptyRows > 0 && (
+                            <TableRow style={{ height: 53 * emptyRows }}>
+                              <TableCell colSpan={6} />
                             </TableRow>
                           )}
-                          {(row.category === 'Beverages' || row.category === 'Sauces') && (
-                            <TableRow key={row.name}>
-                              <TableCell component="th" scope="row">
-                                {row.name}
-                              </TableCell>
-                              <TableCell component="th" scope="row">
-                                <Img alt="complex" src={row.url}/>
-                              </TableCell>
-                              <TableCell align="left">
-                                <TableCell align="left" sx={{ borderBottom: 0, m: 0, paddingLeft: 0, }}>
-                                  Price 
-                                </TableCell>
-                                <TableCell align="right " sx={{ borderBottom: 0, m: 0, fontWeight: 'bold', }}>
-                                  Rs. {row.price} 
-                                </TableCell>
-                              </TableCell>
-
-                              <TableCell component="th" scope="row">
-                                {row.category}
-                              </TableCell>
-                              <TableCell align="center" component="th" scope="row">
-                                <IconButton
-                                  onClick={console.log('success')}>
-                                  <EditIcon color='success' />
-                                </IconButton>
-                                <IconButton
-                                  onClick={console.log('success')}>
-                                  <DeleteOutlineIcon color='error' />
-                                </IconButton>
-                              </TableCell>
-                            </TableRow>
-                          )
-                          }
-                        </Fragment>
-                      ))}
+                        </TableBody>
 
 
 
-                      {emptyRows > 0 && (
-                        <TableRow style={{ height: 53 * emptyRows }}>
-                          <TableCell colSpan={6} />
-                        </TableRow>
-                      )}
-                    </TableBody>
+                        <TableFooter>
+                          <TableRow>
+                            <TablePagination
+                              rowsPerPageOptions={[3, 10, 25, { label: 'All', value: -1 }]}
+                              colSpan={3}
+                              count={rows.length}
+                              rowsPerPage={rowsPerPage}
+                              page={page}
+                              SelectProps={{
+                                inputProps: {
+                                  'aria-label': 'rows per page',
+                                },
+                                native: true,
+                              }}
+                              onPageChange={handleChangePage}
+                              onRowsPerPageChange={handleChangeRowsPerPage}
+                              ActionsComponent={TablePaginationActions}
+                            />
+                          </TableRow>
+                        </TableFooter>
+
+                      </Table>
+
+                    </Paper>
+
+                  </Box>
 
 
+                </Grid>
 
-                    <TableFooter>
-                      <TableRow>
-                        <TablePagination
-                          rowsPerPageOptions={[3, 10, 25, { label: 'All', value: -1 }]}
-                          colSpan={3}
-                          count={rows.length}
-                          rowsPerPage={rowsPerPage}
-                          page={page}
-                          SelectProps={{
-                            inputProps: {
-                              'aria-label': 'rows per page',
-                            },
-                            native: true,
-                          }}
-                          onPageChange={handleChangePage}
-                          onRowsPerPageChange={handleChangeRowsPerPage}
-                          ActionsComponent={TablePaginationActions}
-                        />
-                      </TableRow>
-                    </TableFooter>
-
-                  </Table>
-
-                </Paper>
-
-              </Box>
-
-
+              </Grid>
             </Grid>
-
           </Grid>
-        </Grid>
-      </Grid>
-
-
+        </Fragment>
+      )}
     </>
   )
 }
