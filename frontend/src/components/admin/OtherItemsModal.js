@@ -11,7 +11,7 @@ import { useAlert } from 'react-alert'
 import { getToppings } from '../../actions/toppingActions';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 
-function MenuItemModal({ title, openPopup, setOpenPopup, }) {
+function OtherItemsModal({ title, openPopup, setOpenPopup, }) {
 
     const Img = styled('img')({
         alignItems: "center",
@@ -75,9 +75,9 @@ function MenuItemModal({ title, openPopup, setOpenPopup, }) {
                             noValidate
                             autoComplete="off"
                         >
-                            <Typography variant='h5' sx={{ fontWeight: 'bold', marginBottom: 2, marginLeft: 1.2 }}>Add New Pizza</Typography>
+                            <Typography variant='h5' sx={{ fontWeight: 'bold', marginBottom: 2, marginLeft: 1.2 }}>Add New Other Items</Typography>
                             <Divider sx={{ marginBottom: 2 }} />
-                            <Typography variant='body1' sx={{ fontWeight: 'bold', marginLeft: 1.2 }}>Pizza Details</Typography>
+                            <Typography variant='body1' sx={{ fontWeight: 'bold', marginLeft: 1.2 }}>Product Details</Typography>
                             {/* Name and Email */}
                             <TextField
                                 label='Name'
@@ -104,41 +104,23 @@ function MenuItemModal({ title, openPopup, setOpenPopup, }) {
                                     label="Category"
                                     onChange={(e) => setCategory(e.target.value)}
                                 >
-                                    <MenuItem value='pizza'>Pizza</MenuItem>
+                                    <MenuItem value='beverages'>Beverages</MenuItem>
+                                    <MenuItem value='sauces'>Sauces</MenuItem>
 
                                 </Select>
 
                             </FormControl>
 
-                            <Typography variant='body1' sx={{ marginTop: 2, fontWeight: 'bold', marginLeft: 1.2 }}>Pizza Price</Typography>
+                            <Typography variant='body1' sx={{ marginTop: 2, fontWeight: 'bold', marginLeft: 1.2 }}>Product Price</Typography>
 
                             <TextField
-                                label='Price for Small'
-                                placeholder='Price for Small Pizza' fullWidth required
+                                label='Price '
+                                placeholder='Price for Product' fullWidth required
                                 defaultValue={smallPrice}
                                 onChange={(e) => setSmallPrice(e.target.value)}
                             />
 
-                            <TextField
-                                label='Price for Medium'
-                                placeholder='Price for Medium Pizza' fullWidth required
-                                defaultValue={mediumPrice}
-                                onChange={(e) => setMediumPrice(e.target.value)}
-                            />
-
-                            <TextField
-                                label='Price for Large'
-                                placeholder='Price for Large Pizza' fullWidth required
-                                defaultValue={largePrice}
-                                onChange={(e) => setLargePrice(e.target.value)}
-                            />
-
-                            <TextField
-                                label='Price for Jumbo'
-                                placeholder='Price for Jumbo Pizza' fullWidth required
-                                defaultValue={jumboPrice}
-                                onChange={(e) => setJumboPrice(e.target.value)}
-                            />
+                           
 
 
 
@@ -180,4 +162,4 @@ function MenuItemModal({ title, openPopup, setOpenPopup, }) {
     )
 }
 
-export default MenuItemModal
+export default OtherItemsModal

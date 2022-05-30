@@ -1,5 +1,5 @@
 
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import MetaData from '../layout/MetaData'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
@@ -23,6 +23,9 @@ import LastPageIcon from '@mui/icons-material/LastPage';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import AdminSidebar from './AdminSidebar';
+
+import MenuItemModal from './MenuItemModal'
+import OtherItemsModal from './OtherItemsModal'
 
 
 // yeh nhi baanana abb
@@ -214,6 +217,10 @@ function AdminDashboardMenu({ products }) {
   };
 
 
+  const [openPizzaPopup, setOpenPizzaPopup] = useState(false)
+  const [openOtherItemPopup, setOtherItemPopup] = useState(false)
+
+
   return (
     <>
 
@@ -223,8 +230,12 @@ function AdminDashboardMenu({ products }) {
         <Typography variant="h4" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
           Menu
         </Typography>
-        <Grid item sx={{ paddingRight: 9 }}>
-          <Button variant='contained' startIcon={<AddCircleIcon />}>Add New Item</Button>
+        <Grid item sx={{ paddingRight: 9, }}>
+          <Button variant='contained' startIcon={<AddCircleIcon />}
+            onClick={() => { setOpenPizzaPopup(true) }}>Add New Pizza</Button>
+
+          <Button variant='outlined' startIcon={<AddCircleIcon />} sx={{ marginLeft: 2 }}
+            onClick={() => { setOtherItemPopup(true) }}>Add New Other Items</Button>
         </Grid>
       </Grid>
       <Divider sx={{ marginTop: 2, marginBottom: 3 }} /><Grid display='flex' container rowSpacing={5} columnSpacing={8} sx={{ marginBottom: 8, width: "100%" }}>
@@ -356,6 +367,27 @@ function AdminDashboardMenu({ products }) {
             </Paper>
           </Box>
         </Grid>
+
+        <MenuItemModal
+          title="Employee Form"
+          openPopup={openPizzaPopup}
+          setOpenPopup={setOpenPizzaPopup}
+
+        >
+          <Typography variant='h2'>my anme is modal</Typography>
+        </MenuItemModal>
+
+
+        <OtherItemsModal
+
+          title="Employee Form"
+          openPopup={openOtherItemPopup}
+          setOpenPopup={setOtherItemPopup}
+        >
+
+        </OtherItemsModal>
+  
+
       </Grid>
 
 
