@@ -7,12 +7,14 @@ export const addItemToCart = (id, quantity, price, size, toppingids) => async (d
     // const { cartItems } = useSelector(state => state.cart)
 
     const toppings = []
+    let toppingstotal= 0;
 
     if (toppingids.length != 0) {
         for (let i = 0; i < toppingids.length; i++) {
             console.log(toppingids[i]);
             const { data } = await axios.get(`/api/topping/${toppingids[i]}`)
             console.log(data);
+            toppingstotal = toppingstotal + data.price
             toppings.push(data)
             console.log(toppings);
         }
@@ -31,6 +33,7 @@ export const addItemToCart = (id, quantity, price, size, toppingids) => async (d
             price: price,
             size: size,
             toppings: toppings,
+            toppingstotal: toppingstotal,
             // PizzaDetails: data.product.PizzaDetails,
             // BeverageDetails: data.product.BeverageDetails,
             // SauceDetails: data.product.SauceDetails,

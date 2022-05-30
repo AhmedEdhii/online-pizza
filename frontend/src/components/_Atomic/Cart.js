@@ -20,16 +20,18 @@ const Cart = (props) => {
         dispatch(removeItemFromCart(id))
     }
 
-    const handleTotal = () => {
-        cartItems.map(item => {
-            console.log(item.toppings)
-            item.toppings && item.toppings.map(topping => (
-                sum = sum + parseInt(topping.price)
-            ))
-        })
-        console.log(sum)
-        setSum(sum)
-    }
+    const deliveryCharges = 150;
+
+    // const handleTotal = () => {
+    //     cartItems.map(item => {
+    //         console.log(item.toppings)
+    //         item.toppings && item.toppings.map(topping => (
+    //             sum = sum + parseInt(topping.price)
+    //         ))
+    //     })
+    //     console.log(sum)
+    //     setSum(sum)
+    // }
 
     // useEffect(() => {
     //     const total = 0;
@@ -47,7 +49,7 @@ const Cart = (props) => {
             anchor='right'
             open={openDrawer}
             onClose={() => { setOpenDrawer(false) }}
-            sx={{zIndex: 1500}}
+            sx={{ zIndex: 1500 }}
 
         >
             <Fragment>
@@ -71,8 +73,8 @@ const Cart = (props) => {
                                             <Grid >
                                                 <Grid item display='flex'  >
                                                     <Typography variant="h6" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
-                                                        Your Cart: {cartItems.length} items </Typography>
-
+                                                        Your Cart : {cartItems.length} items
+                                                    </Typography>
                                                 </Grid>
                                                 <Divider sx={{ marginBottom: 2 }} />
 
@@ -130,7 +132,7 @@ const Cart = (props) => {
                                                                     <Typography variant="body1" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
                                                                         {item.name}
                                                                     </Typography>
-                                                                    <Typography variant="body1" component="div" sx={{ flexGrow: 1 }}>
+                                                                    <Typography variant="body1" color='text.secondary' component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
                                                                         {item.description}
                                                                     </Typography>
                                                                 </Grid>
@@ -161,8 +163,9 @@ const Cart = (props) => {
                                             <Grid display='flex' fullWidth sx={{ justifyContent: 'space-between' }}>
 
                                                 <Grid item >
-
-
+                                                    <Typography variant="body1" color='text.secondary' component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
+                                                        Sub Total
+                                                    </Typography>
                                                     <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
                                                         Total
                                                     </Typography>
@@ -170,11 +173,13 @@ const Cart = (props) => {
 
                                                 <Grid item display='flex' sx={{ flexDirection: 'column' }}>
 
-                                                    <a>
-                                                        <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }} onClick={() => handleTotal}>
-                                                            Rs. {cartItems.reduce((acc, item) => acc + (item.quantity * item.price) + sum, 0).toFixed(2)}
-                                                        </Typography>
-                                                    </a>
+                                                    <Typography variant="body1" color='text.secondary' component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
+                                                        Rs. {cartItems.reduce((acc, item) => acc + (item.quantity * item.price) + item.toppingstotal, 0).toFixed(2)}
+                                                    </Typography>
+
+                                                    <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
+                                                        Rs. {cartItems.reduce((acc, item) => acc + (item.quantity * item.price) + item.toppingstotal + deliveryCharges, 0).toFixed(2)}
+                                                    </Typography>
 
                                                 </Grid>
 

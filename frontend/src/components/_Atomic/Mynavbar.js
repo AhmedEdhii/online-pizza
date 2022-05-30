@@ -87,7 +87,7 @@ const Mynavbar = () => {
       {!loading && (
         <ThemeProvider theme={theme}>
           {!user ? (
-            <AppBar elevation={0} position='sticky' sx={{ backgroundColor: "#fff", zIndex: 1200}} >
+            <AppBar elevation={0} position='sticky' sx={{ backgroundColor: "#fff", zIndex: 1200 }} >
 
               <Toolbar >
 
@@ -221,18 +221,18 @@ const Mynavbar = () => {
                         </Fragment>
                       )}
 
-                    {(user.role === 'admin') && (
-                      <Fragment>
-                        <NavLink to="/AdminDashboard" style={{ textDecoration: 'none', color: 'unset' }} >
-                          <MenuItem onClick={handleCloseUserMenu}>
-                            <ListItemIcon>
-                              <Person fontSize="small" />
-                            </ListItemIcon>
-                            Admin Dashboard
-                          </MenuItem>
-                        </NavLink>
+                      {(user.role === 'admin') && (
+                        <Fragment>
+                          <NavLink to="/AdminDashboard" style={{ textDecoration: 'none', color: 'unset' }} >
+                            <MenuItem onClick={handleCloseUserMenu}>
+                              <ListItemIcon>
+                                <Person fontSize="small" />
+                              </ListItemIcon>
+                              Admin Dashboard
+                            </MenuItem>
+                          </NavLink>
 
-                        {/* <NavLink to="/UserProfile" style={{ textDecoration: 'none', color: 'unset' }} >
+                          {/* <NavLink to="/UserProfile" style={{ textDecoration: 'none', color: 'unset' }} >
                             <MenuItem onClick={handleCloseUserMenu}>
                               <ListItemIcon>
                                 <Settings fontSize="small" />
@@ -240,24 +240,31 @@ const Mynavbar = () => {
                               Settings
                             </MenuItem>
                           </NavLink> */}
-                      </Fragment>
-                    )}
+                        </Fragment>
+                      )}
 
-                    <NavLink to="/homepage" style={{ textDecoration: 'none', color: 'unset' }} onClick={logoutHandler}>
-                      <MenuItem onClick={handleCloseUserMenu}>
-                        <ListItemIcon>
-                          <Logout fontSize="small" />
-                        </ListItemIcon>
-                        Logout
-                      </MenuItem>
-                    </NavLink>
-                  </Menu>
+                      <NavLink to="/homepage" style={{ textDecoration: 'none', color: 'unset' }} onClick={logoutHandler}>
+                        <MenuItem onClick={handleCloseUserMenu}>
+                          <ListItemIcon>
+                            <Logout fontSize="small" />
+                          </ListItemIcon>
+                          Logout
+                        </MenuItem>
+                      </NavLink>
+                    </Menu>
+
+                    <Grid item display="flex" >
+                      <Badge badgeContent={cartItems.length} color={"secondary"}  >
+                        <IconButton color="secondary" size='large' onClick={() => { setOpenDrawer(true); }}>
+                          <ShoppingCartOutlinedIcon />
+                        </IconButton>
+                      </Badge>
+                    </Grid>
+                  </Grid>
 
                 </Grid>
 
-              </Grid>
-
-            </Toolbar>
+              </Toolbar>
 
             </AppBar>
 
@@ -271,16 +278,16 @@ const Mynavbar = () => {
 
             // </ProductModal>
           }
-      <Cart
-        openDrawer={openDrawer}
-        setOpenDrawer={setOpenDrawer}>
+          <Cart
+            openDrawer={openDrawer}
+            setOpenDrawer={setOpenDrawer}>
 
-      </Cart>
-    </ThemeProvider>
+          </Cart>
+        </ThemeProvider>
 
 
-  )
-}
+      )
+      }
 
     </>
   )
