@@ -29,6 +29,10 @@ import TestPage from './Pages/TestPage';
 import AdminMainDashboard from './components/admin/AdminMainDashboard';
 import AdminDashboardMenu from './components/admin/AdminDashboardMenu';
 
+import UserDashboard from './userDashboard/UserDashboard';
+import UserProfile from './userDashboard/UserProfile';
+import UserOrders from './userDashboard/UserOrders';
+
 
 function App() {
 
@@ -46,6 +50,11 @@ function App() {
 
           <Route path="/AdminDashboard" component={AdminMainDashboard} />
           <Route path="/AdminDashboardMenu" component={AdminDashboardMenu} />
+
+          <Route path="/UserDashboard" component={UserDashboard} />
+          <Route path="/UserProfile" component={UserProfile} />
+          <Route path="/userorders" component={UserOrders} />
+
 
           {/* Test Page */}
           <Route path="/testPage" component={TestPage} />
