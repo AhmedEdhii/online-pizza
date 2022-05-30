@@ -40,7 +40,7 @@ const rows = [
   []
 ];
 
-
+rows.splice(0, 1)
 function TablePaginationActions(props) {
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
