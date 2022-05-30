@@ -174,17 +174,17 @@ const Mynavbar = () => {
 
 
                     <Menu
-                      sx={{ mt: '75px' }}
+                      sx={{ mt: '55px' }}
                       id="account-menu"
                       anchorEl={anchorElUser}
                       anchorOrigin={{
                         vertical: 'top',
-                        horizontal: 'right',
+                        horizontal: 'center',
                       }}
                       keepMounted
                       transformOrigin={{
                         vertical: 'top',
-                        horizontal: 'right',
+                        horizontal: 'center',
                       }}
                       open={Boolean(anchorElUser)}
                       onClose={handleCloseUserMenu}

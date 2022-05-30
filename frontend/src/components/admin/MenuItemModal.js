@@ -1,6 +1,7 @@
 import {
-    Typography, Dialog, DialogTitle, DialogContent, Fab, Grid, Box, IconButton, Divider, Radio, FormLabel,
-    FormControlLabel, RadioGroup, FormControl, Checkbox, Button, styled, FormGroup, TextField, Select, MenuItem, InputLabel, Switch
+    Typography, Dialog, DialogTitle, DialogContent, Fab, Grid, Box, IconButton, Divider,
+    Radio, FormLabel, FormControlLabel, RadioGroup, FormControl, Checkbox, Button, styled, Input,
+    FormGroup, TextField, Select, MenuItem, InputLabel, Switch
 } from '@mui/material'
 
 import CloseIcon from '@mui/icons-material/Close';
@@ -208,27 +209,14 @@ function MenuItemModal({ title, openPopup, setOpenPopup, }) {
                         <Img alt="complex" src={avatarPreview} />
 
                         <Fragment>
-                        <Input name='avatar' accept="image/*" id="contained-button-file" type="file"
-                            onChange={(e) => {
-                                if (e.target.name === 'avatar') {
-                                    const reader = new FileReader();
-                                    console.log("444" + e.target.value)
-                                    reader.onload = () => {
-                                        console.log(reader.readyState)
-                                        if (reader.readyState === 2) {
-                                            setAvatarPreview(reader.result)
-                                            setAvatar(reader.result)
-                                        }
-                                    }
-                                    reader.readAsDataURL(e.target.files[0])
-                                    alert.success('Picture Uploaded')
-                                }
-                            }}
-                        /> 
-                        <label htmlFor="contained-button-file" >
-                            <Button fullWidth variant='contained' startIcon={<PhotoCamera />}
+
+                        <Input accept="image/*" id="contained-button-file" type="file"/> 
+                        <label htmlFor="contained-button-file">
+                            <Button fullWidth variant='contained' component="span" startIcon={<PhotoCamera />}
                                 sx={{ marginTop: 2, marginBottom: 2, }}>Upload Picture</Button>
                         </label>
+
+
                         </Fragment>
 
                         <Typography
