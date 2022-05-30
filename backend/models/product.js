@@ -25,16 +25,16 @@ const productSchema = new mongoose.Schema({
         }
     },
     PizzaDetails: {
-        crust: {
-            crust1: {
-                type: String,
-                //default: 0,
-            },
-            crust2: {
-                type: String,
-                //default: 0,
-            },
-        },
+        // crust: {
+        //     crust1: {
+        //         type: String,
+        //         //default: 0,
+        //     },
+        //     crust2: {
+        //         type: String,
+        //         //default: 0,
+        //     },
+        // },
         size: {
             small: {
                 type: Number,
@@ -90,7 +90,7 @@ const productSchema = new mongoose.Schema({
     createdBy: {
         type: mongoose.Schema.ObjectId,
         ref: 'User',
-        required: true
+        // required: true
     },
     createdAt: {
         type: Date,

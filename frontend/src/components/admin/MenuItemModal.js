@@ -45,11 +45,11 @@ function MenuItemModal({ title, openPopup, setOpenPopup, }) {
 
     const [category, setCategory] = useState('Pizzas')
 
-    const [activeState, setActiveState] = useState('true');
+    const [activeState, setActiveState] = useState('active');
     const [confirmPassword, setConfirmPassword] = useState('')
 
-    const [avatar, setAvatar] = useState('')
-    const [avatarPreview, setAvatarPreview] = useState('/images/default_avatar.jpg')
+    const [avatar, setAvatar] = useState('/images/default.png')
+    const [avatarPreview, setAvatarPreview] = useState('/images/default.png')
 
     const UploadHandler = () => {
         alert.success('Picture Uploaded')
@@ -91,6 +91,7 @@ function MenuItemModal({ title, openPopup, setOpenPopup, }) {
         const formData = new FormData();
         formData.set('name', name);
         formData.set('description', description);
+        formData.set('category', category);
         formData.set('small', smallPrice);
         formData.set('regular', mediumPrice);
         formData.set('large', largePrice);
@@ -160,11 +161,11 @@ function MenuItemModal({ title, openPopup, setOpenPopup, }) {
                                 <InputLabel id="demo-simple-select-label">Category</InputLabel>
                                 <Select
 
-                                    
+
                                     label="Category"
                                     onChange={(e) => setCategory(e.target.value)}
                                 >
-                                    <MenuItem value='pizza'>Pizza</MenuItem>
+                                    <MenuItem value='Pizzas'>Pizzas</MenuItem>
 
                                 </Select>
 
@@ -209,12 +210,26 @@ function MenuItemModal({ title, openPopup, setOpenPopup, }) {
                         <Img alt="complex" src={avatarPreview} />
 
                         <Fragment>
-
-                        <Input accept="image/*" id="contained-button-file" type="file"/> 
-                        <label htmlFor="contained-button-file">
-                            <Button fullWidth variant='contained' component="span" startIcon={<PhotoCamera />}
-                                sx={{ marginTop: 2, marginBottom: 2, }}>Upload Picture</Button>
-                        </label>
+                            <Input accept="image/*" id="contained-button-file" type="file"
+                                onChange={(e) => {
+                                    if (e.target.name === 'avatar') {
+                                        const reader = new FileReader();
+                                        console.log("444" + e.target.value)
+                                        reader.onload = () => {
+                                            console.log(reader.readyState)
+                                            if (reader.readyState === 2) {
+                                                setAvatarPreview(reader.result)
+                                                setAvatar(reader.result)
+                                            }
+                                        }
+                                        reader.readAsDataURL(e.target.files[0])
+                                    }
+                                }}
+                            />
+                            <label htmlFor="contained-button-file">
+                                <Button fullWidth variant='contained' component="span" startIcon={<PhotoCamera />}
+                                    sx={{ marginTop: 2, marginBottom: 2, }}>Upload Picture</Button>
+                            </label>
 
 
                         </Fragment>
@@ -223,7 +238,7 @@ function MenuItemModal({ title, openPopup, setOpenPopup, }) {
                             variant='body1'
                             sx={{ fontWeight: 'bold', textAlign: 'left' }}>Set Product Active</Typography>
                         <Switch
-                            defaultChecked={true} size='medium'
+                            defaultChecked={'active'} size='medium'
                             checked={activeState}
                             onChange={(e) => setActiveState(e.target.checked)}
 
