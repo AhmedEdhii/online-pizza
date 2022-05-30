@@ -160,7 +160,7 @@ function MenuItemModal({ title, openPopup, setOpenPopup, }) {
                                 <InputLabel id="demo-simple-select-label">Category</InputLabel>
                                 <Select
 
-                                    defaultValue='pizza'
+                                    
                                     label="Category"
                                     onChange={(e) => setCategory(e.target.value)}
                                 >
