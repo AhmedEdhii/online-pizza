@@ -6,25 +6,147 @@ const cloudinary = require('cloudinary')
 
 
 //Add new product -- For Admins
+//Add new product -- For Admins
 exports.newProduct = catchAsyncErrors(async (req, res, next) => {
 
     req.body.createdBy = req.user._id;
-    if (req.body.avatar !== '') {
-        const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
-            folder: 'avatars',
-            width: 150,
-            crop: "scale"
-        })  
-        req.body.url = result.secure_url
-    }
-    const { name, phonenumber, deliveryaddress, email, password } = req.body;
-    const product = await Product.create(req.body);
+    // console.log(req.body)
+    // if (req.body.avatar !== '') {
+    //     const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+    //         folder: 'avatars',
+    //         width: 150,
+    //         crop: "scale"
+    //     })
 
-    res.status(201).json({
-        success: true,
-        product
-    })
+    //     if (product.category === 'Pizzas') {
+    //         const { name, description, smallPrice, mediumPrice, largePrice, jumboPrice, category, activeState } = req.body;
+    //         console.log(req.body)
+    //         const product = await Product.create({
+    //             name,
+    //             description,
+    //             category,
+    //             PizzaDetails: {
+    //                 size: {
+    //                     small: smallPrice,
+    //                     regular: mediumPrice,
+    //                     large: largePrice,
+    //                     jumbo: jumboPrice
+    //                 }
+    //             },
+    //             product_status: activeState,
+    //             url: result.secure_url
+    //         });
+    //         res.status(201).json({
+    //             success: true,
+    //             product
+    //         })
+    //     }
+    //     else if (product.category === 'Beverages') {
+    //         const { name, description, price, category, activeState } = req.body;
+    //         const product = await Product.create({
+    //             name,
+    //             description,
+    //             category,
+    //             BeverageDetails: {
+    //                 price: price
+    //             },
+    //             product_status: activeState,
+    //             url: result.secure_url
+    //         });
+    //         res.status(201).json({
+    //             success: true,
+    //             product
+    //         })
+    //     }
+    //     else if (product.category === 'Sauces') {
+    //         const { name, description, price, category, activeState } = req.body;
+    //         const product = await Product.create({
+    //             name,
+    //             description,
+    //             category,
+    //             SauceDetails: {
+    //                 price: price
+    //             },
+    //             url: result.secure_url,
+    //             activeState,
+    //             url: result.secure_url
+    //         });
+    //         res.status(201).json({
+    //             success: true,
+    //             product
+    //         })
+    //     }
+    // }
+
+    //else {
+    if (req.body.category === 'Pizzas') {
+        const { name, description, smallPrice, mediumPrice, largePrice, jumboPrice, category, activeState } = req.body;
+        console.log(req.body)
+        // const PizzaDetails = {
+        //     size: {
+        //         small: smallPrice,
+        //         regular: mediumPrice,
+        //         large: largePrice,
+        //         jumbo: jumboPrice
+        //     }
+        // }
+            
+        const product = await Product.create({
+            name,
+            description,
+            category,
+            PizzaDetails: {
+                size: {
+                    small: smallPrice,
+                    regular: mediumPrice,
+                    large: largePrice,
+                    jumbo: jumboPrice
+                },
+            },
+            product_status: activeState
+        });
+        console.log(product)
+        res.status(201).json({
+            success: true,
+            product
+        })
+    }
+    else if (req.body.category === 'Beverages') {
+        const { name, description, price, category, activeState } = req.body;
+        const product = await Product.create({
+            name,
+            description,
+            category,
+            BeverageDetails: {
+                price: price
+            },
+            product_status: activeState
+        });
+        res.status(201).json({
+            success: true,
+            product
+        })
+    }
+    else if (req.body.category === 'Sauces') {
+        const { name, description, price, category, activeState } = req.body;
+        const product = await Product.create({
+            name,
+            description,
+            category,
+            SauceDetails: {
+                price: price
+            },
+            product_status: activeState
+        });
+        res.status(201).json({
+            success: true,
+            product
+        })
+    }
+    // }
 })
+
+
 
 
 // Get all products 

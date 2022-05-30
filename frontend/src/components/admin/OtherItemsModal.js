@@ -28,7 +28,7 @@ function OtherItemsModal({ title, openPopup, setOpenPopup, }) {
     const [description, setDescription] = useState('')
 
     const [generalPrice, setGeneralPrice] = useState('')
-    const [smallPrice, setSmallPrice] = useState('')
+    const [price, setPrice] = useState('')
     const [mediumPrice, setMediumPrice] = useState('')
     const [largePrice, setLargePrice] = useState('')
     const [jumboPrice, setJumboPrice] = useState('')
@@ -116,8 +116,8 @@ function OtherItemsModal({ title, openPopup, setOpenPopup, }) {
                             <TextField
                                 label='Price '
                                 placeholder='Price for Product' fullWidth required
-                                defaultValue={smallPrice}
-                                onChange={(e) => setSmallPrice(e.target.value)}
+                                defaultValue={price}
+                                onChange={(e) => setPrice(e.target.value)}
                             />
 
                            

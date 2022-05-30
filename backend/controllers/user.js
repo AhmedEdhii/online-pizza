@@ -14,7 +14,7 @@ exports.signup = catchAsyncErrors(async (req, res) => {
         })
     }
 
-    const { name, description, PizzaDetails, category} = req.body;
+    const { name, phonenumber, deliveryaddress, email, password } = req.body;
     if (req.body.avatar !== '') {
         const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
             folder: 'avatars',

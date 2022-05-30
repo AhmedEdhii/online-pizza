@@ -5,7 +5,7 @@ const generateToken = (user, statusCode, res) => {
 
     // generate a token 
     const token = jwt.sign({ _id: user._id, role: user.role }, process.env.TOKEN_KEY, {
-        expiresIn: '15m'
+        expiresIn: '4000m'
     })
 
     // Options for cookie
