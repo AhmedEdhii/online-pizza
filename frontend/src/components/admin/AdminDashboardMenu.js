@@ -1,5 +1,10 @@
 
-import React from 'react'
+import React, { Fragment, useEffect } from 'react'
+import MetaData from '../layout/MetaData'
+import { useAlert } from 'react-alert'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAdminProducts, clearErrors } from '../../actions/productActions'
+
 import { useTheme } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
@@ -19,6 +24,8 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import AdminSidebar from './AdminSidebar'
 
+
+// yeh nhi baanana abb
 function createData(name, prices, category, actions) {
   return {
     name,
@@ -30,15 +37,16 @@ function createData(name, prices, category, actions) {
 
 
 const rows = [
-  createData('Pizza 1', 380, 'Pizza'),
-  createData('Pizza 2', 380, 'Pizza'),
-  createData('Pizza 3', 380, 'Pizza'),
-  createData('Pizza 4', 380, 'Pizza'),
-  createData('Pizza 5', 380, 'Pizza'),
-  createData('Pizza 6', 380, 'Pizza'),
-  createData('Pizza 7', 380, 'Drinks'),
-  createData('Pizza 8', 450, 'Pizza'),
-  createData('Pizza 9', 185, 'Pizza'),
+  []
+  // createData('Pizza 1', 380, 'Pizza'),
+  // createData('Pizza 2', 380, 'Pizza'),
+  // createData('Pizza 3', 380, 'Pizza'),
+  // createData('Pizza 4', 380, 'Pizza'),
+  // createData('Pizza 5', 380, 'Pizza'),
+  // createData('Pizza 6', 380, 'Pizza'),
+  // createData('Pizza 7', 380, 'Drinks'),
+  // createData('Pizza 8', 450, 'Pizza'),
+  // createData('Pizza 9', 185, 'Pizza'),
 
 ];
 
@@ -106,6 +114,53 @@ function AdminDashboardMenu(props) {
     margin: 1
   });
 
+  const alert = useAlert();
+  const dispatch = useDispatch();
+  const setProducts = () => {
+    products.forEach(product => {
+      if (product.category === 'Pizzas') {
+        rows.push({
+          name: product.name,
+          small: product.PizzaDetails.size.small,
+          regular: product.PizzaDetails.size.regular,
+          large: product.PizzaDetails.size.large,
+          jumbo: product.PizzaDetails.size.jumbo,
+          category: product.category,
+          url: product.url
+        })
+      }
+      else if (product.category === 'Beverages') {
+        rows.push({
+          name: product.name,
+          price: product.BeverageDetails.price,
+          category: product.category,
+          url: product.url
+        })
+      }
+      else if (product.category === 'Sauces') {
+        rows.push({
+          name: product.name,
+          price: product.SauceDetails.price,
+          category: product.category,
+          url: product.url
+        })
+      }
+    })
+    return rows;
+  }
+
+  const { loading, error, products } = useSelector(state => state.products);
+  useEffect(() => {
+    dispatch(getAdminProducts());
+    setProducts();
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors())
+    }
+
+  }, [dispatch, alert, error,])
+
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(3);
 
@@ -125,7 +180,7 @@ function AdminDashboardMenu(props) {
 
   return (
     <>
-
+      <MetaData title={'All Products'} />
       <Grid display='flex'>
 
         <AdminSidebar />
@@ -164,43 +219,75 @@ function AdminDashboardMenu(props) {
                         ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         : rows
                       ).map((row) => (
-                        <TableRow key={row.name}>
+                        <Fragment>
+                          {row.category === 'Pizzas' && (
+                            <TableRow key={row.name}>
+                              <TableCell component="th" scope="row">
+                                {row.name}
+                              </TableCell>
+                              <TableCell component="th" scope="row">
+                                <Img alt="complex" src={row.url} />
+                              </TableCell>
+                              <TableCell align="left">
+                                <TableCell align="left" sx={{ borderBottom: 0, m: 0, paddingLeft: 0, }}>
+                                  Small <br></br> Medium <br></br> Large <br></br> Jumbo
+                                </TableCell>
+                                <TableCell align="right " sx={{ borderBottom: 0, m: 0, fontWeight: 'bold', }}>
+                                  Rs. {row.small} <br></br> Rs. {row.regular} <br></br> Rs. {row.large} <br></br> Rs. {row.jumbo}
+                                </TableCell>
+                              </TableCell>
+                              <TableCell component="th" scope="row">
+                                {row.category}
+                              </TableCell>
+                              <TableCell align="center" component="th" scope="row">
+                                <IconButton
+                                  onClick={console.log('success')}>
+                                  <EditIcon color='success' />
+                                </IconButton>
+                                <IconButton
+                                  onClick={console.log('success')}>
+                                  <DeleteOutlineIcon color='error' />
+                                </IconButton>
+                              </TableCell>
+                            </TableRow>
+                          )}
+                          {(row.category === 'Beverages' || row.category === 'Sauces') && (
+                            <TableRow key={row.name}>
+                              <TableCell component="th" scope="row">
+                                {row.name}
+                              </TableCell>
+                              <TableCell component="th" scope="row">
+                                <Img alt="complex" src={row.url}/>
+                              </TableCell>
+                              <TableCell align="left">
+                                <TableCell align="left" sx={{ borderBottom: 0, m: 0, paddingLeft: 0, }}>
+                                  Price 
+                                </TableCell>
+                                <TableCell align="right " sx={{ borderBottom: 0, m: 0, fontWeight: 'bold', }}>
+                                  Rs. {row.price} 
+                                </TableCell>
+                              </TableCell>
 
-                          <TableCell component="th" scope="row">
-                            {row.name}
-
-                          </TableCell>
-
-                          <TableCell component="th" scope="row">
-                            <Img alt="complex" src='/images/pizza.jpg' />
-                          </TableCell>
-                          <TableCell align="left">
-                            <TableCell align="left" sx={{ borderBottom: 0, m: 0, paddingLeft: 0, }}>
-                              Small <br></br> Medium <br></br> Large <br></br> Jumbo
-                            </TableCell>
-                            <TableCell align="right " sx={{ borderBottom: 0, m: 0, fontWeight: 'bold', }}>
-                              Rs.123 <br></br> Rs. 245 <br></br> Rs. 789 <br></br> Rs. 101112
-                            </TableCell>
-
-
-                          </TableCell>
-                          <TableCell component="th" scope="row">
-                            {row.category}
-                          </TableCell>
-                          <TableCell align="center" component="th" scope="row">
-                            <IconButton
-                              onClick={console.log('success')}>
-                              <EditIcon color='success' />
-                            </IconButton>
-                            <IconButton
-                              onClick={console.log('success')}>
-                              <DeleteOutlineIcon color='error' />
-                            </IconButton>
-                          </TableCell>
-
-
-                        </TableRow>
+                              <TableCell component="th" scope="row">
+                                {row.category}
+                              </TableCell>
+                              <TableCell align="center" component="th" scope="row">
+                                <IconButton
+                                  onClick={console.log('success')}>
+                                  <EditIcon color='success' />
+                                </IconButton>
+                                <IconButton
+                                  onClick={console.log('success')}>
+                                  <DeleteOutlineIcon color='error' />
+                                </IconButton>
+                              </TableCell>
+                            </TableRow>
+                          )
+                          }
+                        </Fragment>
                       ))}
+
+
 
                       {emptyRows > 0 && (
                         <TableRow style={{ height: 53 * emptyRows }}>

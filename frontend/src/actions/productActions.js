@@ -4,12 +4,36 @@ import {
     ALL_PRODUCTS_REQUEST,
     ALL_PRODUCTS_SUCCESS,
     ALL_PRODUCTS_FAIL,
+    ADMIN_PRODUCTS_REQUEST,
+    ADMIN_PRODUCTS_SUCCESS,
+    ADMIN_PRODUCTS_FAIL,
     PRODUCT_DETAILS_REQUEST,
     PRODUCT_DETAILS_SUCCESS,
     PRODUCT_DETAILS_FAIL,
     CLEAR_ERRORS
 
 } from '../constants/productConstants'
+
+export const getAdminProducts = () => async (dispatch) => {
+    try {
+
+        dispatch({ type: ADMIN_PRODUCTS_REQUEST })
+
+        const { data } = await axios.get(`/api/admin/products`)
+
+        dispatch({
+            type: ADMIN_PRODUCTS_SUCCESS,
+            payload: data.products
+        })
+
+    } catch (error) {
+
+        dispatch({
+            type: ADMIN_PRODUCTS_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
 
 export const getProducts = (keyword = '') => async (dispatch) => {
     try {
@@ -31,13 +55,6 @@ export const getProducts = (keyword = '') => async (dispatch) => {
     }
 }
 
-// Clear Errors
-export const clearErrors = () => async (dispatch) => {
-    dispatch({
-        type: CLEAR_ERRORS
-    })
-}
-
 export const getProductDetails = (id) => async (dispatch) => {
     try {
 
@@ -56,4 +73,11 @@ export const getProductDetails = (id) => async (dispatch) => {
             payload: error.response.data.message
         })
     }
+}
+
+// Clear Errors
+export const clearErrors = () => async (dispatch) => {
+    dispatch({
+        type: CLEAR_ERRORS
+    })
 }
