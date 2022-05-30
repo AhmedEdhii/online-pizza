@@ -28,6 +28,7 @@ import TestPage from './Pages/TestPage';
 
 import AdminMainDashboard from './components/admin/AdminMainDashboard';
 import AdminDashboardMenu from './components/admin/AdminDashboardMenu';
+import Admin_ManageUsers from './components/admin/Admin_ManageUsers';
 
 import UserDashboard from './userDashboard/UserDashboard';
 import UserProfile from './userDashboard/UserProfile';
@@ -49,6 +50,9 @@ function App() {
           <Route path="/mylogin" component={LoginandSignup} />
 
           <Route path="/AdminDashboard" component={AdminMainDashboard} />
+          <Route path="/AdminDashboardMenu" component={AdminDashboardMenu} />
+          <Route path="/Admin_ManageUsers" component={Admin_ManageUsers} />
+          <Route path="/AdminDashboardMenu" component={AdminDashboardMenu} />
           <Route path="/AdminDashboardMenu" component={AdminDashboardMenu} />
 
           <Route path="/UserDashboard" component={UserDashboard} />

@@ -17,7 +17,7 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
-import AdminSidebar from './AdminSidebar'
+import AdminSidebar from './AdminSidebar';
 
 function createData(name, prices, category, actions) {
   return {
