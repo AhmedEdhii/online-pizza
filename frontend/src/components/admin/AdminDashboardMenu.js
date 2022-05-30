@@ -50,6 +50,7 @@ const rows = [
 
 ];
 
+
 function TablePaginationActions(props) {
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
@@ -104,7 +105,12 @@ function TablePaginationActions(props) {
   );
 }
 
+
+
 function AdminDashboardMenu(props) {
+
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const Img = styled('img')({
     alignItems: "center",
@@ -148,6 +154,7 @@ function AdminDashboardMenu(props) {
     })
     return rows;
   }
+  console.log(rows);
 
   const { loading, error, products } = useSelector(state => state.products);
   useEffect(() => {
@@ -161,8 +168,7 @@ function AdminDashboardMenu(props) {
   }, [dispatch, alert, error,])
 
 
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(3);
+
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -180,8 +186,7 @@ function AdminDashboardMenu(props) {
 
   return (
     <>
-      {!loading && (
-        <Fragment>
+     
           <MetaData title={'All Products'} />
           <Grid display='flex'>
 
@@ -215,7 +220,9 @@ function AdminDashboardMenu(props) {
                             <TableCell align="center" sx={{ fontWeight: 'bold', }}>Actions</TableCell>
                           </TableRow>
                         </TableHead>
-
+                        
+                        {!loading && (
+                          <Fragment>
                         <TableBody>
                           {(rowsPerPage > 0
                             ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -297,13 +304,13 @@ function AdminDashboardMenu(props) {
                             </TableRow>
                           )}
                         </TableBody>
-
-
+                            </Fragment>
+                        )}
 
                         <TableFooter>
                           <TableRow>
                             <TablePagination
-                              rowsPerPageOptions={[3, 10, 25, { label: 'All', value: -1 }]}
+                              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                               colSpan={3}
                               count={rows.length}
                               rowsPerPage={rowsPerPage}
@@ -324,17 +331,13 @@ function AdminDashboardMenu(props) {
                       </Table>
 
                     </Paper>
-
                   </Box>
-
-
                 </Grid>
-
               </Grid>
             </Grid>
           </Grid>
-        </Fragment>
-      )}
+       
+     
     </>
   )
 }

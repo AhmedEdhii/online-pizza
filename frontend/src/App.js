@@ -14,7 +14,6 @@ import Profile from './components/user/Profile';
 import UpdateProfile from './components/user/UpdateProfile';
 import UpdatePassword from './components/user/UpdatePassword';
 
-import AdminDashboard from './components/admin/AdminDashboard';
 
 import ProtectedRoute from './components/route/protectedRoute';
 
@@ -28,7 +27,7 @@ import TestPage from './Pages/TestPage';
 
 import AdminMainDashboard from './components/admin/AdminMainDashboard';
 import AdminDashboardMenu from './components/admin/AdminDashboardMenu';
-import Admin_ManageUsers from './components/admin/Admin_ManageUsers';
+
 
 import UserDashboard from './userDashboard/UserDashboard';
 import UserProfile from './userDashboard/UserProfile';
@@ -51,9 +50,9 @@ function App() {
 
           <Route path="/AdminDashboard" component={AdminMainDashboard} />
           <Route path="/AdminDashboardMenu" component={AdminDashboardMenu} />
-          <Route path="/Admin_ManageUsers" component={Admin_ManageUsers} />
+          {/* <Route path="/Admin_ManageUsers" component={Admin_ManageUsers} />
           <Route path="/AdminDashboardMenu" component={AdminDashboardMenu} />
-          <Route path="/AdminDashboardMenu" component={AdminDashboardMenu} />
+          <Route path="/AdminDashboardMenu" component={AdminDashboardMenu} /> */}
 
           <Route path="/UserDashboard" component={UserDashboard} />
           <Route path="/UserProfile" component={UserProfile} />
