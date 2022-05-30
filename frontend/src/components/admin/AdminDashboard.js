@@ -25,6 +25,7 @@ import AdminDashboardMenu from './AdminDashboardMenu';
 
 const drawerWidth = 240;
 
+
 function AdminDashboard() {
 
     const [colorchange, setColorChange] = useState('#f30c1c')
@@ -48,7 +49,7 @@ function AdminDashboard() {
         if (sidebarNav[navLabel].state === true) {
             sidebarNav[navLabel].color = '#db0b19'
             console.log(sidebarNav[navLabel])
-           
+
         }
         console.log('success')
     }
@@ -58,11 +59,88 @@ function AdminDashboard() {
 
             <Grid display='flex'>
 
-                <AdminSidebar/>
+                <Drawer
+                    sx={{
+                        position: 'sticky',
+                        width: drawerWidth,
+                        flexShrink: 0,
+
+                        '& .MuiDrawer-paper': {
+                            paddingTop: '86px',
+                            zIndex: '0',
+                            width: drawerWidth,
+                            boxSizing: 'border-box',
+                            backgroundColor: '#f30c1c',
+                        },
+                    }}
+                    variant="permanent"
+                    anchor="left"
+                >
+
+                    <List>
+
+                        
+                            <ListItem sx={{ color: '#fff' }}>
+                                <ListItemButton onClick={() => sidebarHandler(0)} sx={{ backgroundColor: sidebarNav[0].color }} >
+                                    <ListItemIcon sx={{ color: '#fff' }}>
+                                        <DashboardIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Dashboard" />
+                                </ListItemButton>
+                            </ListItem>
+                       
+
+                     
+                            <ListItem sx={{ color: '#fff' }}>
+                                <ListItemButton onClick={() => sidebarHandler(1)}>
+                                    <ListItemIcon sx={{ color: '#fff' }}>
+                                        <LocalPizzaIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Menu" />
+                                </ListItemButton>
+                            </ListItem>
+                      
+
+                            <ListItem sx={{ color: '#fff' }}>
+                                <ListItemButton onClick={() => sidebarHandler(2)}  >
+                                    <ListItemIcon sx={{ color: '#fff' }}>
+                                        <RestaurantMenuIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Toppings" />
+                                </ListItemButton>
+                            </ListItem>
+                      
+
+                      
+                            <ListItem sx={{ color: '#fff' }}>
+                                <ListItemButton onClick={() => sidebarHandler(3)}  >
+                                    <ListItemIcon sx={{ color: '#fff' }}>
+                                        <ListAltIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Orders" />
+                                </ListItemButton>
+                            </ListItem>
+                  
+
+                        
+                            <ListItem sx={{ color: '#fff' }}>
+                                <ListItemButton onClick={() => sidebarHandler(4)} >
+                                    <ListItemIcon sx={{ color: '#fff' }}>
+                                        <GroupIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Users" />
+                                </ListItemButton>
+                            </ListItem>
+                     
+
+
+
+                    </List>
+                </Drawer>
 
                 <Grid display='flex' sx={{ m: 5, marginTop: 2, width: "80%", flexDirection: "column" }}>
-                    {/* <AdminMainDashboard /> */}
-                    <AdminDashboardMenu />
+                    <AdminMainDashboard />
+                    {/* <AdminDashboardMenu /> */}
                 </Grid>
 
 

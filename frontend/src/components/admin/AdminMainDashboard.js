@@ -10,11 +10,7 @@ function AdminMainDashboard() {
         <>
 
 
-            <Grid display='flex'>
-
-                <AdminSidebar />
-
-                <Grid display='flex' sx={{ m: 5, marginTop: 2, width: "80%", flexDirection: "column" }}>
+           
                     <Grid>
                         <Typography variant="h4" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, paddingTop: 2 }}>
                             Dashboard
@@ -164,13 +160,7 @@ function AdminMainDashboard() {
                         </Grid>
 
                     </Grid>
-                </Grid>
-
-
-
-
-
-            </Grid>
+     
         </>
 
     )

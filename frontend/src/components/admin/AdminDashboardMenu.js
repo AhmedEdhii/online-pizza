@@ -210,11 +210,9 @@ function AdminDashboardMenu(props) {
     <>
 
       <MetaData title={'All Products'} />
-      <Grid display='flex'>
+     
 
-        <AdminSidebar />
-
-        <Grid display='flex' sx={{ m: 5, marginTop: 2, width: "80%", flexDirection: "column" }}>
+        
 
           <Grid display='flex' sx={{ alignItems: 'center', paddingTop: 2 }}>
             <Typography variant="h4" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
@@ -356,8 +354,8 @@ function AdminDashboardMenu(props) {
               </Box>
             </Grid>
           </Grid>
-        </Grid>
-      </Grid>
+   
+     
 
 
     </>
