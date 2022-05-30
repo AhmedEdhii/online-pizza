@@ -64,7 +64,7 @@ function App() {
 
       <Route path="/UserDashboard" component={UserDashboard} />
       <Route path="/UserProfile" component={UserProfile} />
-      <Route path="/userorders" component={UserOrders} />
+      <Route path="/userOrders" component={UserOrders} />
 
 
       {/* Test Page */}

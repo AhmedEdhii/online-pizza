@@ -105,7 +105,7 @@ const Mynavbar = () => {
                     {/* <a href='/' > <Img alt="complex" src="/images/OP.png" /></a> */}
 
                   </Grid>
-{/* 
+                  {/* 
                   <Grid sx={{ display: { xs: 'none', md: 'flex' } }}>
 
                     <Button variant="text" color='secondary' component={Link} to="/">One</Button>
@@ -138,7 +138,7 @@ const Mynavbar = () => {
             </AppBar>
           )
             :
-            !loading &&
+            (!loading) &&
 
             <AppBar position='sticky' elevation={2} sx={{ backgroundColor: "#fff", zIndex: 1400 }}  >
 
@@ -161,16 +161,16 @@ const Mynavbar = () => {
 
 
                   {/* sx={{ border: 1 }} */}
-                  <Grid item display="flex" sx={{alignItems: 'center'}} >
+                  <Grid item display="flex" sx={{ alignItems: 'center' }} >
 
-                    
+
                     <Tooltip title="Open settings">
                       <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                         <Avatar alt="Avatar" src={(user.avatar && user.avatar.url) || '/images/default_avatar.jpg'}
                           sx={{ height: 45, width: 45 }} />
                       </IconButton>
                     </Tooltip>
-                    <Typography variant='body1'   sx={{ marginLeft: 2, marginRight:2, color:'#0e0e0e' }}>{user.name}</Typography>
+                    <Typography variant='body1' sx={{ marginLeft: 2, marginRight: 2, color: '#0e0e0e' }}>{user.name}</Typography>
 
 
                     <Menu
@@ -190,40 +190,74 @@ const Mynavbar = () => {
                       onClose={handleCloseUserMenu}
 
                     >
+                      {(user.role === 'user') && (
+                        <Fragment>
+                          <NavLink to="/UserDashboard" style={{ textDecoration: 'none', color: 'unset' }} >
+                            <MenuItem onClick={handleCloseUserMenu}>
+                              <ListItemIcon>
+                                <Person fontSize="small" />
+                              </ListItemIcon>
+                              Dashboard
+                            </MenuItem>
+                          </NavLink>
 
-                      <NavLink to="/UserDashboard" style={{ textDecoration: 'none', color: 'unset' }} >
-                        <MenuItem onClick={handleCloseUserMenu}>
-                          <ListItemIcon>
-                            <Person fontSize="small" />
-                          </ListItemIcon>
-                          Dashboard
-                        </MenuItem>
-                      </NavLink>
+                          <NavLink to="/UserProfile" style={{ textDecoration: 'none', color: 'unset' }} >
+                            <MenuItem onClick={handleCloseUserMenu}>
+                              <ListItemIcon>
+                                <Settings fontSize="small" />
+                              </ListItemIcon>
+                              Profile
+                            </MenuItem>
+                          </NavLink>
 
-                      <NavLink to="/UserProfile" style={{ textDecoration: 'none', color: 'unset' }} >
-                        <MenuItem onClick={handleCloseUserMenu}>
-                          <ListItemIcon>
-                            <Settings fontSize="small" />
-                          </ListItemIcon>
-                          Settings
-                        </MenuItem>
-                      </NavLink>
+                          <NavLink to="/userOrders" style={{ textDecoration: 'none', color: 'unset' }} >
+                            <MenuItem onClick={handleCloseUserMenu}>
+                              <ListItemIcon>
+                                <Settings fontSize="small" />
+                              </ListItemIcon>
+                              Orders
+                            </MenuItem>
+                          </NavLink>
+                        </Fragment>
+                      )}
 
-                      <NavLink to="/homepage" style={{ textDecoration: 'none', color: 'unset' }} onClick={logoutHandler}>
-                        <MenuItem onClick={handleCloseUserMenu}>
-                          <ListItemIcon>
-                            <Logout fontSize="small" />
-                          </ListItemIcon>
-                          Logout
-                        </MenuItem>
-                      </NavLink>
-                    </Menu>
+                    {(user.role === 'admin') && (
+                      <Fragment>
+                        <NavLink to="/AdminDashboard" style={{ textDecoration: 'none', color: 'unset' }} >
+                          <MenuItem onClick={handleCloseUserMenu}>
+                            <ListItemIcon>
+                              <Person fontSize="small" />
+                            </ListItemIcon>
+                            Admin Dashboard
+                          </MenuItem>
+                        </NavLink>
 
-                  </Grid>
+                        {/* <NavLink to="/UserProfile" style={{ textDecoration: 'none', color: 'unset' }} >
+                            <MenuItem onClick={handleCloseUserMenu}>
+                              <ListItemIcon>
+                                <Settings fontSize="small" />
+                              </ListItemIcon>
+                              Settings
+                            </MenuItem>
+                          </NavLink> */}
+                      </Fragment>
+                    )}
+
+                    <NavLink to="/homepage" style={{ textDecoration: 'none', color: 'unset' }} onClick={logoutHandler}>
+                      <MenuItem onClick={handleCloseUserMenu}>
+                        <ListItemIcon>
+                          <Logout fontSize="small" />
+                        </ListItemIcon>
+                        Logout
+                      </MenuItem>
+                    </NavLink>
+                  </Menu>
 
                 </Grid>
 
-              </Toolbar>
+              </Grid>
+
+            </Toolbar>
 
             </AppBar>
 
@@ -237,16 +271,16 @@ const Mynavbar = () => {
 
             // </ProductModal>
           }
-                <Cart
-                openDrawer={openDrawer}
-                setOpenDrawer={setOpenDrawer}>
-                
-                </Cart>
-        </ThemeProvider>
+      <Cart
+        openDrawer={openDrawer}
+        setOpenDrawer={setOpenDrawer}>
+
+      </Cart>
+    </ThemeProvider>
 
 
-      )
-      }
+  )
+}
 
     </>
   )
