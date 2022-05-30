@@ -178,7 +178,7 @@ const Cart = (props) => {
                                                     </Typography>
 
                                                     <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
-                                                        Rs. {cartItems.reduce((acc, item) => acc + (item.quantity * item.price) + item.toppingstotal + deliveryCharges, 0).toFixed(2)}
+                                                        Rs. {cartItems.reduce((acc, item) => acc + (item.quantity * item.price) + item.toppingstotal, deliveryCharges).toFixed(2)}
                                                     </Typography>
 
                                                 </Grid>

@@ -201,7 +201,7 @@ function AdminDashboardMenu({ products }) {
     // dup.splice(0, dup.length)
     // rows = [...dup]; 
     rows.splice(0, rows.length)
-  }, [rows])
+  }, )
 
 
 
