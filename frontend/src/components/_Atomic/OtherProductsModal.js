@@ -54,7 +54,7 @@ function OtherProductsModal({ title, openPopup, setOpenPopup, product, toppings 
 
     return (
         <>
-            <Dialog open={openPopup} maxWidth="md" sx={{ borderRadius: '1.5rem',zIndex: 1500 }} onClose={() => { setOpenPopup(false) }}>
+            <Dialog open={openPopup} maxWidth="md" sx={{ borderRadius: '1.5rem',zIndex: 1200 }} onClose={() => { setOpenPopup(false) }}>
 
                 <Grid spacing={2} sx={{ p: 2, alignItems: 'center', }}>
 
