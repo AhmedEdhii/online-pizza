@@ -9,14 +9,13 @@ const cloudinary = require('cloudinary')
 //Add new product -- For Admins
 exports.newProduct = catchAsyncErrors(async (req, res, next) => {
 
-    req.body.createdBy = req.user._id;
     // console.log(req.body)
     // if (req.body.avatar !== '') {
-    //     const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
-    //         folder: 'avatars',
-    //         width: 150,
-    //         crop: "scale"
-    //     })
+    // const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+    //     folder: 'avatars',
+    //     width: 150,
+    //     crop: "scale"
+    // })
 
     //     if (product.category === 'Pizzas') {
     //         const { name, description, smallPrice, mediumPrice, largePrice, jumboPrice, category, activeState } = req.body;
@@ -79,13 +78,23 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
     // }
 
     //else {
+    console.log(req.body.avatar)
+    var url;
+    if (req.body.avatar != '/images/default.png') {
+        const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+            folder: 'products',
+            width: 150,
+            crop: "scale"
+        })
+        url = result.secure_url;
+    }
+
+    req.body.createdBy = req.user._id;
     if (req.body.category === 'Pizzas') {
         const { name, description, small, regular, large, jumbo, category, activeState } = req.body;
-    
-        
+
         console.log(req.body)
-     
-            
+
         const product = await Product.create({
             name,
             description,
@@ -98,7 +107,8 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
                     jumbo: jumbo
                 },
             },
-            product_status: activeState
+            product_status: activeState,
+            url
         });
         console.log(product)
         res.status(201).json({
@@ -115,7 +125,8 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
             BeverageDetails: {
                 price: price
             },
-            product_status: activeState
+            product_status: activeState,
+            url
         });
         res.status(201).json({
             success: true,
@@ -131,7 +142,8 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
             SauceDetails: {
                 price: price
             },
-            product_status: activeState
+            product_status: activeState,
+            url
         });
         res.status(201).json({
             success: true,

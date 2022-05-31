@@ -7,22 +7,24 @@ import {
     Drawer, Button, Container, Divider, styled
 } from '@mui/material'
 
-import { useAlert } from 'react-alert'
 import MetaData from '../components/layout/MetaData';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { NavLink } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
-import React, { useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
+
+import { useAlert } from 'react-alert'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateProfile, loadUser, clearErrors } from '../actions/userActions'
+import { UPDATE_PROFILE_RESET } from '../constants/userConstants'
+import { updatePassword } from '../actions/userActions'
 
 import UserSidebar from './UserSidebar';
 import EditIcon from '@mui/icons-material/Edit';
 
 
-
-
-
-function UserProfile() {
+function UserProfile({ user }) {
 
     const Img = styled('img')({
         alignItems: "center",
@@ -35,11 +37,14 @@ function UserProfile() {
         borderRadius: '100rem',
     });
 
-    const [name, setName] = useState('Ebrahim Baig')
-    const [email, setEmail] = useState('baig.ebrahim@gmail.com')
-    const [number, setNumber] = useState('03343399234')
-    const [address, setAddress] = useState('GulshanIqbal, Block 13, BaitulMukarram Masjid ')
-    const [avatar, setAvatar] = useState('')
+    console.log(user.avatar)
+
+    const [name, setName] = useState(user.name)
+    const [email, setEmail] = useState(user.email)
+    const [phonenumber, setPhoneNumber] = useState(user.phonenumber)
+    const [deliveryaddress, setDeliveryAddress] = useState(user.deliveryaddress)
+    const [avatar, setAvatar] = useState(user.avatar.url)
+    const [avatarPreview, setAvatarPreview] = useState('/images/default_avatar.jpg')
 
     const [oldPassword, setOldPassword] = useState('')
     const [newPassword, setNewPassword] = useState('');
@@ -52,11 +57,46 @@ function UserProfile() {
     // const [address, setAddress] = useState('')
     // const [avatar, setAvatar] = useState('')
     const alert = useAlert();
+    const dispatch = useDispatch();
+
+    // const { user } = useSelector(state => state.auth);
+    const { error, isUpdated, loading } = useSelector(state => state.user)
+
+    useEffect(() => {
+
+        // if (user) {
+        //     setName(user.name);
+        //     setPhoneNumber(user.phonenumber);
+        //     setEmail(user.email);
+        //     setDeliveryAddress(user.deliveryaddress)
+        //     setAvatarPreview((user && user.avatar.url) || '/images/default_avatar.jpg')
+        // }
+
+        if (error) {
+            alert.error(error);
+            dispatch(clearErrors());
+        }
+
+        // if (isUpdated) {
+        //     alert.success('User updated successfully')
+        //     dispatch(loadUser());
+        //     dispatch({
+        //         type: UPDATE_PROFILE_RESET
+        //     })
+        // }
+
+    }, [dispatch, alert, error, isUpdated])
+
 
     const SubmitHandler = () => {
-
-        alert.success('[Profile Edited]')
-
+        const formData = new FormData();
+        formData.set('name', name);
+        formData.set('phonenumber', phonenumber);
+        formData.set('email', email);
+        formData.set('deliveryaddress', deliveryaddress);
+        formData.set('avatar', avatar);
+        dispatch(updateProfile(formData))
+        alert.success('Profile Edited')
     }
     const UploadHandler = () => {
 
@@ -65,13 +105,21 @@ function UserProfile() {
     }
 
     const ChangePasswordHandler = () => {
-
-        alert.success('Password Chnaged')
-
+        const formData = new FormData();
+        formData.set('oldPassword', oldPassword);
+        if (newPassword != confirmPassword) {
+            alert.error("Passwords must Match");
+            return 0;
+        }
+        else {
+            formData.set('password', newPassword);
+            dispatch(updatePassword(formData))
+            alert.success('Password Changed')
+        }
     }
     const Input = styled('input')({
         display: 'none',
-      });
+    });
 
     return (
         <>
@@ -131,16 +179,16 @@ function UserProfile() {
                                     label='Phone Number'
                                     placeholder='Enter Phone Number' fullWidth required multiline
 
-                                    defaultValue={number}
-                                    onChange={(e) => setNumber(e.target.value)}
+                                    defaultValue={phonenumber}
+                                    onChange={(e) => setPhoneNumber(e.target.value)}
                                 />
 
                                 <TextField
                                     label='Delivery Address'
                                     placeholder='Enter Address' fullWidth required multiline
 
-                                    defaultValue={address}
-                                    onChange={(e) => setAddress(e.target.value)}
+                                    defaultValue={deliveryaddress}
+                                    onChange={(e) => setDeliveryAddress(e.target.value)}
                                 />
 
                             </Box>
@@ -165,13 +213,13 @@ function UserProfile() {
 
                                 <Img alt="complex" src='/images/default.png' sx={{ ml: 8, }} />
 
-                               
-                                    <Input accept="image/*" id="icon-button-file" type="file" />
-                                    <label htmlFor="icon-button-file">
-                                    <IconButton size='small' color="primary" aria-label="upload picture" component="span" sx={{ border:5, borderColor: '#FFF', ml: 28, mt: -14, backgroundColor: '#f30c1c',  "&:hover, &.Mui-focusVisible": { backgroundColor: "#FCAB04" }}} >
-                                        <EditIcon sx={{color: "#fff"}} />
+
+                                <Input accept="image/*" id="icon-button-file" type="file" />
+                                <label htmlFor="icon-button-file">
+                                    <IconButton size='small' color="primary" aria-label="upload picture" component="span" sx={{ border: 5, borderColor: '#FFF', ml: 28, mt: -14, backgroundColor: '#f30c1c', "&:hover, &.Mui-focusVisible": { backgroundColor: "#FCAB04" } }} >
+                                        <EditIcon sx={{ color: "#fff" }} />
                                     </IconButton>
-                                      </label>
+                                </label>
 
 
 

@@ -7,6 +7,11 @@ import {
     Drawer, Button, Container, Divider
 } from '@mui/material'
 
+import React, { Fragment, useState, useEffect } from 'react'
+import { useAlert } from 'react-alert'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateProfile, loadUser, clearErrors } from '../actions/userActions'
+
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -18,8 +23,6 @@ import { Link } from 'react-router-dom';
 import UserDashboardMain from './UserDashboardMain';
 import UserProfile from './UserProfile';
 import UserOrders from './UserOrders';
-
-import React, { useState } from 'react'
 
 import UserSidebar from './UserSidebar';
 
@@ -33,6 +36,8 @@ function UserDashboard() {
     const [dashboard, setDashboard] = useState(true)
     const [profile, setProfile] = useState(false)
     const [order, setOrder] = useState(false)
+
+    const { user, loading } = useSelector(state => state.auth)
 
     const sidebarHandler = (navLabel) => {
 
@@ -113,10 +118,10 @@ function UserDashboard() {
                         <UserDashboardMain />
                     )}
                     {(profile === true) && (
-                        <UserProfile />
+                        <UserProfile user = {user}/>
                     )}
                     {(order === true) && (
-                        <UserOrders />
+                        <UserOrders user = {user}/>
                     )}
                 </Grid>
             </Grid>
