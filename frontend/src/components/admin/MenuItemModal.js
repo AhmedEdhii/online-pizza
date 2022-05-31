@@ -45,8 +45,10 @@ function MenuItemModal({ title, openPopup, setOpenPopup, }) {
 
     const [category, setCategory] = useState('Pizzas')
 
-    const [activeState, setActiveState] = useState('active');
+    const [activeState, setActiveState] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState('')
+
+    const [status, setStatus] = useState('inactive');
 
     const [avatar, setAvatar] = useState('/images/default.png')
     const [avatarPreview, setAvatarPreview] = useState('/images/default.png')
@@ -238,10 +240,10 @@ function MenuItemModal({ title, openPopup, setOpenPopup, }) {
                             variant='body1'
                             sx={{ fontWeight: 'bold', textAlign: 'left' }}>Set Product Active</Typography>
                         <Switch
-                            defaultChecked={'active'} size='medium'
+                            defaultChecked={activeState} size='medium'
                             checked={activeState}
-                            onChange={(e) => setActiveState(e.target.checked)}
-
+                            onChange={(e) => setActiveState(e.target.checked)  }
+                                
                         />
 
                         <Button fullWidth variant='contained' sx={{ marginTop: 2, marginLeft: 1, marginBottom: 1, }}

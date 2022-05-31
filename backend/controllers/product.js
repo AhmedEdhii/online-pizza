@@ -80,16 +80,11 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
 
     //else {
     if (req.body.category === 'Pizzas') {
-        const { name, description, smallPrice, mediumPrice, largePrice, jumboPrice, category, activeState } = req.body;
+        const { name, description, small, regular, large, jumbo, category, activeState } = req.body;
+    
+        
         console.log(req.body)
-        // const PizzaDetails = {
-        //     size: {
-        //         small: smallPrice,
-        //         regular: mediumPrice,
-        //         large: largePrice,
-        //         jumbo: jumboPrice
-        //     }
-        // }
+     
             
         const product = await Product.create({
             name,
@@ -97,10 +92,10 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
             category,
             PizzaDetails: {
                 size: {
-                    small: smallPrice,
-                    regular: mediumPrice,
-                    large: largePrice,
-                    jumbo: jumboPrice
+                    small: small,
+                    regular: regular,
+                    large: large,
+                    jumbo: jumbo
                 },
             },
             product_status: activeState
