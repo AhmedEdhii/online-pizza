@@ -43,19 +43,14 @@ function UserProfile({ user }) {
     const [email, setEmail] = useState(user.email)
     const [phonenumber, setPhoneNumber] = useState(user.phonenumber)
     const [deliveryaddress, setDeliveryAddress] = useState(user.deliveryaddress)
-    const [avatar, setAvatar] = useState(user.avatar.url)
-    const [avatarPreview, setAvatarPreview] = useState('/images/default_avatar.jpg')
 
+    const [avatarPreview, setAvatarPreview] = useState(user.avatar.url || '/images/default_avatar.jpg')
+    const [avatar, setAvatar] = useState(user.avatar.url || '/images/default_avatar.jpg')
     const [oldPassword, setOldPassword] = useState('')
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('')
 
-    // const [name, setName] = useState('')
-    // const [email, setEmail] = useState('')
-    // const [number, setNumber] = useState('')
 
-    // const [address, setAddress] = useState('')
-    // const [avatar, setAvatar] = useState('')
     const alert = useAlert();
     const dispatch = useDispatch();
 
@@ -64,31 +59,23 @@ function UserProfile({ user }) {
 
     useEffect(() => {
 
-        // if (user) {
-        //     setName(user.name);
-        //     setPhoneNumber(user.phonenumber);
-        //     setEmail(user.email);
-        //     setDeliveryAddress(user.deliveryaddress)
-        //     setAvatarPreview((user && user.avatar.url) || '/images/default_avatar.jpg')
-        // }
+
 
         if (error) {
             alert.error(error);
             dispatch(clearErrors());
         }
 
-        // if (isUpdated) {
-        //     alert.success('User updated successfully')
-        //     dispatch(loadUser());
-        //     dispatch({
-        //         type: UPDATE_PROFILE_RESET
-        //     })
-        // }
+
 
     }, [dispatch, alert, error, isUpdated])
 
+    function timeout(delay) {
+        return new Promise(res => setTimeout(res, delay));
+    }
 
     const SubmitHandler = () => {
+
         const formData = new FormData();
         formData.set('name', name);
         formData.set('phonenumber', phonenumber);
@@ -97,6 +84,11 @@ function UserProfile({ user }) {
         formData.set('avatar', avatar);
         dispatch(updateProfile(formData))
         alert.success('Profile Edited')
+
+
+        // window.location.reload()
+
+
     }
     const UploadHandler = () => {
 
@@ -116,10 +108,35 @@ function UserProfile({ user }) {
             dispatch(updatePassword(formData))
             alert.success('Password Changed')
         }
+
+        setOldPassword('')
+        setNewPassword('');
+        setConfirmPassword('')
+
     }
+
+
+
+
     const Input = styled('input')({
         display: 'none',
     });
+
+    const onChange = e => {
+        if (e.target.name === 'avatar') {
+            const reader = new FileReader();
+            console.log("444" + e.target.value)
+            reader.onload = () => {
+                console.log(reader.readyState)
+                if (reader.readyState === 2) {
+                    setAvatarPreview(reader.result)
+                    setAvatar(reader.result)
+                }
+            }
+            reader.readAsDataURL(e.target.files[0])
+        }
+    }
+
 
     return (
         <>
@@ -211,12 +228,18 @@ function UserProfile({ user }) {
 
                             >
 
-                                <Img alt="complex" src='/images/default.png' sx={{ ml: 8, }} />
 
 
-                                <Input accept="image/*" id="icon-button-file" type="file" />
+                                <Img alt="complex" src={avatarPreview} sx={{ ml: 8, }} />
+
+
+                                <Input name='avatar' accept="image/*" id="icon-button-file" type="file" onChange={onChange} />
                                 <label htmlFor="icon-button-file">
-                                    <IconButton size='small' color="primary" aria-label="upload picture" component="span" sx={{ border: 5, borderColor: '#FFF', ml: 28, mt: -14, backgroundColor: '#f30c1c', "&:hover, &.Mui-focusVisible": { backgroundColor: "#FCAB04" } }} >
+                                    <IconButton size='small' color="primary" aria-label="upload picture" component="span"
+                                        sx={{
+                                            border: 5, borderColor: '#FFF', ml: 28, mt: -14,
+                                            backgroundColor: '#f30c1c', "&:hover, &.Mui-focusVisible": { backgroundColor: "#FCAB04" }
+                                        }} >
                                         <EditIcon sx={{ color: "#fff" }} />
                                     </IconButton>
                                 </label>
@@ -242,63 +265,61 @@ function UserProfile({ user }) {
                     </Grid> */}
                 </Grid>
 
-                {/* Chnage Password */}
+                    {/* Chnage Password */}
 
-                <Grid item xs={12} display='flex' sx={{ flexDirection: 'column', ml: 20, }}>
+                    <Grid item xs={12} display='flex' sx={{ flexDirection: 'column', ml: 20, }}>
 
-                    <Typography variant='body1' sx={{ fontWeight: 'bold', marginBottom: 1, marginLeft: 1.2 }}>Change Password</Typography>
-                    <Divider sx={{ marginBottom: 1 }} />
-                    <Grid item >
-                        <Box container display='flex'
-                            component="form"
-                            sx={{
-                                '& .MuiTextField-root': { m: 1, },
+                        <Typography variant='body1' sx={{ fontWeight: 'bold', marginBottom: 1, marginLeft: 1.2 }}>Change Password</Typography>
+                        <Divider sx={{ marginBottom: 1 }} />
+                        <Grid item >
+                            <Box container display='flex'
+                                component="form"
+                                sx={{
+                                    '& .MuiTextField-root': { m: 1, },
 
-                                width: '300px',
-                                flexDirection: 'column',
+                                    width: '300px',
+                                    flexDirection: 'column',
 
-                            }}
-                            noValidate
-                            autoComplete="off"
-                        >
-
-
-                            {/* Name and Email */}
-                            <TextField
-                                label='Old Password'
-                                placeholder='Enter Old Password' fullWidth required
-                                defaultValue={oldPassword}
-                                onChange={(e) => setOldPassword(e.target.value)}
-                            />
+                                }}
+                                noValidate
+                                autoComplete="off"
+                            >
 
 
-                            <TextField
-                                label='New Password'
-                                placeholder='Enter New Password' fullWidth required multiline
-
-                                defaultValue={newPassword}
-                                onChange={(e) => setNewPassword(e.target.value)}
-                            />
-
-
-                            <TextField
-                                label='Confirm Password'
-                                placeholder='Confirm Password' fullWidth required multiline
-
-                                defaultValue={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                            />
-                            <Button fullWidth variant='contained' sx={{ marginTop: 5.5, marginLeft: 1, }}
-                                onClick={ChangePasswordHandler}>Change Password</Button>
+                                {/* Name and Email */}
+                                <TextField
+                                    label='Old Password'
+                                    placeholder='Enter Old Password' fullWidth required
+                                    defaultValue={oldPassword} type='password'
+                                    onChange={(e) => setOldPassword(e.target.value)}
+                                />
 
 
-                        </Box>
+                                <TextField
+                                    label='New Password'
+                                    placeholder='Enter New Password' 
+                                    type='password' fullWidth required
+                                    defaultValue={newPassword}
+                                    onChange={(e) => setNewPassword(e.target.value)}
+                                />
+
+
+                                <TextField
+                                    label='Confirm Password'
+                                    placeholder='Confirm Password' type='password' fullWidth required
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                />
+                                <Button fullWidth variant='contained' sx={{ marginTop: 5.5, marginLeft: 1, }}
+                                    onClick={ChangePasswordHandler}>Change Password</Button>
+
+
+                            </Box>
+                        </Grid>
+
+
+
+
                     </Grid>
-
-
-
-
-                </Grid>
 
 
             </Grid>

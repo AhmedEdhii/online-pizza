@@ -25,6 +25,10 @@ import AdminSidebar from './AdminSidebar'
 import AdminMainDashboard from './AdminMainDashboard';
 import AdminDashboardMenu from './AdminDashboardMenu';
 import AdminManageOrders from './AdminManageOrders';
+import AdminToppings from './AdminToppings';
+
+
+
 const drawerWidth = 240;
 
 
@@ -36,7 +40,7 @@ function AdminDashboard() {
     const [topping, setTopping] = useState(false)
     const [order, setOrder] = useState(false)
     const [user, setUser] = useState(false)
-    
+
     const dispatch = useDispatch();
     const { loading, error, products } = useSelector(state => state.products);
 
@@ -198,9 +202,13 @@ function AdminDashboard() {
                     {(menu === true) && (
                         <AdminDashboardMenu products={products} />
                     )}
+                    {(topping === true) && (
+                        <AdminToppings products={products} />
+                    )}
                     {(order === true) && (
                         <AdminManageOrders products={products} />
                     )}
+
                 </Grid>
 
             </Grid>

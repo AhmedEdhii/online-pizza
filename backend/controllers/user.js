@@ -14,7 +14,9 @@ exports.signup = catchAsyncErrors(async (req, res) => {
         })
     }
 
-    const { name, phonenumber, deliveryaddress, email, password } = req.body;
+    const { name, phonenumber, deliveryaddress, email, password, avatar } = req.body;
+
+  
     if (req.body.avatar !== '') {
         const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
             folder: 'avatars',
@@ -212,9 +214,21 @@ exports.updateProfile = catchAsyncErrors(async (req, res) => {
         deliveryaddress: req.body.deliveryaddress
     }
 
+
+    console.log(req.body)
+    console.log('*****************')
+
+    
     // Update avatar
     //if (req.body.avatar !== '') {
+
+
     const user = await User.findById(req.user._id)
+    console.log(user)
+    console.log('-------------------')
+
+
+
 
     // cloudinary.v2.uploader.destroy(image_id, (err, res) => {
     //     console.log(err, res);
@@ -223,7 +237,7 @@ exports.updateProfile = catchAsyncErrors(async (req, res) => {
     //     const response = await cloudinary.v2.uploader.destroy(user.avatar.public_id, {
     //         resource_type: "image",
     //         invalidate: true,
-    //         type:'upload'
+    //         type:'upload'    
     //     })
     //     console.log({ response })
 

@@ -17,7 +17,7 @@ import { NEW_PRODUCT_RESET } from '../../constants/productConstants'
 import { getToppings } from '../../actions/toppingActions';
 
 
-function MenuItemModal({ title, openPopup, setOpenPopup, }) {
+function EditPizzaModal({ title, openPopup, setOpenPopup, }) {
 
     const Input = styled('input')({
         display: 'none',
@@ -34,23 +34,27 @@ function MenuItemModal({ title, openPopup, setOpenPopup, }) {
         borderRadius: '1.5rem',
     });
 
-    const [name, setName] = useState('')
-    const [description, setDescription] = useState('')
 
-    const [generalPrice, setGeneralPrice] = useState('')
-    const [smallPrice, setSmallPrice] = useState('')
-    const [mediumPrice, setMediumPrice] = useState('')
-    const [largePrice, setLargePrice] = useState('')
-    const [jumboPrice, setJumboPrice] = useState('')
+    const [name, setName] = useState('Hello')
+    const [description, setDescription] = useState('My')
+
+
+    const [smallPrice, setSmallPrice] = useState(1200)
+    const [mediumPrice, setMediumPrice] = useState(1300)
+    const [largePrice, setLargePrice] = useState(1400)
+    const [jumboPrice, setJumboPrice] = useState(1500)
+
 
     const [category, setCategory] = useState('Pizzas')
 
-    const [activeState, setActiveState] = useState(false);
-    const [confirmPassword, setConfirmPassword] = useState('')
 
+    const [activeState, setActiveState] = useState(false);
     const [status, setStatus] = useState('inactive');
 
     const [avatar, setAvatar] = useState('/images/default.png')
+
+
+
     const [avatarPreview, setAvatarPreview] = useState('/images/default.png')
 
     const UploadHandler = () => {
@@ -160,7 +164,7 @@ function MenuItemModal({ title, openPopup, setOpenPopup, }) {
                             noValidate
                             autoComplete="off"
                         >
-                            <Typography variant='h5' sx={{ fontWeight: 'bold', marginBottom: 2, marginLeft: 1.2 }}>Add New Pizza</Typography>
+                            <Typography variant='h5' sx={{ fontWeight: 'bold', marginBottom: 2, marginLeft: 1.2 }}>Edit Pizza</Typography>
                             <Divider sx={{ marginBottom: 2 }} />
                             <Typography variant='body1' sx={{ fontWeight: 'bold', marginLeft: 1.2 }}>Pizza Details</Typography>
                             {/* Name and Email */}
@@ -239,7 +243,7 @@ function MenuItemModal({ title, openPopup, setOpenPopup, }) {
                             />
                             <label htmlFor="contained-button-file">
                                 <Button fullWidth variant='contained' component="span" startIcon={<PhotoCamera />}
-                                    sx={{ marginTop: 2, marginBottom: 2, }}>Upload Picture</Button>
+                                    sx={{ marginTop: 2, marginBottom: 2, }}>Change Picture</Button>
                             </label>
 
 
@@ -256,7 +260,7 @@ function MenuItemModal({ title, openPopup, setOpenPopup, }) {
                         />
 
                         <Button fullWidth variant='contained' sx={{ marginTop: 2, marginLeft: 1, marginBottom: 1, }}
-                            onClick={submitHandler}>Add Item</Button>
+                            onClick={submitHandler}>Edit Item</Button>
 
 
                     </Grid>
@@ -270,4 +274,4 @@ function MenuItemModal({ title, openPopup, setOpenPopup, }) {
     )
 }
 
-export default MenuItemModal
+export default EditPizzaModal

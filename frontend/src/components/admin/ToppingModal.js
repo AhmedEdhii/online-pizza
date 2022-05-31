@@ -11,7 +11,7 @@ import { useAlert } from 'react-alert'
 import { getToppings } from '../../actions/toppingActions';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 
-function OtherItemsModal({ title, openPopup, setOpenPopup, }) {
+function ToppingModal({ title, openPopup, setOpenPopup, }) {
 
     const Input = styled('input')({
         display: 'none',
@@ -28,21 +28,11 @@ function OtherItemsModal({ title, openPopup, setOpenPopup, }) {
         borderRadius: '1.5rem',
     });
 
-    const [name, setName] = useState('')
-    const [description, setDescription] = useState('')
+    const [name, setName] = useState('11')
 
-    const [generalPrice, setGeneralPrice] = useState('')
-    const [price, setPrice] = useState('')
-    const [mediumPrice, setMediumPrice] = useState('')
-    const [largePrice, setLargePrice] = useState('')
-    const [jumboPrice, setJumboPrice] = useState('')
+    const [price, setPrice] = useState('22')
 
 
-
-    const [category, setCategory] = useState('')
-
-    const [activeState, setActiveState] = useState('true');
-    const [confirmPassword, setConfirmPassword] = useState('')
 
     const [avatar, setAvatar] = useState('')
     const [avatarPreview, setAvatarPreview] = useState('/images/default.png')
@@ -54,20 +44,18 @@ function OtherItemsModal({ title, openPopup, setOpenPopup, }) {
 
         setAvatarPreview('/images/default.png')
         setName('')
-        setCategory('')
-        setDescription('')
+
         setPrice('')
     }
 
     const clearHandler = () => {
 
-        
+
         setOpenPopup(false)
 
         setAvatarPreview('/images/default.png')
         setName('')
-        setCategory('')
-        setDescription('')
+
         setPrice('')
     }
 
@@ -93,11 +81,11 @@ function OtherItemsModal({ title, openPopup, setOpenPopup, }) {
 
     return (
         <>
-            <Dialog open={openPopup} maxWidth="md" sx={{ borderRadius: '1.5rem', zIndex: 1200 }} onClose={clearHandler}>
+            <Dialog open={openPopup} maxWidth="md" sx={{ borderRadius: '1.5rem', zIndex: 1200, }} onClose={clearHandler}>
 
-                <Grid display='flex' sm={12} sx={{ p: 2, }}>
+                <Grid display='flex' sm={12} sx={{ p: 2,mr:3  }}>
 
-                    <Grid display='flex' sx={{ flexDirection: 'column', p: 1 }}>
+                    <Grid display='flex' sx={{ flexDirection: 'column', alignItems: 'center', p: 1 }}>
                         <Box container display='flex'
                             component="form"
                             sx={{
@@ -110,10 +98,12 @@ function OtherItemsModal({ title, openPopup, setOpenPopup, }) {
                             noValidate
                             autoComplete="off"
                         >
-                            <Typography variant='h5' sx={{ fontWeight: 'bold', marginBottom: 2, marginLeft: 1.2 }}>Add New Other Items</Typography>
+                            <Typography variant='h5' sx={{ fontWeight: 'bold', marginBottom: 2, marginLeft: 1.2 }}>Add New Topping</Typography>
                             <Divider sx={{ marginBottom: 2 }} />
-                            <Typography variant='body1' sx={{ fontWeight: 'bold', marginLeft: 1.2 }}>Product Details</Typography>
-                            {/* Name and Email */}
+                            <Typography variant='body1' sx={{ fontWeight: 'bold', marginLeft: 1.2 }}>Item Details</Typography>
+
+
+
                             <TextField
                                 label='Name'
                                 placeholder='Enter Name' fullWidth required
@@ -121,47 +111,18 @@ function OtherItemsModal({ title, openPopup, setOpenPopup, }) {
                                 onChange={(e) => setName(e.target.value)}
                             />
 
+                        
 
                             <TextField
-                                label='Description'
-                                placeholder='Enter Email' fullWidth required multiline
+                                label='Price'
+                                placeholder='Enter Price' fullWidth required
 
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
-                            />
-
-
-                            <FormControl fullWidth sx={{ marginTop: 1, marginLeft: 1, marginBottom: 1, }}>
-                                <InputLabel id="demo-simple-select-label">Category</InputLabel>
-                                <Select
-
-                                   
-                                    label="Category"
-                                    onChange={(e) => setCategory(e.target.value)}
-                                >
-                                    <MenuItem value='beverages'>Beverages</MenuItem>
-                                    <MenuItem value='sauces'>Sauces</MenuItem>
-
-                                </Select>
-
-                            </FormControl>
-
-                            <Typography variant='body1' sx={{ marginTop: 2, fontWeight: 'bold', marginLeft: 1.2 }}>Product Price</Typography>
-
-                            <TextField
-                                label='Price '
-                                placeholder='Price for Product' fullWidth required
-                                defaultValue={price}
+                                value={price}
                                 onChange={(e) => setPrice(e.target.value)}
                             />
 
-
                         </Box>
-                    </Grid>
-
-
-
-                    <Grid display='flex' sx={{ m: 1, mt: 8, p: 1, marginLeft: 3, width: "80%", flexDirection: "column", alignItems: 'center', justifyContent: 'center ' }}>
+                    
 
                         <Img alt="complex" src={avatarPreview} />
 
@@ -177,7 +138,7 @@ function OtherItemsModal({ title, openPopup, setOpenPopup, }) {
 
                         </Fragment>
 
-                        <Button fullWidth variant='contained' sx={{ marginTop: 2, marginBottom: 1, }}
+                        <Button fullWidth variant='contained' sx={{  marginBottom: 1, }}
                             onClick={UploadHandler}>Add Item</Button>
 
 
@@ -192,4 +153,4 @@ function OtherItemsModal({ title, openPopup, setOpenPopup, }) {
     )
 }
 
-export default OtherItemsModal
+export default ToppingModal

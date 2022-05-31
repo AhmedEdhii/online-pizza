@@ -26,7 +26,9 @@ import AdminSidebar from './AdminSidebar';
 
 import MenuItemModal from './MenuItemModal'
 import OtherItemsModal from './OtherItemsModal'
-
+import DeleteConfirmation from './DeleteConfirmation'
+import EditPizzaModal from './EditPizzaModal'
+import EditOtherModal from './EditOtherModal'
 
 // yeh nhi baanana abb
 // function createData(name, prices, category, actions) {
@@ -222,6 +224,9 @@ function AdminDashboardMenu({ products }) {
 
   const [openPizzaPopup, setOpenPizzaPopup] = useState(false)
   const [openOtherItemPopup, setOtherItemPopup] = useState(false)
+  const [openDelete, setOpenDelete] = useState(false)
+  const [openEditPizza, setOpenEditPizza] = useState(false)
+  const [openEditOther, setOpenEditOther] = useState(false)
 
 
   return (
@@ -287,12 +292,13 @@ function AdminDashboardMenu({ products }) {
                               {row.category}
                             </TableCell>
                             <TableCell align="center" component="th" scope="row">
-                              <IconButton
-                                onClick={console.log('success')}>
+                            <IconButton
+                                 onClick={() => { setOpenEditPizza(true)}}>
                                 <EditIcon color='success' />
                               </IconButton>
+                              
                               <IconButton
-                                onClick={console.log('success')}>
+                                 onClick={() => { setOpenDelete(true)}}>
                                 <DeleteOutlineIcon color='error' />
                               </IconButton>
                             </TableCell>
@@ -319,12 +325,14 @@ function AdminDashboardMenu({ products }) {
                               {row.category}
                             </TableCell>
                             <TableCell align="center" component="th" scope="row">
+
                               <IconButton
-                                onClick={console.log('success')}>
+                                 onClick={() => { setOpenEditOther(true)}}>
                                 <EditIcon color='success' />
                               </IconButton>
+                              
                               <IconButton
-                                onClick={console.log('success')}>
+                                 onClick={() => { setOpenDelete(true)}}>
                                 <DeleteOutlineIcon color='error' />
                               </IconButton>
                             </TableCell>
@@ -389,7 +397,31 @@ function AdminDashboardMenu({ products }) {
         >
 
         </OtherItemsModal>
+
+        <DeleteConfirmation
+        
+        title="Employee Form"
+        openPopup={openDelete}
+        setOpenPopup={setOpenDelete}
+        >
+        </DeleteConfirmation>
   
+        <EditPizzaModal
+      
+        title="Employee Form"
+        openPopup={openEditPizza}
+        setOpenPopup={setOpenEditPizza}
+        >
+        </EditPizzaModal>       
+
+        <EditOtherModal
+      
+      title="Employee Form"
+      openPopup={openEditOther}
+      setOpenPopup={setOpenEditOther}
+      >
+      </EditOtherModal>   
+              
 
       </Grid>
 

@@ -11,7 +11,7 @@ import { useAlert } from 'react-alert'
 import { getToppings } from '../../actions/toppingActions';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 
-function OtherItemsModal({ title, openPopup, setOpenPopup, }) {
+function EditOtherModal({ title, openPopup, setOpenPopup, }) {
 
     const Input = styled('input')({
         display: 'none',
@@ -28,21 +28,19 @@ function OtherItemsModal({ title, openPopup, setOpenPopup, }) {
         borderRadius: '1.5rem',
     });
 
-    const [name, setName] = useState('')
-    const [description, setDescription] = useState('')
+    const [name, setName] = useState('Hello')
+    const [description, setDescription] = useState('my')
 
-    const [generalPrice, setGeneralPrice] = useState('')
-    const [price, setPrice] = useState('')
-    const [mediumPrice, setMediumPrice] = useState('')
-    const [largePrice, setLargePrice] = useState('')
-    const [jumboPrice, setJumboPrice] = useState('')
+
+    const [price, setPrice] = useState(11)
+
 
 
 
     const [category, setCategory] = useState('')
 
     const [activeState, setActiveState] = useState('true');
-    const [confirmPassword, setConfirmPassword] = useState('')
+
 
     const [avatar, setAvatar] = useState('')
     const [avatarPreview, setAvatarPreview] = useState('/images/default.png')
@@ -110,7 +108,7 @@ function OtherItemsModal({ title, openPopup, setOpenPopup, }) {
                             noValidate
                             autoComplete="off"
                         >
-                            <Typography variant='h5' sx={{ fontWeight: 'bold', marginBottom: 2, marginLeft: 1.2 }}>Add New Other Items</Typography>
+                            <Typography variant='h5' sx={{ fontWeight: 'bold', marginBottom: 2, marginLeft: 1.2 }}>Edit Other Menu Items</Typography>
                             <Divider sx={{ marginBottom: 2 }} />
                             <Typography variant='body1' sx={{ fontWeight: 'bold', marginLeft: 1.2 }}>Product Details</Typography>
                             {/* Name and Email */}
@@ -171,14 +169,14 @@ function OtherItemsModal({ title, openPopup, setOpenPopup, }) {
                             />
                             <label htmlFor="contained-button-file">
                                 <Button fullWidth variant='contained' component="span" startIcon={<PhotoCamera />}
-                                    sx={{ marginTop: 2, marginBottom: 2, }}>Upload Picture</Button>
+                                    sx={{ marginTop: 2, marginBottom: 2, }}>Change Picture</Button>
                             </label>
 
 
                         </Fragment>
 
                         <Button fullWidth variant='contained' sx={{ marginTop: 2, marginBottom: 1, }}
-                            onClick={UploadHandler}>Add Item</Button>
+                            onClick={UploadHandler}>Edit Item</Button>
 
 
                     </Grid>
@@ -192,4 +190,4 @@ function OtherItemsModal({ title, openPopup, setOpenPopup, }) {
     )
 }
 
-export default OtherItemsModal
+export default EditOtherModal
