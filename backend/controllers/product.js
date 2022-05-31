@@ -236,7 +236,7 @@ exports.getSingleProduct = catchAsyncErrors(async (req, res, next) => {
 //Update Product -- For Admins
 exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
 
-    let product = await Product.findById(req.params.id);
+    const product = await Product.findById("623d9e8f70365e7770439a11");
 
     if (!product) {
         return res.status(404).json({
@@ -245,17 +245,140 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
         })
     }
 
-    product = await Product.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-        runValidators: true,
-        useFindAndModify: false
-    });
+    // console.log(req.body)
+    // const newProductData = {
+    //     url: product.url
+    // }
 
-    res.status(200).json({
-        success: true,
-        product
-    })
+    if (req.body.category === 'Pizzas') {
+        const newProductData = {
+            name: req.body.name,
+            description: req.body.description,
+            category: req.body.category,
+            PizzaDetails: {
+                size: {
+                    small: req.body.small,
+                    regular: req.body.regular,
+                    large: req.body.large,
+                    jumbo: req.body.jumbo
+                },
+            },
+            product_status: req.body.activeState
+        }
+        // var path;
+        // if (req.body.avatar != '/images/default.png') {
+        //     const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+        //         folder: 'products',
+        //         width: 150,
+        //         crop: "scale"
+        //     })
+        //     path = result.secure_url;
+    
+        //     newProductData.url = {
+        //         url: path || (product.url)
+        //     }
+        //     // newProductData.avatar = {
+        //     //     public_id: result.public_id,
+        //     //     url: result.secure_url
+        //     // }
+        // }
+        const product = await Product.findByIdAndUpdate("623d9e8f70365e7770439a11", newProductData, {
+            new: true,
+            runValidators: true,
+            useFindAndModify: false
+        });
 
+        console.log(product)
+
+        res.status(200).json({
+            success: true,
+            // product
+        })
+
+    }
+    else if (req.body.category === 'Beverages') {
+        const newProductData = {
+            name: req.body.name,
+            description: req.body.description,
+            category: req.body.category,
+            BeverageDetails: {
+                price: req.body.price
+            },
+            product_status: req.body.activeState
+        }
+        var url;
+        if (req.body.avatar != '/images/default.png') {
+            const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+                folder: 'products',
+                width: 150,
+                crop: "scale"
+            })
+            url = result.secure_url;
+    
+            newProductData.url = {
+                url: result.secure_url || (product.url)
+            }
+            // newProductData.avatar = {
+            //     public_id: result.public_id,
+            //     url: result.secure_url
+            // }
+        }
+        product = await Product.findByIdAndUpdate("623d9e8f70365e7770439a11", newProductData, {
+            new: true,
+            runValidators: true,
+            useFindAndModify: false
+        });
+
+        console.log(product)
+
+        res.status(200).json({
+            success: true,
+            // product
+        })
+
+    }
+    else if (req.body.category === 'Sauces') {
+        const newProductData = {
+            name: req.body.name,
+            description: req.body.description,
+            category: req.body.category,
+            SauceDetails: {
+                price: req.body.price
+            },
+            product_status: req.body.activeState,
+        }
+
+        var url;
+        if (req.body.avatar != '/images/default.png') {
+            const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+                folder: 'products',
+                width: 150,
+                crop: "scale"
+            })
+            url = result.secure_url;
+    
+            newProductData.url = {
+                url: result.secure_url || (product.url)
+            }
+            // newProductData.avatar = {
+            //     public_id: result.public_id,
+            //     url: result.secure_url
+            // }
+        }
+        product = await Product.findByIdAndUpdate("623d9e8f70365e7770439a11", newProductData, {
+            new: true,
+            runValidators: true,
+            useFindAndModify: false
+        });
+
+        console.log(product)
+
+        res.status(200).json({
+            success: true,
+            // product
+        })
+
+    }
 })
 
 

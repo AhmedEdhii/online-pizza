@@ -10,6 +10,10 @@ import {
     ADMIN_PRODUCTS_REQUEST,
     ADMIN_PRODUCTS_SUCCESS,
     ADMIN_PRODUCTS_FAIL,
+    UPDATE_PRODUCT_REQUEST,
+    UPDATE_PRODUCT_SUCCESS,
+    UPDATE_PRODUCT_RESET,
+    UPDATE_PRODUCT_FAIL,
     NEW_PRODUCT_REQUEST,
     NEW_PRODUCT_SUCCESS,
     NEW_PRODUCT_RESET,
@@ -17,6 +21,34 @@ import {
     CLEAR_ERRORS
 
 } from '../constants/productConstants'
+
+
+// Update Product (ADMIN)
+export const updateProduct = (id, productData) => async (dispatch) => {
+    try {
+
+        dispatch({ type: UPDATE_PRODUCT_REQUEST })
+
+        const config = {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }
+
+        const { data } = await axios.put(`/api/admin/product/${id}`, productData, config)
+
+        dispatch({
+            type: UPDATE_PRODUCT_SUCCESS,
+            payload: data.success
+        })
+
+    } catch (error) {
+        dispatch({
+            type: UPDATE_PRODUCT_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
 
 export const newProduct = (productData) => async (dispatch) => {
     try {
@@ -90,7 +122,7 @@ export const getProductDetails = (id) => async (dispatch) => {
 
         dispatch({ type: PRODUCT_DETAILS_REQUEST })
 
-        const { data } = await axios.get(`/api/product/${id}`)
+        const { data } = await axios.get(`/api/admin/product/${id}`)
 
         dispatch({
             type: PRODUCT_DETAILS_SUCCESS,

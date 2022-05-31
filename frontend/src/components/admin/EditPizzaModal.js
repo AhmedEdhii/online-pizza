@@ -12,12 +12,12 @@ import React, { Fragment, useState, useEffect } from 'react'
 import MetaData from '../layout/MetaData'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { newProduct, clearErrors } from '../../actions/productActions'
-import { NEW_PRODUCT_RESET } from '../../constants/productConstants'
+import { updateProduct, getProductDetails, clearErrors } from '../../actions/productActions'
+import { UPDATE_PRODUCT_RESET } from '../../constants/productConstants'
 import { getToppings } from '../../actions/toppingActions';
 
 
-function EditPizzaModal({ title, openPopup, setOpenPopup, }) {
+function EditPizzaModal({ title, openPopup, setOpenPopup, row }) {
 
     const Input = styled('input')({
         display: 'none',
@@ -34,60 +34,61 @@ function EditPizzaModal({ title, openPopup, setOpenPopup, }) {
         borderRadius: '1.5rem',
     });
 
+    // const UploadHandler = () => {
+    //     alert.success('Picture Uploaded')
+    //     const reader = new FileReader();
+    //     reader.onload = () => {
+    //         console.log(reader.readyState)
+    //         if (reader.readyState === 2) {
+    //             setAvatarPreview(reader.result)
+    //             setAvatar(reader.result)
+    //         }
+    //     }
+    //     // reader.readAsDataURL(e.target.files[0])
+    //     // setOpenPopup(false)
+    // }
 
-    const [name, setName] = useState('Hello')
-    const [description, setDescription] = useState('My')
+    const alert = useAlert();
+    const dispatch = useDispatch();
+
+    const { error: updateError, isUpdated } = useSelector(state => state.product);
+    const { product } = useSelector(state => state.productDetails)
+
+    console.log(product)
+    const [name, setName] = useState(row.name)
+    const [description, setDescription] = useState(row.description)
+
+    const [smallPrice, setSmallPrice] = useState(row.small)
+    const [mediumPrice, setMediumPrice] = useState(row.regular)
+    const [largePrice, setLargePrice] = useState(row.large)
+    const [jumboPrice, setJumboPrice] = useState(row.jumbo)
 
 
-    const [smallPrice, setSmallPrice] = useState(1200)
-    const [mediumPrice, setMediumPrice] = useState(1300)
-    const [largePrice, setLargePrice] = useState(1400)
-    const [jumboPrice, setJumboPrice] = useState(1500)
-
-
-    const [category, setCategory] = useState('Pizzas')
-
+    const [category, setCategory] = useState("Pizzas")
 
     const [activeState, setActiveState] = useState(false);
     const [status, setStatus] = useState('inactive');
 
     const [avatar, setAvatar] = useState('/images/default.png')
-
-
-
-    const [avatarPreview, setAvatarPreview] = useState('/images/default.png')
-
-    const UploadHandler = () => {
-        alert.success('Picture Uploaded')
-        const reader = new FileReader();
-        reader.onload = () => {
-            console.log(reader.readyState)
-            if (reader.readyState === 2) {
-                setAvatarPreview(reader.result)
-                setAvatar(reader.result)
-            }
-        }
-        // reader.readAsDataURL(e.target.files[0])
-        // setOpenPopup(false)
-    }
-
-    const alert = useAlert();
-    const dispatch = useDispatch();
-
-    const { loading, error, success } = useSelector(state => state.newProduct);
+    const [avatarPreview, setAvatarPreview] = useState((row.url) || ('/images/default.png'))
 
     useEffect(() => {
-        if (error) {
-            alert.error(error);
+
+        if (product && product._id !== "623d9e8f70365e7770439a11") {
+            dispatch(getProductDetails("623d9e8f70365e7770439a11"));
+        }
+
+        if (updateError) {
+            alert.error(updateError);
             dispatch(clearErrors())
         }
 
-        if (success) {
-            alert.success('Product added successfully');
-            dispatch({ type: NEW_PRODUCT_RESET })
+        if (isUpdated) {
+            alert.success('Product updated successfully');
+            dispatch({ type: UPDATE_PRODUCT_RESET })
         }
 
-    }, [dispatch, alert, error, success])
+    }, [dispatch, alert, isUpdated, updateError, product])
 
 
     const submitHandler = (e) => {
@@ -103,8 +104,7 @@ function EditPizzaModal({ title, openPopup, setOpenPopup, }) {
         formData.set('large', largePrice);
         formData.set('jumbo', jumboPrice);
         formData.set('avatar', avatar);
-        dispatch(newProduct(formData))
-
+        dispatch(updateProduct("623d9e8f70365e7770439a11", formData))
         setAvatarPreview('/images/default.png')
         setName('')
         setDescription('')
@@ -112,16 +112,25 @@ function EditPizzaModal({ title, openPopup, setOpenPopup, }) {
         setMediumPrice('')
         setLargePrice('')
         setJumboPrice('')
-
     }
 
     const clearHandler = () => {
-
-        
         setOpenPopup(false)
-        setAvatarPreview('/images/default.png')
-        setName('')
-        setDescription('')
+        // setAvatarPreview('/images/default.png')
+        // setName('')
+        // setDescription('')
+        // setSmallPrice('')
+        // setMediumPrice('')
+        // setLargePrice('')
+        // setJumboPrice('')
+    }
+
+    const openHandler = () => {
+        console.log(product + "hello")
+        setOpenPopup(true)
+        setAvatarPreview((product.url || '/images/default.png'))
+        setName(product.name)
+        setDescription(product.description)
         setSmallPrice('')
         setMediumPrice('')
         setLargePrice('')

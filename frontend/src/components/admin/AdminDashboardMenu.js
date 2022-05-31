@@ -105,7 +105,8 @@ function AdminDashboardMenu({ products }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   // const { loading, error, products } = useSelector(state => state.products);
-
+  // const alert = useAlert();
+  // const dispatch = useDispatch();
 
   // function createData(id, name, category, url, price, small, regular, large, jumbo) {
   //   return { id, name, category, url, price, small, regular, large, jumbo };
@@ -118,6 +119,7 @@ function AdminDashboardMenu({ products }) {
       rows.push({
         id: product._id,
         name: product.name,
+        description: product.description,
         small: product.PizzaDetails.size.small,
         regular: product.PizzaDetails.size.regular,
         large: product.PizzaDetails.size.large,
@@ -134,6 +136,7 @@ function AdminDashboardMenu({ products }) {
         id: product._id,
         name: product.name,
         price: product.BeverageDetails.price,
+        description: product.description,
         category: product.category,
         url: (product.url || '/images/default.png')
       })
@@ -144,6 +147,7 @@ function AdminDashboardMenu({ products }) {
         id: product._id,
         name: product.name,
         price: product.SauceDetails.price,
+        description: product.description,
         category: product.category,
         url: (product.url || '/images/default.png')
       })
@@ -203,7 +207,7 @@ function AdminDashboardMenu({ products }) {
     // dup.splice(0, dup.length)
     // rows = [...dup]; 
     rows.splice(0, rows.length)
-  })
+  }, products)
 
 
 
@@ -339,8 +343,16 @@ function AdminDashboardMenu({ products }) {
                           </TableRow>
                         )
                         }
+                        <EditPizzaModal
+                          row={row}
+                          title="Employee Form"
+                          openPopup={openEditPizza}
+                          setOpenPopup={setOpenEditPizza}
+                        >
+                        </EditPizzaModal>
                       </Fragment>
-                    ))}
+                    ))
+                    }
 
 
 
@@ -405,14 +417,6 @@ function AdminDashboardMenu({ products }) {
           setOpenPopup={setOpenDelete}
         >
         </DeleteConfirmation>
-
-        <EditPizzaModal
-
-          title="Employee Form"
-          openPopup={openEditPizza}
-          setOpenPopup={setOpenEditPizza}
-        >
-        </EditPizzaModal>
 
         <EditOtherModal
 

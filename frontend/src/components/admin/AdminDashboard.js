@@ -50,7 +50,7 @@ function AdminDashboard() {
             alert.error(error);
             dispatch(clearErrors())
         }
-    }, [dispatch])
+    }, [dispatch, alert])
 
     var sidebarNav = [
         { id: 'dashboard', state: true, color: '#f30c1c' },

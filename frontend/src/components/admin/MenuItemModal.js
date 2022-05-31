@@ -37,7 +37,6 @@ function MenuItemModal({ title, openPopup, setOpenPopup, }) {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
 
-    const [generalPrice, setGeneralPrice] = useState('')
     const [smallPrice, setSmallPrice] = useState('')
     const [mediumPrice, setMediumPrice] = useState('')
     const [largePrice, setLargePrice] = useState('')
