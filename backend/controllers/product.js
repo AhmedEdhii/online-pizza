@@ -78,7 +78,7 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
     // }
 
     //else {
-    console.log(req.body.avatar)
+    //console.log(req.body.avatar)
     var url;
     if (req.body.avatar != '/images/default.png') {
         const result = await cloudinary.v2.uploader.upload(req.body.avatar, {

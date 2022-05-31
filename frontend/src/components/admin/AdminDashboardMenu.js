@@ -123,7 +123,7 @@ function AdminDashboardMenu({ products }) {
         large: product.PizzaDetails.size.large,
         jumbo: product.PizzaDetails.size.jumbo,
         category: product.category,
-        url: product.url
+        url: (product.url || '/images/default.png')
       })
       // createData(product._id, product.name, product.category, product.url, product.PizzaDetails.size.small, product.PizzaDetails.size.small,
       //   product.PizzaDetails.size.regular, product.PizzaDetails.size.large, product.PizzaDetails.size.jumbo
@@ -135,7 +135,7 @@ function AdminDashboardMenu({ products }) {
         name: product.name,
         price: product.BeverageDetails.price,
         category: product.category,
-        url: product.url
+        url: (product.url || '/images/default.png')
       })
       // createData(product._id, product.name, product.category, product.url, product.BeverageDetails.price)
     }
@@ -145,7 +145,7 @@ function AdminDashboardMenu({ products }) {
         name: product.name,
         price: product.SauceDetails.price,
         category: product.category,
-        url: product.url
+        url: (product.url || '/images/default.png')
       })
       // createData(product._id, product.name, product.category, product.url, product.SauceDetails.price)
     }
@@ -203,7 +203,7 @@ function AdminDashboardMenu({ products }) {
     // dup.splice(0, dup.length)
     // rows = [...dup]; 
     rows.splice(0, rows.length)
-  }, )
+  })
 
 
 
@@ -292,13 +292,13 @@ function AdminDashboardMenu({ products }) {
                               {row.category}
                             </TableCell>
                             <TableCell align="center" component="th" scope="row">
-                            <IconButton
-                                 onClick={() => { setOpenEditPizza(true)}}>
+                              <IconButton
+                                onClick={() => { setOpenEditPizza(true) }}>
                                 <EditIcon color='success' />
                               </IconButton>
-                              
+
                               <IconButton
-                                 onClick={() => { setOpenDelete(true)}}>
+                                onClick={() => { setOpenDelete(true) }}>
                                 <DeleteOutlineIcon color='error' />
                               </IconButton>
                             </TableCell>
@@ -327,12 +327,12 @@ function AdminDashboardMenu({ products }) {
                             <TableCell align="center" component="th" scope="row">
 
                               <IconButton
-                                 onClick={() => { setOpenEditOther(true)}}>
+                                onClick={() => { setOpenEditOther(true) }}>
                                 <EditIcon color='success' />
                               </IconButton>
-                              
+
                               <IconButton
-                                 onClick={() => { setOpenDelete(true)}}>
+                                onClick={() => { setOpenDelete(true) }}>
                                 <DeleteOutlineIcon color='error' />
                               </IconButton>
                             </TableCell>
@@ -399,29 +399,29 @@ function AdminDashboardMenu({ products }) {
         </OtherItemsModal>
 
         <DeleteConfirmation
-        
-        title="Employee Form"
-        openPopup={openDelete}
-        setOpenPopup={setOpenDelete}
+
+          title="Employee Form"
+          openPopup={openDelete}
+          setOpenPopup={setOpenDelete}
         >
         </DeleteConfirmation>
-  
+
         <EditPizzaModal
-      
-        title="Employee Form"
-        openPopup={openEditPizza}
-        setOpenPopup={setOpenEditPizza}
+
+          title="Employee Form"
+          openPopup={openEditPizza}
+          setOpenPopup={setOpenEditPizza}
         >
-        </EditPizzaModal>       
+        </EditPizzaModal>
 
         <EditOtherModal
-      
-      title="Employee Form"
-      openPopup={openEditOther}
-      setOpenPopup={setOpenEditOther}
-      >
-      </EditOtherModal>   
-              
+
+          title="Employee Form"
+          openPopup={openEditOther}
+          setOpenPopup={setOpenEditOther}
+        >
+        </EditOtherModal>
+
 
       </Grid>
 

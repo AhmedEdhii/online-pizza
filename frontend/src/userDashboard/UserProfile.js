@@ -93,7 +93,7 @@ function UserProfile({ user }) {
     const ChangePasswordHandler = () => {
         const formData = new FormData();
         formData.set('oldPassword', oldPassword);
-        if (newPassword != confirmPassword) {
+        if (newPassword !== confirmPassword) {
             alert.error("Passwords must Match");
             return 0;
         }

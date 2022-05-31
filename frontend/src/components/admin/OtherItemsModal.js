@@ -2,13 +2,16 @@ import {
     Typography, Dialog, DialogTitle, DialogContent, Fab, Grid, Box, IconButton, Divider, Radio, FormLabel, Input,
     FormControlLabel, RadioGroup, FormControl, Checkbox, Button, styled, FormGroup, TextField, Select, MenuItem, InputLabel, Switch
 } from '@mui/material'
-import React, { Fragment, useEffect, useState } from 'react'
 
 import CloseIcon from '@mui/icons-material/Close';
 
-import { useDispatch, useSelector } from 'react-redux'
+import React, { Fragment, useState, useEffect } from 'react'
+
+import MetaData from '../layout/MetaData'
 import { useAlert } from 'react-alert'
-import { getToppings } from '../../actions/toppingActions';
+import { useDispatch, useSelector } from 'react-redux'
+import { newProduct, clearErrors } from '../../actions/productActions'
+import { NEW_PRODUCT_RESET } from '../../constants/productConstants'
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 
 function OtherItemsModal({ title, openPopup, setOpenPopup, }) {
@@ -30,26 +33,37 @@ function OtherItemsModal({ title, openPopup, setOpenPopup, }) {
 
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
-
-    const [generalPrice, setGeneralPrice] = useState('')
     const [price, setPrice] = useState('')
-    const [mediumPrice, setMediumPrice] = useState('')
-    const [largePrice, setLargePrice] = useState('')
-    const [jumboPrice, setJumboPrice] = useState('')
 
-
-
-    const [category, setCategory] = useState('')
+    const [category, setCategory] = useState('Sauces')
 
     const [activeState, setActiveState] = useState('true');
     const [confirmPassword, setConfirmPassword] = useState('')
 
-    const [avatar, setAvatar] = useState('')
+    const [avatar, setAvatar] = useState('/images/default.png')
     const [avatarPreview, setAvatarPreview] = useState('/images/default.png')
+
+    const alert = useAlert();
+    const dispatch = useDispatch();
+
+    const { loading, error, success } = useSelector(state => state.newProduct);
+
+    useEffect(() => {
+        if (error) {
+            alert.error(error);
+            dispatch(clearErrors())
+        }
+
+        if (success) {
+            // alert.success('Product added successfully');
+            dispatch({ type: NEW_PRODUCT_RESET })
+        }
+
+    }, [dispatch, alert, error, success])
 
     const UploadHandler = () => {
 
-        alert.success('Item Added Menu')
+        // alert.success('Item Added Menu')
         setOpenPopup(false)
 
         setAvatarPreview('/images/default.png')
@@ -60,10 +74,7 @@ function OtherItemsModal({ title, openPopup, setOpenPopup, }) {
     }
 
     const clearHandler = () => {
-
-        
         setOpenPopup(false)
-
         setAvatarPreview('/images/default.png')
         setName('')
         setCategory('')
@@ -86,8 +97,22 @@ function OtherItemsModal({ title, openPopup, setOpenPopup, }) {
         }
     }
 
-    const alert = useAlert();
-    const dispatch = useDispatch();
+    const submitHandler = (e) => {
+        e.preventDefault();
+        setOpenPopup(false)
+        const formData = new FormData();
+        formData.set('name', name);
+        formData.set('description', description);
+        formData.set('category', category);
+        formData.set('price', price);
+        formData.set('avatar', avatar);
+        dispatch(newProduct(formData))
+        alert.success('Product added successfully');
+        setAvatarPreview('/images/default.png')
+        setName('')
+        setDescription('')
+        setPrice('')
+    }
 
     console.log(openPopup)
 
@@ -113,7 +138,7 @@ function OtherItemsModal({ title, openPopup, setOpenPopup, }) {
                             <Typography variant='h5' sx={{ fontWeight: 'bold', marginBottom: 2, marginLeft: 1.2 }}>Add New Other Items</Typography>
                             <Divider sx={{ marginBottom: 2 }} />
                             <Typography variant='body1' sx={{ fontWeight: 'bold', marginLeft: 1.2 }}>Product Details</Typography>
-                            {/* Name and Email */}
+                            {/* Name and Description */}
                             <TextField
                                 label='Name'
                                 placeholder='Enter Name' fullWidth required
@@ -124,7 +149,7 @@ function OtherItemsModal({ title, openPopup, setOpenPopup, }) {
 
                             <TextField
                                 label='Description'
-                                placeholder='Enter Email' fullWidth required multiline
+                                placeholder='Enter Description' fullWidth required multiline
 
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
@@ -134,16 +159,12 @@ function OtherItemsModal({ title, openPopup, setOpenPopup, }) {
                             <FormControl fullWidth sx={{ marginTop: 1, marginLeft: 1, marginBottom: 1, }}>
                                 <InputLabel id="demo-simple-select-label">Category</InputLabel>
                                 <Select
-
-                                   
                                     label="Category"
                                     onChange={(e) => setCategory(e.target.value)}
                                 >
-                                    <MenuItem value='beverages'>Beverages</MenuItem>
-                                    <MenuItem value='sauces'>Sauces</MenuItem>
-
+                                    <MenuItem value='Beverages'>Beverages</MenuItem>
+                                    <MenuItem value='Sauces'>Sauces</MenuItem>
                                 </Select>
-
                             </FormControl>
 
                             <Typography variant='body1' sx={{ marginTop: 2, fontWeight: 'bold', marginLeft: 1.2 }}>Product Price</Typography>
@@ -154,7 +175,6 @@ function OtherItemsModal({ title, openPopup, setOpenPopup, }) {
                                 defaultValue={price}
                                 onChange={(e) => setPrice(e.target.value)}
                             />
-
 
                         </Box>
                     </Grid>
@@ -178,7 +198,7 @@ function OtherItemsModal({ title, openPopup, setOpenPopup, }) {
                         </Fragment>
 
                         <Button fullWidth variant='contained' sx={{ marginTop: 2, marginBottom: 1, }}
-                            onClick={UploadHandler}>Add Item</Button>
+                            onClick={submitHandler}>Add Item</Button>
 
 
                     </Grid>

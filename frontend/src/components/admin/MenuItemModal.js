@@ -46,7 +46,6 @@ function MenuItemModal({ title, openPopup, setOpenPopup, }) {
     const [category, setCategory] = useState('Pizzas')
 
     const [activeState, setActiveState] = useState(false);
-    const [confirmPassword, setConfirmPassword] = useState('')
 
     const [status, setStatus] = useState('inactive');
 
@@ -87,7 +86,6 @@ function MenuItemModal({ title, openPopup, setOpenPopup, }) {
 
 
     const submitHandler = (e) => {
-
         e.preventDefault();
         setOpenPopup(false)
         const formData = new FormData();
@@ -100,7 +98,6 @@ function MenuItemModal({ title, openPopup, setOpenPopup, }) {
         formData.set('jumbo', jumboPrice);
         formData.set('avatar', avatar);
         dispatch(newProduct(formData))
-
         setAvatarPreview('/images/default.png')
         setName('')
         setDescription('')
@@ -108,12 +105,9 @@ function MenuItemModal({ title, openPopup, setOpenPopup, }) {
         setMediumPrice('')
         setLargePrice('')
         setJumboPrice('')
-
     }
 
-    const clearHandler = () => {
-
-        
+    const clearHandler = () => {  
         setOpenPopup(false)
         setAvatarPreview('/images/default.png')
         setName('')
@@ -163,7 +157,7 @@ function MenuItemModal({ title, openPopup, setOpenPopup, }) {
                             <Typography variant='h5' sx={{ fontWeight: 'bold', marginBottom: 2, marginLeft: 1.2 }}>Add New Pizza</Typography>
                             <Divider sx={{ marginBottom: 2 }} />
                             <Typography variant='body1' sx={{ fontWeight: 'bold', marginLeft: 1.2 }}>Pizza Details</Typography>
-                            {/* Name and Email */}
+                            {/* Name and Description */}
                             <TextField
                                 label='Name'
                                 placeholder='Enter Name' fullWidth required
@@ -184,15 +178,12 @@ function MenuItemModal({ title, openPopup, setOpenPopup, }) {
                             <FormControl fullWidth sx={{ marginTop: 1, marginLeft: 1, marginBottom: 1, }}>
                                 <InputLabel id="demo-simple-select-label">Category</InputLabel>
                                 <Select
-
                                     defaultValue='Pizzas'
                                     label="Category"
                                     onChange={(e) => setCategory(e.target.value)}
                                 >
                                     <MenuItem value='Pizzas'>Pizzas</MenuItem>
-
                                 </Select>
-
                             </FormControl>
 
                             <Typography variant='body1' sx={{ marginTop: 2, fontWeight: 'bold', marginLeft: 1.2 }}>Pizza Price</Typography>
