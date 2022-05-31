@@ -3,7 +3,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import MetaData from '../layout/MetaData'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAdminProducts, clearErrors } from '../../actions/productActions'
+import { getAdminProducts, getProductDetails, clearErrors } from '../../actions/productActions'
 
 import { useTheme } from '@mui/material/styles';
 import PropTypes from 'prop-types';
@@ -114,6 +114,10 @@ function AdminDashboardMenu({ products }) {
 
   // need to pass products in this using props
   // const rows = [
+  const alert = useAlert();
+  const dispatch = useDispatch();
+  const { product } = useSelector(state => state.productDetails)
+
   products.forEach(product => {
     if (product.category === 'Pizzas') {
       rows.push({
@@ -207,9 +211,14 @@ function AdminDashboardMenu({ products }) {
     // dup.splice(0, dup.length)
     // rows = [...dup]; 
     rows.splice(0, rows.length)
-  }, products)
+  })
 
 
+  const UpdatePizzaHandler = (id) => {
+    setOpenEditPizza(true)
+    console.log(id)
+    dispatch(getProductDetails(id));
+  }
 
 
   // Avoid a layout jump when reaching the last page with empty rows.
@@ -297,7 +306,7 @@ function AdminDashboardMenu({ products }) {
                             </TableCell>
                             <TableCell align="center" component="th" scope="row">
                               <IconButton
-                                onClick={() => { setOpenEditPizza(true) }}>
+                                onClick={() => UpdatePizzaHandler(row.id)}>
                                 <EditIcon color='success' />
                               </IconButton>
 
@@ -343,13 +352,6 @@ function AdminDashboardMenu({ products }) {
                           </TableRow>
                         )
                         }
-                        <EditPizzaModal
-                          row={row}
-                          title="Employee Form"
-                          openPopup={openEditPizza}
-                          setOpenPopup={setOpenEditPizza}
-                        >
-                        </EditPizzaModal>
                       </Fragment>
                     ))
                     }
@@ -400,15 +402,24 @@ function AdminDashboardMenu({ products }) {
           <Typography variant='h2'>my anme is modal</Typography>
         </MenuItemModal>
 
+        {product.category === "Pizzas" && (
+          <EditPizzaModal
+            product={product}
+            title="Employee Form"
+            openPopup={openEditPizza}
+            setOpenPopup={setOpenEditPizza}
+          >
+          </EditPizzaModal>
+        )}
 
-        <OtherItemsModal
-
-          title="Employee Form"
-          openPopup={openOtherItemPopup}
-          setOpenPopup={setOtherItemPopup}
-        >
-
-        </OtherItemsModal>
+        {product.category === "Beverages" || product.category === "Sauces" && (
+          <OtherItemsModal
+            title="Employee Form"
+            openPopup={openOtherItemPopup}
+            setOpenPopup={setOtherItemPopup}
+          >
+          </OtherItemsModal>
+        )}
 
         <DeleteConfirmation
 

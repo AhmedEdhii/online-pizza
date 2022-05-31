@@ -83,7 +83,7 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
     if (req.body.avatar != '/images/default.png') {
         const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
             folder: 'products',
-            width: 500,
+            width: 800,
             crop: "scale"
         })
         url = result.secure_url;
@@ -93,7 +93,7 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
     if (req.body.category === 'Pizzas') {
         const { name, description, small, regular, large, jumbo, category, activeState } = req.body;
 
-        console.log(req.body)
+        // console.log(req.body)
 
         const product = await Product.create({
             name,
@@ -236,8 +236,9 @@ exports.getSingleProduct = catchAsyncErrors(async (req, res, next) => {
 //Update Product -- For Admins
 exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
 
-    const product = await Product.findById("623d9e8f70365e7770439a11");
+    const product = await Product.findById(req.params.id);
 
+    console.log(product)
     if (!product) {
         return res.status(404).json({
             success: false,
@@ -263,7 +264,7 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
                     jumbo: req.body.jumbo
                 },
             },
-            product_status: req.body.activeState
+            product_status: req.body.status
         }
         // var path;
         // if (req.body.avatar != '/images/default.png') {
@@ -282,7 +283,7 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
         //     //     url: result.secure_url
         //     // }
         // }
-        const product = await Product.findByIdAndUpdate("623d9e8f70365e7770439a11", newProductData, {
+        const product = await Product.findByIdAndUpdate(req.params.id, newProductData, {
             new: true,
             runValidators: true,
             useFindAndModify: false
@@ -304,13 +305,13 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
             BeverageDetails: {
                 price: req.body.price
             },
-            product_status: req.body.activeState
+            product_status: req.body.status
         }
         var url;
         if (req.body.avatar != '/images/default.png') {
             const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
                 folder: 'products',
-                width: 500,
+                width: 800,
                 crop: "scale"
             })
             url = result.secure_url;
@@ -323,7 +324,7 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
             //     url: result.secure_url
             // }
         }
-        product = await Product.findByIdAndUpdate("623d9e8f70365e7770439a11", newProductData, {
+        product = await Product.findByIdAndUpdate((req.params.id), newProductData, {
             new: true,
             runValidators: true,
             useFindAndModify: false
@@ -345,14 +346,14 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
             SauceDetails: {
                 price: req.body.price
             },
-            product_status: req.body.activeState,
+            product_status: req.body.status,
         }
 
         var url;
         if (req.body.avatar != '/images/default.png') {
             const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
                 folder: 'products',
-                width: 500,
+                width: 800,
                 crop: "scale"
             })
             url = result.secure_url;
@@ -365,7 +366,7 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
             //     url: result.secure_url
             // }
         }
-        product = await Product.findByIdAndUpdate("623d9e8f70365e7770439a11", newProductData, {
+        product = await Product.findByIdAndUpdate((req.params.id), newProductData, {
             new: true,
             runValidators: true,
             useFindAndModify: false

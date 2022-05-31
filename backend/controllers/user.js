@@ -20,7 +20,7 @@ exports.signup = catchAsyncErrors(async (req, res) => {
     if (req.body.avatar !== '') {
         const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
             folder: 'avatars',
-            width: 500,
+            width: 800,
             crop: "scale"
         })
         const user = new User({
@@ -261,7 +261,7 @@ exports.updateProfile = catchAsyncErrors(async (req, res) => {
 
         const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
             folder: 'avatars',
-            width: 500,
+            width: 800,
             crop: "scale"
         })
         console.log("here " + result.public_id)

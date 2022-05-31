@@ -9,15 +9,15 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera';
 
 import React, { Fragment, useState, useEffect } from 'react'
 
-import MetaData from '../layout/MetaData'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateProduct, getProductDetails, clearErrors } from '../../actions/productActions'
 import { UPDATE_PRODUCT_RESET } from '../../constants/productConstants'
-import { getToppings } from '../../actions/toppingActions';
 
 
-function EditPizzaModal({ title, openPopup, setOpenPopup, row }) {
+function EditPizzaModal({ title, openPopup, setOpenPopup, product}) {
+
+    console.log(product.name)
 
     const Input = styled('input')({
         display: 'none',
@@ -52,31 +52,29 @@ function EditPizzaModal({ title, openPopup, setOpenPopup, row }) {
     const dispatch = useDispatch();
 
     const { error: updateError, isUpdated } = useSelector(state => state.product);
-    const { product } = useSelector(state => state.productDetails)
 
-    console.log(product)
-    const [name, setName] = useState(row.name)
-    const [description, setDescription] = useState(row.description)
+    const [name, setName] = useState(product.name)
+    const [description, setDescription] = useState(product.description)
 
-    const [smallPrice, setSmallPrice] = useState(row.small)
-    const [mediumPrice, setMediumPrice] = useState(row.regular)
-    const [largePrice, setLargePrice] = useState(row.large)
-    const [jumboPrice, setJumboPrice] = useState(row.jumbo)
+    const [smallPrice, setSmallPrice] = useState(product.PizzaDetails.size.small)
+    const [mediumPrice, setMediumPrice] = useState(product.PizzaDetails.size.regular)
+    const [largePrice, setLargePrice] = useState(product.PizzaDetails.size.large)
+    const [jumboPrice, setJumboPrice] = useState(product.PizzaDetails.size.jumbo)
 
 
     const [category, setCategory] = useState("Pizzas")
 
     const [activeState, setActiveState] = useState(false);
-    const [status, setStatus] = useState('inactive');
+    const [status, setStatus] = useState('active');
 
     const [avatar, setAvatar] = useState('/images/default.png')
-    const [avatarPreview, setAvatarPreview] = useState((row.url) || ('/images/default.png'))
+    const [avatarPreview, setAvatarPreview] = useState((product.url) || ('/images/default.png'))
 
     useEffect(() => {
 
-        if (product && product._id !== "623d9e8f70365e7770439a11") {
-            dispatch(getProductDetails("623d9e8f70365e7770439a11"));
-        }
+        // if (product && product._id !== "623d9e8f70365e7770439a11") {
+        //     dispatch(getProductDetails("623d9e8f70365e7770439a11"));
+        // }
 
         if (updateError) {
             alert.error(updateError);
@@ -104,7 +102,8 @@ function EditPizzaModal({ title, openPopup, setOpenPopup, row }) {
         formData.set('large', largePrice);
         formData.set('jumbo', jumboPrice);
         formData.set('avatar', avatar);
-        dispatch(updateProduct("623d9e8f70365e7770439a11", formData))
+        formData.set('status', status)
+        dispatch(updateProduct(product._id, formData))
         setAvatarPreview('/images/default.png')
         setName('')
         setDescription('')
@@ -155,7 +154,6 @@ function EditPizzaModal({ title, openPopup, setOpenPopup, row }) {
 
     return (
         <>
-            <MetaData title={'New Product'} />
             <Dialog open={openPopup} maxWidth="md" sx={{ borderRadius: '5rem', zIndex: 1200 }} onClose={clearHandler}>
 
                 <Grid display='flex' sm={12} sx={{ p: 2, }}>
