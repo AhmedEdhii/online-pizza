@@ -45,7 +45,7 @@ function UserProfile({ user }) {
     const [deliveryaddress, setDeliveryAddress] = useState(user.deliveryaddress)
 
     const [avatarPreview, setAvatarPreview] = useState(user.avatar.url || '/images/default_avatar.jpg')
-    const [avatar, setAvatar] = useState(user.avatar.url || '/images/default_avatar.jpg')
+    const [avatar, setAvatar] = useState('')
     const [oldPassword, setOldPassword] = useState('')
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('')
@@ -58,16 +58,10 @@ function UserProfile({ user }) {
     const { error, isUpdated, loading } = useSelector(state => state.user)
 
     useEffect(() => {
-
-
-
         if (error) {
             alert.error(error);
             dispatch(clearErrors());
         }
-
-
-
     }, [dispatch, alert, error, isUpdated])
 
     function timeout(delay) {

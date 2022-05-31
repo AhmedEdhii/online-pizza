@@ -215,7 +215,7 @@ exports.updateProfile = catchAsyncErrors(async (req, res) => {
     }
 
 
-    console.log(req.body)
+    //console.log(req.body)
     console.log('*****************')
 
     
@@ -278,6 +278,8 @@ exports.updateProfile = catchAsyncErrors(async (req, res) => {
         runValidators: true,
         useFindAndModify: false
     })
+
+    console.log(user1)
 
     res.status(200).json({
         success: true
