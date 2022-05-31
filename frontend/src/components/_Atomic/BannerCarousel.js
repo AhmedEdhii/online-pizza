@@ -1,8 +1,15 @@
-import React from 'react'
+import React from 'react';
+import './BannerCarousel.css'
 import { Box, Grid } from '@mui/material'
+import ImageSlider from './imageslide/ImageSlider';
+import {Slider_image} from './imageslide/Slider_image';
+
 function BannerCarousel() {
-  return (
-    <Grid sx={{flexGrow: 1}} >
+  
+    {/*
+      
+      
+      <Grid sx={{flexGrow: 1}} >
       <Grid item>
       <Box
         sx={{
@@ -10,6 +17,8 @@ function BannerCarousel() {
           
           width: '100%',
           height: 450,
+          
+
           
           backgroundColor: '#F0F0F0',
           '&:hover': {
@@ -19,9 +28,9 @@ function BannerCarousel() {
         }}
       />
     </Grid>
-    </Grid>
+      </Grid>*/}
       
-  )
+      return <ImageSlider slides={Slider_image} />
 }
 
 export default BannerCarousel
