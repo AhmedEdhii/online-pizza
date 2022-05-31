@@ -83,7 +83,7 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
     if (req.body.avatar != '/images/default.png') {
         const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
             folder: 'products',
-            width: 150,
+            width: 500,
             crop: "scale"
         })
         url = result.secure_url;
@@ -310,7 +310,7 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
         if (req.body.avatar != '/images/default.png') {
             const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
                 folder: 'products',
-                width: 150,
+                width: 500,
                 crop: "scale"
             })
             url = result.secure_url;
@@ -352,7 +352,7 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
         if (req.body.avatar != '/images/default.png') {
             const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
                 folder: 'products',
-                width: 150,
+                width: 500,
                 crop: "scale"
             })
             url = result.secure_url;

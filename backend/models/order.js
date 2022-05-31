@@ -1,28 +1,6 @@
 const mongoose = require('mongoose')
 
 const orderSchema = mongoose.Schema({
-    shippingInfo: {
-        address: {
-            type: String,
-            required: true
-        },
-        city: {
-            type: String,
-            required: true
-        },
-        phoneNumber: {
-            type: String,
-            required: true
-        },
-        postalCode: {
-            type: String,
-            required: true
-        },
-        country: {
-            type: String,
-            required: true
-        }
-    },
     customer_id: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
@@ -33,10 +11,6 @@ const orderSchema = mongoose.Schema({
             product_name: {
                 type: String,
                 required: true
-            },
-            image_url: {
-                type: String,
-                //required: true
             },
             quantity: {
                 type: Number,
@@ -74,77 +48,12 @@ const orderSchema = mongoose.Schema({
             ],
         }
     ],
-    orderDeals: [
-        {
-            deal_name: {
-                type: String,
-                required: true
-            },
-            image_url: {
-                type: String,
-                //required: true
-            },
-            quantity: {
-                type: Number,
-                required: true
-            },
-            unit_price: {
-                type: Number,
-                required: true
-            },
-            deal_id: {
-                type: mongoose.Schema.Types.ObjectId,
-                required: true,
-                ref: 'Deal'
-            },
-            toppings: [
-                {
-                    topping_id: {
-                        type: mongoose.Schema.Types.ObjectId,
-                        required: true,
-                        ref: 'Topping'
-                    },
-                    topping_name: {
-                        type: String,
-                        required: true
-                    },
-                    category: {
-                        type: String,
-                        required: true
-                    },
-                    unit_price: {
-                        type: Number,
-                        required: true
-                    },
-                },
-            ],
-        }
-    ],
-    paymentInfo: {
-        id: {
-            type: String
-        },
-        paymentmethod: {
-            type: String
-        },
-        status: {
-            type: String
-        }
-    },
-    paidAt: {
-        type: Date
-    },
     itemsPrice: {
         type: Number,
         required: true,
         default: 0.0
     },
-    salesTax: {
-        type: Number,
-        required: true,
-        default: 0.0
-    },
-    shippingRate: {
+    deliveryCharges: {
         type: Number,
         required: true,
         default: 0.0
@@ -153,6 +62,12 @@ const orderSchema = mongoose.Schema({
         type: Number,
         required: true,
         default: 0.0
+    },
+    paymentmethod: {
+        type: String
+    },
+    orderDate: {
+        type: Date
     },
     orderStatus: {
         type: String,

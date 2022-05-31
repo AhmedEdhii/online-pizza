@@ -1,4 +1,3 @@
-import React from 'react'
 import { useTheme } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
@@ -17,23 +16,32 @@ import LastPageIcon from '@mui/icons-material/LastPage';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 
+import MetaData from '../components/layout/MetaData';
 
-function createData(id, date, orderDetails, total) {
-    return {
-        id,
-        date,
-        orderDetails,
-        total,
-    };
-}
+import React, { Fragment, useEffect } from 'react'
+import { useAlert } from 'react-alert'
+import { useDispatch, useSelector } from 'react-redux'
+import { myOrders, clearErrors } from '../actions/orderActions'
+
+
+// function createData(id, date, orderDetails, total) {
+//     return {
+//         id,
+//         date,
+//         orderDetails,
+//         total,
+//     };
+// }
 
 
 const rows = [
-    createData('1123', '22.05.2022', '2xPizza', 1199),
-    createData('1123', '22.05.2022', '2xPizza', 1199),
-    createData('1123', '22.05.2022', '2xPizza', 1199),
-    createData('1123', '22.05.2022', '2xPizza', 1199),
+    // createData('1123', '22.05.2022', '2xPizza', 1199),
+    // createData('1123', '22.05.2022', '2xPizza', 1199),
+    // createData('1123', '22.05.2022', '2xPizza', 1199),
+    // createData('1123', '22.05.2022', '2xPizza', 1199),
 ];
+
+rows.splice(0, 1)
 
 function TablePaginationActions(props) {
     const theme = useTheme();
@@ -91,6 +99,46 @@ function TablePaginationActions(props) {
 
 function UserOrders(props) {
 
+    const alert = useAlert();
+    const dispatch = useDispatch();
+
+    const { loading, error, orders } = useSelector(state => state.myOrders);
+
+    useEffect(() => {
+        dispatch(myOrders());
+
+        if (error) {
+            alert.error(error);
+            dispatch(clearErrors())
+        }
+    }, [dispatch, alert, error])
+
+    // orders && orders.forEach(orderItems => {
+    //     {orderItems.map(orderItems => (
+    //             console.log(orderItems)
+    //         ))}
+    // })
+
+    orders && orders.forEach(order => {
+        {order.map(orderItems => (
+            console.log(orderItems)
+        ))}
+        rows.push({
+            id: order._id,
+            date: String(order.orderDate).substring(0, 10),
+            orderDetails: order.orderItems.length,
+            total: order.totalPrice,
+        })
+    })
+    useEffect(() => {
+        // dispatch(getAdminProducts());
+        // setProducts();
+        // const dup = [...rows];
+        // dup.splice(0, dup.length)
+        // rows = [...dup]; 
+        rows.splice(0, rows.length)
+    }, orders)
+
     const Img = styled('img')({
         alignItems: "center",
         maxwidth: "100%",
@@ -118,6 +166,7 @@ function UserOrders(props) {
 
     return (
         <>
+            <MetaData title={'My Orders'} />
             <Grid display='flex' sx={{ alignItems: 'center', paddingTop: 2 }}>
                 <Typography variant="h4" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
                     My Orders
@@ -138,7 +187,7 @@ function UserOrders(props) {
                                         <TableCell align="left" sx={{ fontWeight: 'bold', }}>Order Id</TableCell>
 
                                         <TableCell align="left" sx={{ fontWeight: 'bold', }}>Order Date</TableCell>
-                                        <TableCell align="left" sx={{ fontWeight: 'bold', }}>Order Details</TableCell>
+                                        <TableCell align="left" sx={{ fontWeight: 'bold', }}>Quantity</TableCell>
                                         <TableCell align="left" sx={{ fontWeight: 'bold', }}>Total</TableCell>
                                         <TableCell align="center" sx={{ fontWeight: 'bold', }}>Actions</TableCell>
                                     </TableRow>
@@ -173,60 +222,60 @@ function UserOrders(props) {
 
                                             <TableCell align="center" component="th" scope="row">
                                                 <Button variant='contained' sx={{
-                                                    backgroundColor: '#f30c1c', 
+                                                    backgroundColor: '#f30c1c',
                                                     '&:hover': {
                                                         backgroundColor: '#FCAB04',
-                                                        
+
                                                     }
                                                 }} > Order Again </Button>
-                                        </TableCell>
+                                            </TableCell>
 
 
-                    </TableRow>
-                  ))}
+                                        </TableRow>
+                                    ))}
 
-                                {emptyRows > 0 && (
-                                    <TableRow style={{ height: 53 * emptyRows }}>
-                                        <TableCell colSpan={6} />
+                                    {emptyRows > 0 && (
+                                        <TableRow style={{ height: 53 * emptyRows }}>
+                                            <TableCell colSpan={6} />
+                                        </TableRow>
+                                    )}
+                                </TableBody>
+
+
+
+                                <TableFooter>
+                                    <TableRow>
+                                        <TablePagination
+                                            rowsPerPageOptions={[3, 10, 25, { label: 'All', value: -1 }]}
+                                            colSpan={3}
+                                            count={rows.length}
+                                            rowsPerPage={rowsPerPage}
+                                            page={page}
+                                            SelectProps={{
+                                                inputProps: {
+                                                    'aria-label': 'rows per page',
+                                                },
+                                                native: true,
+                                            }}
+                                            onPageChange={handleChangePage}
+                                            onRowsPerPageChange={handleChangeRowsPerPage}
+                                            ActionsComponent={TablePaginationActions}
+                                        />
                                     </TableRow>
-                                )}
-                            </TableBody>
+                                </TableFooter>
+
+                            </Table>
+
+                        </Paper>
+
+                    </Box>
 
 
-
-                            <TableFooter>
-                                <TableRow>
-                                    <TablePagination
-                                        rowsPerPageOptions={[3, 10, 25, { label: 'All', value: -1 }]}
-                                        colSpan={3}
-                                        count={rows.length}
-                                        rowsPerPage={rowsPerPage}
-                                        page={page}
-                                        SelectProps={{
-                                            inputProps: {
-                                                'aria-label': 'rows per page',
-                                            },
-                                            native: true,
-                                        }}
-                                        onPageChange={handleChangePage}
-                                        onRowsPerPageChange={handleChangeRowsPerPage}
-                                        ActionsComponent={TablePaginationActions}
-                                    />
-                                </TableRow>
-                            </TableFooter>
-
-                        </Table>
-
-                    </Paper>
-
-                </Box>
-
+                </Grid>
 
             </Grid>
-
-        </Grid>
-    </>
-  )
+        </>
+    )
 }
 
 export default UserOrders
