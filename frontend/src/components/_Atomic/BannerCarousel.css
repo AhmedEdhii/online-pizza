@@ -7,8 +7,7 @@ align-items: center;
 
 .image {
     flex:1;
-    height: undefined;
-    width: undefined;
+    zoom: 130%;
     border-radius: 10px;
     }
 
