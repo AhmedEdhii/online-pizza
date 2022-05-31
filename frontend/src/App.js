@@ -33,6 +33,7 @@ import UserDashboard from './userDashboard/UserDashboard';
 import UserProfile from './userDashboard/UserProfile';
 import UserOrders from './userDashboard/UserOrders';
 
+import Checkout from './Pages/Checkout';
 
 function App() {
 
@@ -69,7 +70,7 @@ function App() {
 
       {/* Test Page */}
       <Route path="/testPage" component={TestPage} />
-
+      <Route path="/checkout" component={Checkout} />
 
       {/* <Header/> */}
       {/* <Route path="/" component={Home} exact />

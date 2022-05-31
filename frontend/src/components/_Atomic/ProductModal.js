@@ -72,8 +72,6 @@ function ProductModal({ title, openPopup, setOpenPopup, product, toppings }) {
         setOpenDrawer(true);
         setOpenPopup(false);
 
-
-
     }
 
 
