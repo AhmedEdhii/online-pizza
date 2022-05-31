@@ -231,8 +231,6 @@ function AdminToppings({ products }) {
                     title="Employee Form"
                     openPopup={openToppings}
                     setOpenPopup={setOpenToppings}
-
-
                 >
 
                 </ToppingModal>

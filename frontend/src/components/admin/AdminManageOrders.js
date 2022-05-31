@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { useTheme } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
@@ -18,6 +18,8 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import { LOGIN_SUCCESS } from '../../constants/userConstants';
 
+import OrderConfirmation from './OrderConfirmation';
+
 
 function createData(id, date, orderDetails, total, status) {
     return {
@@ -25,7 +27,7 @@ function createData(id, date, orderDetails, total, status) {
         date,
         orderDetails,
         total,
-      
+
         status,
     };
 }
@@ -119,6 +121,8 @@ function AdminManageOrders({ products }) {
     };
 
 
+    const [openOrderConfirmation, setOpenOrderConfirmation] = useState(false)
+
     return (
         <>
             <Grid display='flex' sx={{ alignItems: 'center', paddingTop: 2 }}>
@@ -185,7 +189,10 @@ function AdminManageOrders({ products }) {
 
 
                                                     <TableCell align="center" component="th" scope="row">
-                                                        <Button disabled variant='contained' sx={{
+                                                        <Button disabled variant='contained'
+                                                       
+                                                        
+                                                        sx={{
                                                             backgroundColor: '#f30c1c',
                                                             '&:hover': {
                                                                 backgroundColor: '#FCAB04',
@@ -196,22 +203,24 @@ function AdminManageOrders({ products }) {
                                                 </>
                                             )}
                                             {!row.status && (
-                                                 <>
-                                                 <TableCell component="th" scope="row">
-                                                     Pending
-                                                 </TableCell>
+                                                <>
+                                                    <TableCell component="th" scope="row">
+                                                        Pending
+                                                    </TableCell>
 
 
-                                                 <TableCell align="center" component="th" scope="row">
-                                                     <Button  variant='contained' sx={{
-                                                         backgroundColor: '#f30c1c',
-                                                         '&:hover': {
-                                                             backgroundColor: '#FCAB04',
+                                                    <TableCell align="center" component="th" scope="row">
+                                                        <Button variant='contained'
+                                                         onClick={() => { setOpenOrderConfirmation(true)}}
+                                                        sx={{
+                                                            backgroundColor: '#f30c1c',
+                                                            '&:hover': {
+                                                                backgroundColor: '#FCAB04',
 
-                                                         }
-                                                     }} > Mark As Delivered</Button>
-                                                 </TableCell>
-                                             </>
+                                                            }
+                                                        }} > Mark As Delivered</Button>
+                                                    </TableCell>
+                                                </>
                                             )}
 
 
@@ -257,6 +266,17 @@ function AdminManageOrders({ products }) {
 
 
                 </Grid>
+
+                <OrderConfirmation
+                    title="Employee Form"
+                    openPopup={openOrderConfirmation}
+                    setOpenPopup={setOpenOrderConfirmation}
+
+
+                >
+
+                </OrderConfirmation>
+           
 
             </Grid>
         </>
