@@ -24,7 +24,7 @@ import AdminSidebar from './AdminSidebar'
 
 import AdminMainDashboard from './AdminMainDashboard';
 import AdminDashboardMenu from './AdminDashboardMenu';
-
+import AdminManageOrders from './AdminManageOrders';
 const drawerWidth = 240;
 
 
@@ -198,7 +198,9 @@ function AdminDashboard() {
                     {(menu === true) && (
                         <AdminDashboardMenu products={products} />
                     )}
-                    {/* <AdminDashboardMenu /> */}
+                    {(order === true) && (
+                        <AdminManageOrders products={products} />
+                    )}
                 </Grid>
 
             </Grid>
