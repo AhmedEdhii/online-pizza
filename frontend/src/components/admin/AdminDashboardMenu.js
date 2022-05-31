@@ -206,16 +206,18 @@ function AdminDashboardMenu({ products }) {
 
   useEffect(() => {
     // dispatch(getAdminProducts());
-    // setProducts();
-    // const dup = [...rows];
-    // dup.splice(0, dup.length)
-    // rows = [...dup]; 
     rows.splice(0, rows.length)
   })
 
 
   const UpdatePizzaHandler = (id) => {
     setOpenEditPizza(true)
+    console.log(id)
+    dispatch(getProductDetails(id));
+  }
+
+  const UpdateOtherItemsHandler = (id) => {
+    setOpenEditOther(true)
     console.log(id)
     dispatch(getProductDetails(id));
   }
@@ -309,7 +311,6 @@ function AdminDashboardMenu({ products }) {
                                 onClick={() => UpdatePizzaHandler(row.id)}>
                                 <EditIcon color='success' />
                               </IconButton>
-
                               <IconButton
                                 onClick={() => { setOpenDelete(true) }}>
                                 <DeleteOutlineIcon color='error' />
@@ -340,7 +341,7 @@ function AdminDashboardMenu({ products }) {
                             <TableCell align="center" component="th" scope="row">
 
                               <IconButton
-                                onClick={() => { setOpenEditOther(true) }}>
+                                onClick={() => UpdateOtherItemsHandler(row.id)}>
                                 <EditIcon color='success' />
                               </IconButton>
 
@@ -412,14 +413,22 @@ function AdminDashboardMenu({ products }) {
           </EditPizzaModal>
         )}
 
-        {product.category === "Beverages" || product.category === "Sauces" && (
-          <OtherItemsModal
+        {(product.category === "Beverages" || product.category === "Sauces") && (
+          <EditOtherModal
+            product={product}
             title="Employee Form"
-            openPopup={openOtherItemPopup}
-            setOpenPopup={setOtherItemPopup}
+            openPopup={openEditOther}
+            setOpenPopup={setOpenEditOther}
           >
-          </OtherItemsModal>
+          </EditOtherModal>
         )}
+
+        <OtherItemsModal
+          title="Employee Form"
+          openPopup={openOtherItemPopup}
+          setOpenPopup={setOtherItemPopup}
+        >
+        </OtherItemsModal>
 
         <DeleteConfirmation
 
@@ -428,15 +437,6 @@ function AdminDashboardMenu({ products }) {
           setOpenPopup={setOpenDelete}
         >
         </DeleteConfirmation>
-
-        <EditOtherModal
-
-          title="Employee Form"
-          openPopup={openEditOther}
-          setOpenPopup={setOpenEditOther}
-        >
-        </EditOtherModal>
-
 
       </Grid>
 

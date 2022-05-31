@@ -2,17 +2,21 @@ import {
     Typography, Dialog, DialogTitle, DialogContent, Fab, Grid, Box, IconButton, Divider, Radio, FormLabel, Input,
     FormControlLabel, RadioGroup, FormControl, Checkbox, Button, styled, FormGroup, TextField, Select, MenuItem, InputLabel, Switch
 } from '@mui/material'
-import React, { Fragment, useEffect, useState } from 'react'
 
 import CloseIcon from '@mui/icons-material/Close';
 
-import { useDispatch, useSelector } from 'react-redux'
+import React, { Fragment, useState, useEffect } from 'react'
+
 import { useAlert } from 'react-alert'
-import { getToppings } from '../../actions/toppingActions';
+import { useDispatch, useSelector } from 'react-redux'
+import { updateProduct, clearErrors } from '../../actions/productActions'
+import { UPDATE_PRODUCT_RESET } from '../../constants/productConstants'
+
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 
-function EditOtherModal({ title, openPopup, setOpenPopup, }) {
+function EditOtherModal({ title, openPopup, setOpenPopup, product}) {
 
+    console.log(product)
     const Input = styled('input')({
         display: 'none',
     });
@@ -28,25 +32,39 @@ function EditOtherModal({ title, openPopup, setOpenPopup, }) {
         borderRadius: '1.5rem',
     });
 
-    const [name, setName] = useState('Hello')
-    const [description, setDescription] = useState('my')
+    const alert = useAlert();
+    const dispatch = useDispatch();
 
+    const { error: updateError, isUpdated } = useSelector(state => state.product);
+
+    const [name, setName] = useState(product.name)
+    const [description, setDescription] = useState(product.description)
 
     const [price, setPrice] = useState(11)
 
-
-
-
-    const [category, setCategory] = useState('')
+    const [category, setCategory] = useState(product.category)
 
     const [activeState, setActiveState] = useState('true');
-
+    const [status, setStatus] = useState('active');
 
     const [avatar, setAvatar] = useState('')
-    const [avatarPreview, setAvatarPreview] = useState('/images/default.png')
+    // const [avatarPreview, setAvatarPreview] = useState(('/images/default.png'))
+    const [avatarPreview, setAvatarPreview] = useState((product.url) || ('/images/default.png'))
+
+    useEffect(() => {
+        if (updateError) {
+            alert.error(updateError);
+            dispatch(clearErrors())
+        }
+
+        if (isUpdated) {
+            alert.success('Product updated successfully');
+            dispatch({ type: UPDATE_PRODUCT_RESET })
+        }
+
+    }, [dispatch, alert, isUpdated, updateError, product])
 
     const UploadHandler = () => {
-
         alert.success('Item Added Menu')
         setOpenPopup(false)
 
@@ -57,9 +75,25 @@ function EditOtherModal({ title, openPopup, setOpenPopup, }) {
         setPrice('')
     }
 
-    const clearHandler = () => {
+    const submitHandler = (e) => {
+        // e.preventDefault();
+        setOpenPopup(false)
+        const formData = new FormData();
+        formData.set('name', name);
+        formData.set('description', description);
+        formData.set('category', category);
+        formData.set('price', price);
+        formData.set('avatar', avatar);
+        formData.set('status', status)
+        dispatch(updateProduct(product._id, formData))
+        setAvatarPreview('/images/default.png')
+        setName('')
+        setDescription('')
+        setPrice('')
+    }
 
-        
+
+    const clearHandler = () => {
         setOpenPopup(false)
 
         setAvatarPreview('/images/default.png')
@@ -84,8 +118,6 @@ function EditOtherModal({ title, openPopup, setOpenPopup, }) {
         }
     }
 
-    const alert = useAlert();
-    const dispatch = useDispatch();
 
     console.log(openPopup)
 
@@ -137,8 +169,8 @@ function EditOtherModal({ title, openPopup, setOpenPopup, }) {
                                     label="Category"
                                     onChange={(e) => setCategory(e.target.value)}
                                 >
-                                    <MenuItem value='beverages'>Beverages</MenuItem>
-                                    <MenuItem value='sauces'>Sauces</MenuItem>
+                                    <MenuItem value='Beverages'>Beverages</MenuItem>
+                                    <MenuItem value='Sauces'>Sauces</MenuItem>
 
                                 </Select>
 
@@ -176,7 +208,7 @@ function EditOtherModal({ title, openPopup, setOpenPopup, }) {
                         </Fragment>
 
                         <Button fullWidth variant='contained' sx={{ marginTop: 2, marginBottom: 1, }}
-                            onClick={UploadHandler}>Edit Item</Button>
+                            onClick={submitHandler}>Edit Item</Button>
 
 
                     </Grid>

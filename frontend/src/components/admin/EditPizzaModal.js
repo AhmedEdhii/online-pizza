@@ -11,7 +11,7 @@ import React, { Fragment, useState, useEffect } from 'react'
 
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateProduct, getProductDetails, clearErrors } from '../../actions/productActions'
+import { updateProduct, clearErrors } from '../../actions/productActions'
 import { UPDATE_PRODUCT_RESET } from '../../constants/productConstants'
 
 
@@ -71,11 +71,6 @@ function EditPizzaModal({ title, openPopup, setOpenPopup, product}) {
     const [avatarPreview, setAvatarPreview] = useState((product.url) || ('/images/default.png'))
 
     useEffect(() => {
-
-        // if (product && product._id !== "623d9e8f70365e7770439a11") {
-        //     dispatch(getProductDetails("623d9e8f70365e7770439a11"));
-        // }
-
         if (updateError) {
             alert.error(updateError);
             dispatch(clearErrors())
@@ -90,7 +85,6 @@ function EditPizzaModal({ title, openPopup, setOpenPopup, product}) {
 
 
     const submitHandler = (e) => {
-
         e.preventDefault();
         setOpenPopup(false)
         const formData = new FormData();
@@ -122,6 +116,7 @@ function EditPizzaModal({ title, openPopup, setOpenPopup, product}) {
         // setMediumPrice('')
         // setLargePrice('')
         // setJumboPrice('')
+        return openPopup;
     }
 
     const openHandler = () => {
@@ -134,6 +129,7 @@ function EditPizzaModal({ title, openPopup, setOpenPopup, product}) {
         setMediumPrice('')
         setLargePrice('')
         setJumboPrice('')
+        return openPopup;
     }
 
     const onChange = e => {
@@ -154,7 +150,7 @@ function EditPizzaModal({ title, openPopup, setOpenPopup, product}) {
 
     return (
         <>
-            <Dialog open={openPopup} maxWidth="md" sx={{ borderRadius: '5rem', zIndex: 1200 }} onClose={clearHandler}>
+            <Dialog open={openHandler} maxWidth="md" sx={{ borderRadius: '5rem', zIndex: 1200 }} onClose={clearHandler}>
 
                 <Grid display='flex' sm={12} sx={{ p: 2, }}>
 
@@ -267,7 +263,7 @@ function EditPizzaModal({ title, openPopup, setOpenPopup, product}) {
                         />
 
                         <Button fullWidth variant='contained' sx={{ marginTop: 2, marginLeft: 1, marginBottom: 1, }}
-                            onClick={submitHandler}>Edit Item</Button>
+                            onClick = {submitHandler}>Edit Item</Button>
 
 
                     </Grid>
