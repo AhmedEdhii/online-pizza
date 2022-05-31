@@ -3,8 +3,16 @@ const mongoose = require('mongoose')
 const orderSchema = mongoose.Schema({
     customer_id: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
+        //required: true,
         ref: 'User'
+    },
+    deliveryaddress: {
+        type: String,
+        required: true,
+    },
+    deliveryinstructions: {
+        type: String,
+        //required: true,
     },
     orderItems: [
         {
@@ -14,7 +22,7 @@ const orderSchema = mongoose.Schema({
             },
             quantity: {
                 type: Number,
-                required: true
+                //required: true
             },
             unit_price: {
                 type: Number,
@@ -36,10 +44,6 @@ const orderSchema = mongoose.Schema({
                         type: String,
                         required: true
                     },
-                    category: {
-                        type: String,
-                        required: true
-                    },
                     unit_price: {
                         type: Number,
                         required: true
@@ -48,11 +52,6 @@ const orderSchema = mongoose.Schema({
             ],
         }
     ],
-    itemsPrice: {
-        type: Number,
-        required: true,
-        default: 0.0
-    },
     deliveryCharges: {
         type: Number,
         required: true,
@@ -75,11 +74,7 @@ const orderSchema = mongoose.Schema({
         enum: {
             values: [
                 'Processing',
-                'Confirmed',
-                'onDelivery',
-                'Delivered',
-                'Cancelled',
-                'Rejected'
+                'Delivered'
             ],
             message: 'Incorrect Order Status'
         },

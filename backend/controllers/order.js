@@ -9,17 +9,34 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
         orderItems,
         deliveryCharges,
         totalPrice,
-        paymentmethod
+        paymentmethod,
+        deliveryaddress,
+        deliveryinstructions
     } = req.body;
 
-    const order = await Order.create({
-        orderItems,
-        deliveryCharges,
-        totalPrice,
-        paymentmethod,
-        orderDate: Date.now(),
-        customer_id: req.user._id
-    })
+    if(req.user) {
+        const order = await Order.create({
+            orderItems,
+            deliveryCharges,
+            totalPrice,
+            paymentmethod,
+            deliveryaddress,
+            deliveryinstructions,
+            orderDate: Date.now(),
+            customer_id: req.user._id
+        })
+    }
+    else {
+        const order = await Order.create({
+            orderItems,
+            deliveryCharges,
+            totalPrice,
+            paymentmethod,
+            deliveryaddress,
+            deliveryinstructions,
+            orderDate: Date.now()
+        })
+    }
 
     res.status(200).json({
         success: true,

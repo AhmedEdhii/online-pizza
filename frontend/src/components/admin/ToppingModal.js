@@ -6,10 +6,12 @@ import React, { Fragment, useEffect, useState } from 'react'
 
 import CloseIcon from '@mui/icons-material/Close';
 
-import { useDispatch, useSelector } from 'react-redux'
-import { useAlert } from 'react-alert'
-import { getToppings } from '../../actions/toppingActions';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
+
+import { useAlert } from 'react-alert'
+import { useDispatch, useSelector } from 'react-redux'
+import { newTopping, clearErrors } from '../../actions/toppingActions'
+import { NEW_TOPPING_RESET } from '../../constants/toppingConstants'
 
 function ToppingModal({ title, openPopup, setOpenPopup, }) {
 
@@ -28,10 +30,28 @@ function ToppingModal({ title, openPopup, setOpenPopup, }) {
         borderRadius: '1.5rem',
     });
 
-    const [name, setName] = useState('11')
+    const [name, setName] = useState('')
 
-    const [price, setPrice] = useState('22')
+    const [category, setCategory] = useState('Extra Topping')
+    const [price, setPrice] = useState('')
 
+    const alert = useAlert();
+    const dispatch = useDispatch();
+
+    const { loading, error, success } = useSelector(state => state.newTopping);
+
+    useEffect(() => {
+        if (error) {
+            alert.error(error);
+            dispatch(clearErrors())
+        }
+
+        if (success) {
+            // alert.success('topping added successfully');
+            dispatch({ type: NEW_TOPPING_RESET })
+        }
+
+    }, [dispatch, alert, error, success])
 
 
     const [avatar, setAvatar] = useState('')
@@ -41,21 +61,32 @@ function ToppingModal({ title, openPopup, setOpenPopup, }) {
 
         alert.success('Item Added Menu')
         setOpenPopup(false)
-
         setAvatarPreview('/images/default.png')
         setName('')
+        setCategory('');
+        setPrice('')
+    }
 
+    const submitHandler = (e) => {
+        e.preventDefault();
+        setOpenPopup(false)
+        const formData = new FormData();
+        formData.set('name', name);
+        formData.set('category', category);
+        formData.set('price', price);
+        dispatch(newTopping(formData))
+        alert.success('Topping added successfully');
+        setAvatarPreview('/images/default.png')
+        setName('')
+        setCategory('');
         setPrice('')
     }
 
     const clearHandler = () => {
-
-
         setOpenPopup(false)
-
         setAvatarPreview('/images/default.png')
         setName('')
-
+        setCategory('');
         setPrice('')
     }
 
@@ -74,16 +105,13 @@ function ToppingModal({ title, openPopup, setOpenPopup, }) {
         }
     }
 
-    const alert = useAlert();
-    const dispatch = useDispatch();
-
     console.log(openPopup)
 
     return (
         <>
             <Dialog open={openPopup} maxWidth="md" sx={{ borderRadius: '1.5rem', zIndex: 1200, }} onClose={clearHandler}>
 
-                <Grid display='flex' sm={12} sx={{ p: 2,mr:3  }}>
+                <Grid display='flex' sm={12} sx={{ p: 2, mr: 3 }}>
 
                     <Grid display='flex' sx={{ flexDirection: 'column', alignItems: 'center', p: 1 }}>
                         <Box container display='flex'
@@ -111,7 +139,7 @@ function ToppingModal({ title, openPopup, setOpenPopup, }) {
                                 onChange={(e) => setName(e.target.value)}
                             />
 
-                        
+
 
                             <TextField
                                 label='Price'
@@ -122,7 +150,7 @@ function ToppingModal({ title, openPopup, setOpenPopup, }) {
                             />
 
                         </Box>
-                    
+
 
                         <Img alt="complex" src={avatarPreview} />
 
@@ -138,8 +166,8 @@ function ToppingModal({ title, openPopup, setOpenPopup, }) {
 
                         </Fragment>
 
-                        <Button fullWidth variant='contained' sx={{  marginBottom: 1, }}
-                            onClick={UploadHandler}>Add Item</Button>
+                        <Button fullWidth variant='contained' sx={{ marginBottom: 1, }}
+                            onClick={submitHandler}>Add Item</Button>
 
 
                     </Grid>

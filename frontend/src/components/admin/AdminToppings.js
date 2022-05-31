@@ -1,7 +1,7 @@
-import React, { Fragment, useEffect, useState } from 'react'
 import { useTheme } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
+import MetaData from '../layout/MetaData'
 import {
     Box, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination,
     TableRow, TabelSortLabel, Toolbar, Typography, Paper, IconButton, Button, Grid,
@@ -20,23 +20,36 @@ import { LOGIN_SUCCESS } from '../../constants/userConstants';
 
 import ToppingModal from './ToppingModal';
 
+import { useDispatch, useSelector } from 'react-redux'
+import { getProducts } from '../../actions/productActions'
+import { getToppings } from '../../actions/toppingActions';
+import React, { Fragment, useEffect, useState } from 'react'
+import { useAlert } from 'react-alert';
 
-function createData(name, price) {
 
 
-    return {
-        name,
-        price,
-    };
-}
+// function createData(name, price) {
 
+
+//     return {
+//         name,
+//         price,
+//     };
+// }
+
+
+// const rows = [
+//     createData('Cheese', 80,),
+//     createData('Jalepenos', 70,),
+//     createData('1123', 120,),
+//     createData('1123', 40,),
+// ];
 
 const rows = [
-    createData('Cheese', 80,),
-    createData('Jalepenos', 70,),
-    createData('1123', 120,),
-    createData('1123', 40,),
+    []
 ];
+
+rows.splice(0, 1)
 
 function TablePaginationActions(props) {
     const theme = useTheme();
@@ -94,8 +107,6 @@ function TablePaginationActions(props) {
 
 function AdminToppings({ products }) {
 
-    const [openToppings, setOpenToppings] = useState(false)
-
     const Img = styled('img')({
         alignItems: "center",
         maxwidth: "100%",
@@ -103,6 +114,30 @@ function AdminToppings({ products }) {
         padding: 1,
         margin: 1
     });
+
+    const alert = useAlert();
+    const dispatch = useDispatch();
+    const { toppings, toppingsCount } = useSelector(state => state.toppings)
+    const [openToppings, setOpenToppings] = useState(false)
+
+    useEffect(() => {
+        //alert.success('Success')
+        dispatch(getToppings());
+    }, [dispatch, alert])
+
+
+    toppings.forEach(topping => {
+        rows.push({
+            id: topping._id,
+            name: topping.name,
+            category: topping.category,
+            price: topping.price
+        })
+    })
+
+    useEffect(() => {
+        rows.splice(0, rows.length)
+    })
 
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(3);
@@ -123,13 +158,14 @@ function AdminToppings({ products }) {
 
     return (
         <>
+            <MetaData title={'All Toppings'} />
             <Grid display='flex' sx={{ alignItems: 'center', paddingTop: 2 }}>
                 <Typography variant="h4" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
                     All Toppings
                 </Typography>
                 <Grid item sx={{ paddingRight: 9, }}>
                     <Button variant='contained' startIcon={<AddCircleIcon />}
-                        onClick={() => { setOpenToppings(true)}}>Add New Topping</Button>
+                        onClick={() => { setOpenToppings(true) }}>Add New Topping</Button>
                 </Grid>
             </Grid>
             <Divider sx={{ marginTop: 2, marginBottom: 3 }} /><Grid display='flex' container rowSpacing={5} columnSpacing={8} sx={{ marginBottom: 8, width: "100%" }}>
@@ -144,7 +180,7 @@ function AdminToppings({ products }) {
                                     <TableRow sx={{ backgroundColor: "#E5E4E2", }}>
 
                                         <TableCell align="left" sx={{ fontWeight: 'bold', width: "300px" }}>Topping Name</TableCell>
-                                        <TableCell align="left" sx={{ fontWeight: 'bold',paddingLeft: -10 }}></TableCell>
+                                        <TableCell align="left" sx={{ fontWeight: 'bold', paddingLeft: -10 }}></TableCell>
                                         <TableCell align="left" sx={{ fontWeight: 'bold', }}>Price</TableCell>
 
                                         <TableCell align="center" sx={{ fontWeight: 'bold', }}>Actions</TableCell>
@@ -164,8 +200,8 @@ function AdminToppings({ products }) {
                                             </TableCell>
 
                                             <TableCell component="th" scope="row">
-                                <Img alt="complex" src='/images/default.png' />
-                            </TableCell>
+                                                <Img alt="complex" src='/images/default.png' />
+                                            </TableCell>
 
 
                                             <TableCell component="th" scope="row">

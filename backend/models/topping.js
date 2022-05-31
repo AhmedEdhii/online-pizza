@@ -8,8 +8,9 @@ const toppingSchema = mongoose.Schema({
     },
     category: {
         type: String,
-        required: true,
-        enum: ["Extra Topping", "Extra Veggies"]
+        //required: true,
+        enum: ["Extra Topping", "Extra Veggies"],
+        default: "Extra Topping"
     },
     price: {
         type: Number,
