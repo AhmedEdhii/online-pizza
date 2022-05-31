@@ -239,10 +239,12 @@ function ProductModal({ title, openPopup, setOpenPopup, product, toppings }) {
 
                             {/* {children} */}
                             <Img alt="complex" src={product.url} />
-                            {/* <div align='center'>
+                            {/* 
+                            <div align='center'>
                                 <Typography variant="h5" sx={{ flexGrow: 1, fontWeight: 'bold', }}> Cart Price</Typography>
                                 <Typography variant="h5" sx={{ flexGrow: 1, }}> Rs. 299</Typography>
-                            </div> */}
+                            </div> 
+                            */}
                             <Button type='submit' color='primary' variant="contained" fullWidth
                                 sx={{ m: 1, height: 50 }} onClick={() => ATCbuttonHandler()}>Add To Cart</Button>
                         </Grid>
