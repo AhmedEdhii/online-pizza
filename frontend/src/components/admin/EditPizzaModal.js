@@ -110,7 +110,7 @@ function EditPizzaModal({ title, openPopup, setOpenPopup, dashboard}) {
     const clearHandler = () => {
         setOpenPopup(false)
         // forceUpdate();
-        window.location.reload();
+        // window.location.reload();
         setAvatarPreview('/images/default.png')
         setName('')
         setDescription('')

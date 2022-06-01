@@ -118,25 +118,17 @@ function TablePaginationActions(props) {
     );
 }
 
-function Admin_ManageUsers({ products }) {
+function Admin_ManageUsers() {
 
-    const Img = styled('img')({
-        alignItems: "center",
-        maxwidth: "100%",
-        height: 80,
-        padding: 1,
-        margin: 1
-    });
-
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const { error, products } = useSelector(state => state.products);
     const alert = useAlert();
     const dispatch = useDispatch();
     const { users, usersCount } = useSelector(state => state.allUsers)
     const [openUsers, setOpenUsers] = useState(false)
 
-    useEffect(() => {
-        //alert.success('Success')
-        dispatch(allUsers());
-    }, [dispatch, alert])
+  
 
 
     users.forEach(user => {
@@ -153,8 +145,7 @@ function Admin_ManageUsers({ products }) {
         rows.splice(0, rows.length)
     })
 
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(3);
+    
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
@@ -194,7 +185,7 @@ function Admin_ManageUsers({ products }) {
                                     <TableRow sx={{ backgroundColor: "#E5E4E2", }}>
 
                                         <TableCell align="left" sx={{ fontWeight: 'bold', width: "300px" }}>User Name</TableCell>
-                                        <TableCell align="left" sx={{ fontWeight: 'bold', paddingLeft: -10 }}></TableCell>
+                                    
                                         <TableCell align="left" sx={{ fontWeight: 'bold', }}>Phone Number</TableCell>
                                         <TableCell align="left" sx={{ fontWeight: 'bold', }}>Email</TableCell>
                                         <TableCell align="left" sx={{ fontWeight: 'bold', }}>Role</TableCell>
@@ -216,10 +207,13 @@ function Admin_ManageUsers({ products }) {
                                             </TableCell>
 
                                             <TableCell component="th" scope="row">
-                                                <Img alt="complex" src='/images/default.png' />
+                                                {row.phonenumber}
+
                                             </TableCell>
+                                            <TableCell component="th" scope="row">
+                                                {row.role}
 
-
+                                            </TableCell>
                                             <TableCell component="th" scope="row">
                                                 {row.email}
 
@@ -279,13 +273,13 @@ function Admin_ManageUsers({ products }) {
 
 
                 </Grid>
-                <UserModal
+                {/* <UserModal
                     title="Employee Form"
                     openPopup={openUsers}
                     setOpenPopup={setOpenUsers}
                 >
 
-                </UserModal>
+                </UserModal> */}
             </Grid>
         </>
     )

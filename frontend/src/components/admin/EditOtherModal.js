@@ -94,7 +94,7 @@ function EditOtherModal({ title, openPopup, setOpenPopup}) {
 
     const clearHandler = () => {
         setOpenPopup(false)
-        window.location.reload();
+        // window.location.reload();
         setAvatarPreview('/images/default.png')
         setName('')
         setCategory('')

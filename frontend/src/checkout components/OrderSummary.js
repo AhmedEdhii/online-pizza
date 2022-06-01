@@ -2,18 +2,18 @@ import React, { Fragment } from 'react'
 import { Typography, Grid, Divider, Box, Button, IconButton } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useDispatch, useSelector } from 'react-redux'
-
+import { Link } from 'react-router-dom';
 import { removeItemFromCart } from '../actions/cartActions'
 
 
 function OrderSummary() {
 
-    const RedirectBtnHandler = () => {
+    // const RedirectBtnHandler = () => {
 
-        // dispatch(addItemToCart(product._id, quantity, sizePrice, selectSize, selectToppings));
+    //     // dispatch(addItemToCart(product._id, quantity, sizePrice, selectSize, selectToppings));
 
-        alert.success('Redirecting')
-    }
+    //     alert.success('Redirecting')
+    // }
 
     const removeCartItemHandler = (id) => {
         console.log(id)
@@ -160,9 +160,9 @@ function OrderSummary() {
 
                                 </Grid>
 
-                                <Button type='submit' variant="outlined" fullWidth
+                                <Button component={Link} to="/"  type='submit'variant="outlined" fullWidth
                                     sx={{ m: 1, mt: 2, height: 50 }}
-                                    onClick={() => RedirectBtnHandler()}
+                                   
                                 >Continue Shopping</Button>
                             </Grid>
 
