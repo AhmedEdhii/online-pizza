@@ -15,13 +15,7 @@ import { updateProduct, clearErrors } from '../../actions/productActions'
 import { UPDATE_PRODUCT_RESET } from '../../constants/productConstants'
 
 
-<<<<<<< Updated upstream
-function EditPizzaModal({ title, openPopup, setOpenPopup, product }) {
-
-    console.log('This is the passed product' +product.name)
-=======
-function EditPizzaModal({ title, openPopup, setOpenPopup}) {
->>>>>>> Stashed changes
+function EditPizzaModal({ title, openPopup, setOpenPopup, dashboard}) {
 
     const Input = styled('input')({
         display: 'none',
@@ -38,7 +32,19 @@ function EditPizzaModal({ title, openPopup, setOpenPopup}) {
         borderRadius: '1.5rem',
     });
 
-
+    // const UploadHandler = () => {
+    //     alert.success('Picture Uploaded')
+    //     const reader = new FileReader();
+    //     reader.onload = () => {
+    //         console.log(reader.readyState)
+    //         if (reader.readyState === 2) {
+    //             setAvatarPreview(reader.result)
+    //             setAvatar(reader.result)
+    //         }
+    //     }
+    //     // reader.readAsDataURL(e.target.files[0])
+    //     // setOpenPopup(false)
+    // }
 
     const alert = useAlert();
     const dispatch = useDispatch();
@@ -47,13 +53,13 @@ function EditPizzaModal({ title, openPopup, setOpenPopup}) {
     const { error: updateError, isUpdated } = useSelector(state => state.product);
     const { product } = useSelector(state => state.productDetails)
 
-    const [name, setName] = useState('')
-    const [description, setDescription] = useState('')
+    const [name, setName] = useState(product.name)
+    const [description, setDescription] = useState(product.description)
 
-    const [smallPrice, setSmallPrice] = useState('')
-    const [mediumPrice, setMediumPrice] = useState('')
-    const [largePrice, setLargePrice] = useState('')
-    const [jumboPrice, setJumboPrice] = useState('')
+    const [smallPrice, setSmallPrice] = useState(product.PizzaDetails.size.small)
+    const [mediumPrice, setMediumPrice] = useState(product.PizzaDetails.size.regular)
+    const [largePrice, setLargePrice] = useState(product.PizzaDetails.size.large)
+    const [jumboPrice, setJumboPrice] = useState(product.PizzaDetails.size.jumbo)
 
 
     const [category, setCategory] = useState("Pizzas")
@@ -63,9 +69,6 @@ function EditPizzaModal({ title, openPopup, setOpenPopup}) {
 
     const [avatar, setAvatar] = useState('/images/default.png')
     const [avatarPreview, setAvatarPreview] = useState((product.url) || ('/images/default.png'))
-
-
-    const [openEdit, setOpenEdit] = useState(true);
 
     useEffect(() => {
         if (updateError) {
@@ -77,11 +80,10 @@ function EditPizzaModal({ title, openPopup, setOpenPopup}) {
             alert.success('Product updated successfully');
             dispatch({ type: UPDATE_PRODUCT_RESET })
         }
-    }, [dispatch, alert, isUpdated, updateError, value])
+    }, [dispatch, alert, isUpdated, updateError, value, dashboard])
 
 
     const submitHandler = (e) => {
-
         e.preventDefault();
         setOpenPopup(false)
         const formData = new FormData();
@@ -96,10 +98,6 @@ function EditPizzaModal({ title, openPopup, setOpenPopup}) {
         formData.set('status', status)
         dispatch(updateProduct(product._id, formData))
         setAvatarPreview('/images/default.png')
-<<<<<<< Updated upstream
-
-
-=======
         setName('')
         setDescription('')
         setSmallPrice('')
@@ -107,16 +105,10 @@ function EditPizzaModal({ title, openPopup, setOpenPopup}) {
         setLargePrice('')
         setJumboPrice('')
         // forceUpdate();
->>>>>>> Stashed changes
     }
-    var newname = product.name;
-    const closeModal = () => {
 
+    const clearHandler = () => {
         setOpenPopup(false)
-<<<<<<< Updated upstream
-        console.log('this is new name' + newname)
-        newname=null
-=======
         // forceUpdate();
         window.location.reload();
         setAvatarPreview('/images/default.png')
@@ -127,10 +119,20 @@ function EditPizzaModal({ title, openPopup, setOpenPopup}) {
         setLargePrice('')
         setJumboPrice('')
         return openPopup;
->>>>>>> Stashed changes
     }
 
-
+    const openHandler = () => {
+        console.log(product + "hello")
+        setOpenPopup(true)
+        setAvatarPreview((product.url || '/images/default.png'))
+        setName(product.name)
+        setDescription(product.description)
+        setSmallPrice('')
+        setMediumPrice('')
+        setLargePrice('')
+        setJumboPrice('')
+        return openPopup;
+    }
 
     const onChange = e => {
         if (e.target.name === 'avatar') {
@@ -150,19 +152,11 @@ function EditPizzaModal({ title, openPopup, setOpenPopup}) {
 
     return (
         <>
-<<<<<<< Updated upstream
-            <Dialog open={openPopup} maxWidth="md" sx={{ borderRadius: '5rem', zIndex: 1200 }} >
-
-
-
-=======
             <Dialog open={openPopup} maxWidth="md" sx={{ borderRadius: '5rem', zIndex: 1200 }} onClose={clearHandler}>
->>>>>>> Stashed changes
 
                 <Grid display='flex' sm={12} sx={{ p: 2, }}>
 
                     <Grid display='flex' sx={{ flexDirection: 'column', p: 1 }}>
-
                         <Box container display='flex'
                             component="form"
                             sx={{
@@ -176,14 +170,13 @@ function EditPizzaModal({ title, openPopup, setOpenPopup}) {
                             autoComplete="off"
                         >
                             <Typography variant='h5' sx={{ fontWeight: 'bold', marginBottom: 2, marginLeft: 1.2 }}>Edit Pizza</Typography>
-
                             <Divider sx={{ marginBottom: 2 }} />
                             <Typography variant='body1' sx={{ fontWeight: 'bold', marginLeft: 1.2 }}>Pizza Details</Typography>
                             {/* Name and Email */}
                             <TextField
                                 label='Name'
                                 placeholder='Enter Name' fullWidth required
-                                defaultValue={newname}
+                                defaultValue={name}
                                 onChange={(e) => setName(e.target.value)}
                             />
 
@@ -192,7 +185,7 @@ function EditPizzaModal({ title, openPopup, setOpenPopup}) {
                                 label='Description'
                                 placeholder='Enter Description' fullWidth required multiline
 
-                                defaultValue={product.description}
+                                value={description}
                                 onChange={(e) => setDescription(e.target.value)}
                             />
 
@@ -216,40 +209,38 @@ function EditPizzaModal({ title, openPopup, setOpenPopup}) {
                             <TextField
                                 label='Price for Small'
                                 placeholder='Price for Small Pizza' fullWidth required
-                                defaultValue={product.PizzaDetails.size.small}
+                                defaultValue={smallPrice}
                                 onChange={(e) => setSmallPrice(e.target.value)}
                             />
 
                             <TextField
                                 label='Price for Medium'
                                 placeholder='Price for Medium Pizza' fullWidth required
-                                defaultValue={product.PizzaDetails.size.regular}
+                                defaultValue={mediumPrice}
                                 onChange={(e) => setMediumPrice(e.target.value)}
                             />
 
                             <TextField
                                 label='Price for Large'
                                 placeholder='Price for Large Pizza' fullWidth required
-                                defaultValue={product.PizzaDetails.size.large}
+                                defaultValue={largePrice}
                                 onChange={(e) => setLargePrice(e.target.value)}
                             />
 
                             <TextField
                                 label='Price for Jumbo'
                                 placeholder='Price for Jumbo Pizza' fullWidth required
-                                defaultValue={product.PizzaDetails.size.jumbo}
+                                defaultValue={jumboPrice}
                                 onChange={(e) => setJumboPrice(e.target.value)}
                             />
                         </Box>
-
                     </Grid>
 
 
 
                     <Grid display='flex' sx={{ m: 1, p: 1, marginLeft: 3, width: "80%", flexDirection: "column", alignItems: 'center', justifyContent: 'center ' }}>
 
-
-                        <Img alt="complex" src={product.url} />
+                        <Img alt="complex" src={avatarPreview} />
 
                         <Fragment>
                             <Input name='avatar' accept="image/*" id="contained-button-file" type="file"
@@ -274,11 +265,11 @@ function EditPizzaModal({ title, openPopup, setOpenPopup}) {
                         />
 
                         <Button fullWidth variant='contained' sx={{ marginTop: 2, marginLeft: 1, marginBottom: 1, }}
-                            onClick={submitHandler}>Edit Item</Button>
+                            onClick = {submitHandler}>Edit Item</Button>
 
 
                     </Grid>
-                    <Button onClick={closeModal} sx={{ height: "48px", ml: -7 }}> Close</Button>
+
                 </Grid>
             </Dialog>
 
