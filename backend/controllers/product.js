@@ -9,74 +9,7 @@ const cloudinary = require('cloudinary')
 //Add new product -- For Admins
 exports.newProduct = catchAsyncErrors(async (req, res, next) => {
 
-    // console.log(req.body)
-    // if (req.body.avatar !== '') {
-    // const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
-    //     folder: 'avatars',
-    //     width: 150,
-    //     crop: "scale"
-    // })
-
-    //     if (product.category === 'Pizzas') {
-    //         const { name, description, smallPrice, mediumPrice, largePrice, jumboPrice, category, activeState } = req.body;
-    //         console.log(req.body)
-    //         const product = await Product.create({
-    //             name,
-    //             description,
-    //             category,
-    //             PizzaDetails: {
-    //                 size: {
-    //                     small: smallPrice,
-    //                     regular: mediumPrice,
-    //                     large: largePrice,
-    //                     jumbo: jumboPrice
-    //                 }
-    //             },
-    //             product_status: activeState,
-    //             url: result.secure_url
-    //         });
-    //         res.status(201).json({
-    //             success: true,
-    //             product
-    //         })
-    //     }
-    //     else if (product.category === 'Beverages') {
-    //         const { name, description, price, category, activeState } = req.body;
-    //         const product = await Product.create({
-    //             name,
-    //             description,
-    //             category,
-    //             BeverageDetails: {
-    //                 price: price
-    //             },
-    //             product_status: activeState,
-    //             url: result.secure_url
-    //         });
-    //         res.status(201).json({
-    //             success: true,
-    //             product
-    //         })
-    //     }
-    //     else if (product.category === 'Sauces') {
-    //         const { name, description, price, category, activeState } = req.body;
-    //         const product = await Product.create({
-    //             name,
-    //             description,
-    //             category,
-    //             SauceDetails: {
-    //                 price: price
-    //             },
-    //             url: result.secure_url,
-    //             activeState,
-    //             url: result.secure_url
-    //         });
-    //         res.status(201).json({
-    //             success: true,
-    //             product
-    //         })
-    //     }
-    // }
-
+   
     //else {
     //console.log(req.body.avatar)
     var url;
@@ -168,8 +101,6 @@ exports.getallProducts = catchAsyncErrors(async (req, res, next) => {
         })
     }
     else {
-        //const products = await Product.find({ product_status: "active" });
-        //const resPerPage = 6;
         const productsCount = await Product.countDocuments();
 
         const apiFeatures = new APIFeatures(Product.find({ product_status: "active" }), req.query)
@@ -186,18 +117,6 @@ exports.getallProducts = catchAsyncErrors(async (req, res, next) => {
             //resPerPage,
             products
         })
-        // res.status(200).json({
-        //     success: true,
-        //     count: products.length,
-        //     products
-        // })
-        // setTimeout(() => {
-        //     res.status(200).json({
-        //         success: true,
-        //         count: products.length,
-        //         products
-        //     })  
-        // }, 2000);
     }
 })
 
@@ -246,11 +165,7 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
         })
     }
 
-    // console.log(req.body)
-    // const newProductData = {
-    //     url: product.url
-    // }
-
+   
     if (req.body.category === 'Pizzas') {
         const newProductData = {
             name: req.body.name,
@@ -266,23 +181,6 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
             },
             product_status: req.body.status
         }
-        // var path;
-        // if (req.body.avatar != '/images/default.png') {
-        //     const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
-        //         folder: 'products',
-        //         width: 150,
-        //         crop: "scale"
-        //     })
-        //     path = result.secure_url;
-    
-        //     newProductData.url = {
-        //         url: path || (product.url)
-        //     }
-        //     // newProductData.avatar = {
-        //     //     public_id: result.public_id,
-        //     //     url: result.secure_url
-        //     // }
-        // }
         const product = await Product.findByIdAndUpdate(req.params.id, newProductData, {
             new: true,
             runValidators: true,
@@ -319,10 +217,6 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
             newProductData.url = {
                 url: result.secure_url || (product.url)
             }
-            // newProductData.avatar = {
-            //     public_id: result.public_id,
-            //     url: result.secure_url
-            // }
         }
         product = await Product.findByIdAndUpdate((req.params.id), newProductData, {
             new: true,
@@ -361,10 +255,6 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
             newProductData.url = {
                 url: result.secure_url || (product.url)
             }
-            // newProductData.avatar = {
-            //     public_id: result.public_id,
-            //     url: result.secure_url
-            // }
         }
         product = await Product.findByIdAndUpdate((req.params.id), newProductData, {
             new: true,

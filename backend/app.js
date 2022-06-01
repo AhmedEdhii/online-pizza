@@ -29,9 +29,7 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 })
 
-// use parsing middlewares
-//app.use(bodyParser.json())
-// app.use(bodyParser.urlencoded({ extended: true }));
+
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
