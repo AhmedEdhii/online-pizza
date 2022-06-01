@@ -1,6 +1,8 @@
 import './App.css';
 // import 'bootstrap/dist/css/bootstrap.min.css';
-
+import {
+  createTheme,ThemeProvider
+} from '@mui/material';
 import { useEffect } from 'react'
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import HeaderTest from './components/layout/HeaderTest';
@@ -41,7 +43,24 @@ function App() {
     store.dispatch(loadUser())
   }, [])
 
+
+  const theme = createTheme({
+    palette: {
+
+      primary: {
+        main: "#f30c1c"
+      },
+      secondary: {
+        main: "#FCAB04"
+      }
+
+    },
+
+  });
+
+
   return (
+    <ThemeProvider theme={theme}>
     <Router>
       <Route
         exact
@@ -85,6 +104,7 @@ function App() {
       {/* <Footer /> */}
 
     </Router>
+    </ThemeProvider>
   );
 }
 

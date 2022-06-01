@@ -39,8 +39,8 @@ if(!Array.isArray(slides) || slides.length <= 0){
 
 return(
 <section className='slider'>
-    <FaArrowAltCircleLeft className='left-arrow' onClick={prevSlide}/>
-    <FaArrowAltCircleRight className='right-arrow' onClick={nextSlide}/>
+    {/* <FaArrowAltCircleLeft className='left-arrow' onClick={prevSlide}/>
+    <FaArrowAltCircleRight className='right-arrow' onClick={nextSlide}/> */}
     {Slider_image.map((slide, index) => {
         return (
         <div 
