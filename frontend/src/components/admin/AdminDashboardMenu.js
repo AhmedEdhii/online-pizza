@@ -100,10 +100,11 @@ function TablePaginationActions(props) {
   );
 }
 
-function AdminDashboardMenu({ products }) {
+function AdminDashboardMenu({  }) {
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const { error, products } = useSelector(state => state.products);
   // const { loading, error, products } = useSelector(state => state.products);
   // const alert = useAlert();
   // const dispatch = useDispatch();

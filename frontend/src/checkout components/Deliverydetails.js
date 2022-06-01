@@ -42,40 +42,7 @@ function DeliveryDetails({ user }) {
 
 
     const PlaceOrderHandler = () => {
-        // const formData = new FormData();
-        // dispatch(addItemToCart(product._id, quantity, sizePrice, selectSize, selectToppings));
-        // formData.set('orderItems', cartItems);
-        // formData.set('deliverycharges', deliverycharges);
-        // formData.set('totalPrice', totalPrice);
-        // formData.set('paymentmethod', paymentmethod);
-        // formData.set('deliveryaddress', deliveryaddress);
-        // formData.set('additionalInstructions', additionalInstructions);
-        // console.log(formData)
-        // dispatch(createOrder(formData))
-        // const orderItems = []
-
-        // {
-        //     cartItems.map((item, index) => {
-        //         orderItems.push(item)
-        //     })
-        // }
-        // for (let i = 0; i < cartItems.length; i++) {
-        //     orderItems.push(cartItems[i])
-        //     console.log(orderItems[i]);
-        // }
-        // cartItems.forEach(function (Item) {  // For every element of pageData from   client.
-        //     orderItems.push(Item)  // This pushes each and every pagedata given from the client into PagesData.
-        // })
-        // var orderItems = [];
-        // cartItems.forEach(function (item) {
-        //     var object = {
-        //         "name": item.name,
-        //         "price": item.price,
-        //         "size": item.size,
-        //         "product": item.product
-        //     }
-        //     orderItems.push(object);
-        // });
+    
 
         const order = {
             orderItems: cartItems,
@@ -156,7 +123,8 @@ function DeliveryDetails({ user }) {
 
                 </Box>
                 <Fragment>
-                    <Button component={Link} type='submit' variant="contained" fullWidth
+                    
+                    <Button component={Link} to="/"  type='submit' variant="contained" fullWidth
                         sx={{ m: 1, mt: 2, height: 50 }}
                         onClick={() => PlaceOrderHandler()}
 

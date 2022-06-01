@@ -55,8 +55,21 @@ function App() {
       }
 
     },
+    overrides: {
+      MuiOutlinedInput: {
 
-  });
+        root: {
+          // Hover state
+          "&:hover $notchedOutline": {
+            borderColor: '#oooeee'
+          },
+          // Focused state
+          "&$focused $notchedOutline": {
+            borderColor: '#oooeee'
+          }
+        },
+    },
+  }});
 
 
   return (

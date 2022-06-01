@@ -87,7 +87,7 @@ const Mynavbar = () => {
       {!loading && (
         <ThemeProvider theme={theme}>
           {!user ? (
-            <AppBar elevation={0} position='sticky' sx={{ backgroundColor: "#fff", zIndex: 1200 }} >
+            <AppBar elevation={0} position='  ' sx={{ backgroundColor: "#fff", zIndex: 1200 }} >
 
               <Toolbar >
 

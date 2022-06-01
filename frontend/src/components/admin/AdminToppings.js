@@ -134,7 +134,7 @@ function AdminToppings({ products }) {
     })
 
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(3);
+    const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
@@ -163,7 +163,7 @@ function AdminToppings({ products }) {
                 </Grid>
             </Grid>
             <Divider sx={{ marginTop: 2, marginBottom: 3 }} /><Grid display='flex' container rowSpacing={5} columnSpacing={8} sx={{ marginBottom: 8, width: "100%" }}>
-                <Grid item xs={12} >
+                <Grid item xs={6} >
 
 
                     <Box sx={{ width: '100%' }}>
@@ -173,11 +173,11 @@ function AdminToppings({ products }) {
                                 <TableHead>
                                     <TableRow sx={{ backgroundColor: "#E5E4E2", }}>
 
-                                        <TableCell align="left" sx={{ fontWeight: 'bold', width: "300px" }}>Topping Name</TableCell>
+                                        <TableCell align="left" sx={{ fontWeight: 'bold',  paddingLeft: 5}}>Topping Name</TableCell>
                                         
-                                        <TableCell align="left" sx={{ fontWeight: 'bold', }}>Price</TableCell>
-                                        <TableCell align="left" sx={{ fontWeight: 'bold', paddingLeft: -10 }}></TableCell>
-                                        <TableCell align="center" sx={{ fontWeight: 'bold', }}>Actions</TableCell>
+                                        <TableCell align="left" sx={{ fontWeight: 'bold',}}>Price</TableCell>
+                                        
+                                        {/* <TableCell align="center" sx={{ fontWeight: 'bold', }}>Actions</TableCell> */}
                                     </TableRow>
                                 </TableHead>
 
@@ -188,7 +188,7 @@ function AdminToppings({ products }) {
                                     ).map((row) => (
                                         <TableRow key={row.name} >
 
-                                            <TableCell component="th" scope="row" sx={{ paddingLeft: 5 }}>
+                                            <TableCell align="left"  component="th" scope="row" sx={{ paddingLeft: 5 }}>
                                                 {row.name}
 
                                             </TableCell>
@@ -196,12 +196,12 @@ function AdminToppings({ products }) {
                                             
 
 
-                                            <TableCell component="th" scope="row">
+                                            <TableCell align="left" component="th" scope="row">
                                                 {row.price}
 
                                             </TableCell>
-                                            <TableCell align="left" sx={{ fontWeight: 'bold', paddingLeft: -10 }}></TableCell>
-                                            <TableCell align="center" component="th" scope="row">
+                                            
+                                            {/* <TableCell align="center" component="th" scope="row">
                                                 <IconButton
                                                     onClick={() => { console.log('delete clicked') }}>
                                                     <EditIcon color='success' />
@@ -211,7 +211,7 @@ function AdminToppings({ products }) {
                                                     onClick={() => { console.log('delete clicked') }}>
                                                     <DeleteOutlineIcon color='error' />
                                                 </IconButton>
-                                            </TableCell>
+                                            </TableCell> */}
 
 
                                         </TableRow>

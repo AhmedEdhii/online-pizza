@@ -53,6 +53,7 @@ const Mylogin = ({history}) => {
                     label='Email' 
                     placeholder='Enter Email' fullWidth required 
                     value={email}
+                
                     onChange={(e) => setEmail(e.target.value)}
                     />
 
