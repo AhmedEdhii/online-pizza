@@ -1,5 +1,5 @@
 import { Typography, Grid } from '@mui/material'
-import DeliveryDetails from '../checkout components/DeliveryDetails'
+import Deliverydetails from '../checkout components/Deliverydetails'
 import OrderSummary from '../checkout components/OrderSummary'
 import MetaData from '../components/layout/MetaData'
 import React, { Fragment, useState, useEffect } from 'react'
@@ -18,7 +18,7 @@ function Checkout() {
             <Grid container md={12} display='flex' sx={{ justifyContent: 'center' }}>
 
                 <Grid item >
-                    <DeliveryDetails user = {user}/>
+                    <Deliverydetails user = {user}/>
                 </Grid>
                 <Grid item >
                     <OrderSummary />

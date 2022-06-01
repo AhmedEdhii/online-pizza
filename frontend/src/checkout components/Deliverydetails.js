@@ -6,7 +6,7 @@ import { createOrder, clearErrors } from '../actions/orderActions'
 import { Link } from 'react-router-dom';
 
 
-function DeliveryDetails({ user }) {
+function Deliverydetails({ user }) {
 
     const alert = useAlert();
     const dispatch = useDispatch();
@@ -141,4 +141,4 @@ function DeliveryDetails({ user }) {
     )
 }
 
-export default DeliveryDetails
+export default Deliverydetails
