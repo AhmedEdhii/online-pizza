@@ -2,6 +2,7 @@ import { Drawer, Typography, Box, Grid, Button, Divider, IconButton } from '@mui
 import DeleteIcon from '@mui/icons-material/Delete';
 import React, { Fragment, useState, useEffect } from 'react'
 import MetaData from '../layout/MetaData'
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import { useAlert } from 'react-alert'
 import { addItemToCart, removeItemFromCart } from '../../actions/cartActions'
@@ -16,7 +17,7 @@ const Cart = (props) => {
     const [sum, setSum] = useState(5)
 
     const removeCartItemHandler = (id) => {
-        //console.log(id)
+        console.log(id)
         dispatch(removeItemFromCart(id))
     }
 
@@ -185,9 +186,9 @@ const Cart = (props) => {
 
                                             </Grid>
 
-                                            <Button type='submit' color='primary' variant="contained" fullWidth sx={{ marginTop: 2 }}
-
-                                            >Add To Cart</Button>
+                                            <Button component={Link} to="/checkout" type='submit' color='primary' variant="contained" fullWidth sx={{ marginTop: 2 }}
+                                                onClick={() => { setOpenDrawer(false) }}
+                                            >Checkout</Button>
                                         </Grid>
 
                                     </Grid>

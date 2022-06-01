@@ -8,15 +8,15 @@ const orderSchema = mongoose.Schema({
     },
     deliveryaddress: {
         type: String,
-        required: true,
+        //required: true,
     },
-    deliveryinstructions: {
+    additionalInstructions: {
         type: String,
         //required: true,
     },
     orderItems: [
         {
-            product_name: {
+            name: {
                 type: String,
                 required: true
             },
@@ -24,27 +24,34 @@ const orderSchema = mongoose.Schema({
                 type: Number,
                 //required: true
             },
-            unit_price: {
+            price: {
                 type: Number,
                 required: true
             },
-            product_id: {
+            category: {
+                type: String,
+                //required: true
+            },
+            size: {
+                type: String
+            },
+            product: {
                 type: mongoose.Schema.Types.ObjectId,
                 required: true,
                 ref: 'Product'
             },
             toppings: [
                 {
-                    topping_id: {
+                    _id: {
                         type: mongoose.Schema.Types.ObjectId,
                         required: true,
                         ref: 'Topping'
                     },
-                    topping_name: {
+                    name: {
                         type: String,
                         required: true
                     },
-                    unit_price: {
+                    price: {
                         type: Number,
                         required: true
                     },
@@ -52,7 +59,7 @@ const orderSchema = mongoose.Schema({
             ],
         }
     ],
-    deliveryCharges: {
+    deliverycharges: {
         type: Number,
         required: true,
         default: 0.0

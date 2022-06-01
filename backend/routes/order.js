@@ -6,7 +6,7 @@ const { newOrder, getSingleOrder, myOrders, allOrders, updateOrder, deleteOrder}
 const {verifyToken, authorizeRoles} = require("../middlewares/authentication");
 
 
-router.post('/neworder', verifyToken, newOrder)
+router.post('/neworder', newOrder)
 
 router.get('/order/:id', verifyToken, getSingleOrder)
 

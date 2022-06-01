@@ -1,195 +1,184 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Typography, Grid, Divider, Box, Button, IconButton } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useDispatch, useSelector } from 'react-redux'
+
+import { removeItemFromCart } from '../actions/cartActions'
 
 
-
-
-function orderSummary() {
-
+function OrderSummary() {
 
     const RedirectBtnHandler = () => {
 
         // dispatch(addItemToCart(product._id, quantity, sizePrice, selectSize, selectToppings));
 
         alert.success('Redirecting')
-
-
     }
-
 
     const removeCartItemHandler = (id) => {
-        alert.success('Deleted')
-        // dispatch(removeItemFromCart(id))
+        console.log(id)
+        dispatch(removeItemFromCart(id))
+        alert.error('Deleted')
     }
+    const deliveryCharges = 150;
+    const dispatch = useDispatch();
 
+    const { cartItems } = useSelector(state => state.cart)
 
-  return (
-    
-    <Grid display='flex'>
-    <Box sm={12} sx={{ width: '500px', m: 5,  p:5, border:1, borderColor: 'grey.300' }}>
+    return (
 
-        <Typography variant='h5' sx={{ fontWeight: 'bold', marginBottom: 2, marginLeft: 1.2 }}>Order Summary</Typography>
-        <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
-        
-        <Box display='flex' sx={{ flexDirection: 'column', m: 4 }}>
+        <Grid display='flex'>
+            <Box sm={12} sx={{ width: '500px', m: 5, p: 5, border: 1, borderColor: 'grey.300' }}>
 
-                                <Grid spacing={2} >
+                <Typography variant='h5' sx={{ fontWeight: 'bold', marginBottom: 2, marginLeft: 1.2 }}>Order Summary</Typography>
+                <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
 
-                                    <Grid display="flex" sx={{ flexDirection: 'column', justifyContent: 'space-between' }}>
+                <Box display='flex' sx={{ flexDirection: 'column', m: 4 }}>
 
-                                        <Grid item >
-                                            <Grid >
-                                                <Grid item display='flex'  >
-                                                    <Typography variant="h6" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
-                                                        Your Cart : 2 items
-                                                    </Typography>
-                                                </Grid>
-                                                <Divider sx={{ marginBottom: 2 }} />
+                    <Grid spacing={2} >
 
-                                                {/* Start of Loop */}
-                                                {/* {cartItems.map((item, index) => {
-                                                    return (item.category === 'Pizzas' && (item)) ?
-                                                        <Fragment> */}
-                                                            <Grid display='flex' sx={{ justifyContent: 'space-between', }}>
-                                                                <Grid sx={{ columnDirection: 'column' }}>
-                                                                    <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
-                                                                        Chicken Fajita</Typography>
-                                                                    <Typography variant="body1" color='text.secondary' component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
-                                                                        Small</Typography>
+                        <Grid display="flex" sx={{ flexDirection: 'column', justifyContent: 'space-between' }}>
 
-                                                                    {/* {(item.toppings.length > 0) && ( */}
-                                                                        <Typography variant="body2" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
-                                                                            Extra Toppings
-                                                                        </Typography>
-                                                                    {/* )} */}
-                                                                    {/* {item.toppings && item.toppings.map(topping => ( */}
-                                                                        <Grid sx={{ columnDirection: 'column' }}>
-                                                                            <Typography variant="body2" color='text.secondary' component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
-                                                                                Cheese
-                                                                            </Typography>
-                                                                        </Grid>
-                                                                    {/* ))} */}
-                                                                </Grid>
-                                                                <Grid item display='flex' alignContent='right' sx={{ flexDirection: 'column', alignItems: 'flex-end' }}>
-                                                                    <Typography variant="body1" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1, paddingBottom: 5 }}>
-                                                                        Rs. 400
-                                                                    </Typography>
+                            <Grid item >
+                                <Grid >
+                                    <Grid item display='flex'  >
+                                        <Typography variant="h6" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
+                                            Your Cart : {cartItems.length} items
+                                        </Typography>
+                                    </Grid>
+                                    <Divider sx={{ marginBottom: 2 }} />
 
-                                                                    {/* Toppings price */}
-                                                                    {/* {item.toppings && item.toppings.map(topping => ( */}
-                                                                        <Typography variant="body2" color='text.secondary' component="div" sx={{ flexGrow: 1 }}>
-                                                                            Rs. 40
-                                                                        </Typography>
-                                                                    {/* ))} */}
+                                    {/* Start of Loop */}
+                                    {cartItems.map((item, index) => {
+                                        return (item.category === 'Pizzas' && (item)) ?
+                                            <Fragment>
+                                                <Grid display='flex' sx={{ justifyContent: 'space-between', }}>
+                                                    <Grid sx={{ columnDirection: 'column' }}>
+                                                        <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
+                                                            {item.name}
+                                                        </Typography>
+                                                        <Typography variant="body1" color='text.secondary' component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
+                                                            {item.size}
+                                                        </Typography>
 
-                                                                    <IconButton sx={{ p: 0 }}  ><DeleteIcon color='primary' sx={{ width: "20px", height: "20px", paddingTop: 2 }} /></IconButton>
-
-                                                                    {/* onClick={() => removeCartItemHandler(index)} */}
-                                                                </Grid>
+                                                        {(item.toppings.length > 0) && (
+                                                            <Typography variant="body2" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
+                                                                Extra Toppings
+                                                            </Typography>
+                                                        )}
+                                                        {item.toppings && item.toppings.map(topping => (
+                                                            <Grid sx={{ columnDirection: 'column' }}>
+                                                                <Typography variant="body2" color='text.secondary' component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
+                                                                    {topping.name}
+                                                                </Typography>
                                                             </Grid>
-                                                            <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
-                                                        {/* </Fragment>
-                                                        : null;
-                                                })} */}
-                                                {/* End of Loop */}
+                                                        ))}
+                                                    </Grid>
+                                                    <Grid item display='flex' alignContent='right' sx={{ flexDirection: 'column', alignItems: 'flex-end' }}>
+                                                        <Typography variant="body1" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1, paddingBottom: 5 }}>
+                                                            Rs. {item.price}
+                                                        </Typography>
 
-                                                {/* Start of Loop */}
-                                                {/* {cartItems.map((item, index) => {
-                                                    return ((item.category === 'Beverages' || item.category === 'Sauces') && (item)) ?
-                                                        <Fragment> */}
-                                                            <Grid display='flex' sx={{ justifyContent: 'space-between', }}>
-                                                                <Grid sx={{ columnDirection: 'column' }}>
-                                                                    <Typography variant="body1" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
-                                                                        Pepsi
-                                                                    </Typography>
-                                                                    <Typography variant="body1" color='text.secondary' component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
-                                                                        150 ml
-                                                                    </Typography>
-                                                                </Grid>
-                                                                <Grid item display='flex' alignContent='right' sx={{ flexDirection: 'column', alignItems: 'flex-end' }}>
+                                                        {/* Toppings price */}
+                                                        {item.toppings && item.toppings.map(topping => (
+                                                            <Typography variant="body2" color='text.secondary' component="div" sx={{ flexGrow: 1 }}>
+                                                                Rs. {topping.price}
+                                                            </Typography>
+                                                        ))}
+                                                        <Fragment>
+                                                            <IconButton sx={{ p: 0 }} onClick={() => removeCartItemHandler(index)} ><DeleteIcon color='primary' sx={{ width: "20px", height: "20px", paddingTop: 2 }} /></IconButton>
+                                                        </Fragment>
 
-
-                                                                    <Typography variant="body1" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
-                                                                        Rs. 50</Typography>
-
-
-
-                                                                    <IconButton sx={{ p: 0 }}  ><DeleteIcon color='primary' sx={{ width: "20px", height: "20px" }} /></IconButton>
-
-
-                                                                    {/* onClick={() => removeCartItemHandler(index)} */}
-                                                                </Grid>
-                                                            </Grid>
-                                                            <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
-                                                        {/* </Fragment>
-                                                        : null;
-                                                })} */}
-                                                {/* End of Loop */}
-
-
-
-                                            </Grid>
-
-
-                                        </Grid>
-
-
-
-                                        <Grid item display='flex' sx={{ flexDirection: "column", justifyContent: "space-evenly" }}>
-
-                                            {/* {children} */}
-                                            <Grid display='flex' fullWidth sx={{ justifyContent: 'space-between' }}>
-
-                                                <Grid item >
-                                                    <Typography variant="body1" color='text.secondary' component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
-                                                        Sub Total
-                                                    </Typography>
-                                                    <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
-                                                        Total
-                                                    </Typography>
+                                                    </Grid>
                                                 </Grid>
+                                                <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
+                                            </Fragment>
+                                            : null;
+                                    })}
+                                    {/* End of Loop */}
 
-                                                <Grid item display='flex' sx={{ flexDirection: 'column' }}>
+                                    {/* Start of Loop */}
+                                    {cartItems.map((item, index) => {
+                                        return ((item.category === 'Beverages' || item.category === 'Sauces') && (item)) ?
+                                            <Fragment>
+                                                <Grid display='flex' sx={{ justifyContent: 'space-between', }}>
+                                                    <Grid sx={{ columnDirection: 'column' }}>
+                                                        <Typography variant="body1" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
+                                                            {item.name}
+                                                        </Typography>
+                                                        <Typography variant="body1" color='text.secondary' component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
+                                                            {item.description}
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item display='flex' alignContent='right' sx={{ flexDirection: 'column', alignItems: 'flex-end' }}>
 
-                                                    {/* <Typography variant="body1" color='text.secondary' component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
-                                                        Rs. {cartItems.reduce((acc, item) => acc + (item.quantity * item.price) + item.toppingstotal, 0).toFixed(2)}
-                                                    </Typography> */}
-                                                                                                        <Typography variant="body1" color='text.secondary' component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
-                                                        Rs. 200
-                                                    </Typography>
 
-                                                    {/* <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
-                                                        Rs. {cartItems.reduce((acc, item) => acc + (item.quantity * item.price) + item.toppingstotal, deliveryCharges).toFixed(2)}
-                                                    </Typography> */}
+                                                        <Typography variant="body1" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
+                                                            Rs. {item.price}
+                                                        </Typography>
 
-<Typography variant="body1" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
-                                                        Rs. 1200
-                                                    </Typography>
+                                                        <Fragment>
+                                                            <IconButton sx={{ p: 0 }} onClick={() => removeCartItemHandler(index)} ><DeleteIcon color='primary' sx={{ width: "20px", height: "20px", paddingTop: 2 }} /></IconButton>
+                                                        </Fragment>
 
+                                                    </Grid>
                                                 </Grid>
+                                                <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
+                                            </Fragment>
+                                            : null;
+                                    })}
+                                    {/* End of Loop */}
+                                </Grid>
+                            </Grid>
 
-                                            </Grid>
+                            <Grid item display='flex' sx={{ flexDirection: "column", justifyContent: "space-evenly" }}>
 
-                                            <Button type='submit'  variant="outlined" fullWidth
-                        sx={{ m: 1, mt:2, height: 50 }} 
-                        onClick={() => RedirectBtnHandler()} 
-                        >Continue Shopping</Button>
-                                        </Grid>
+                                {/* {children} */}
+                                <Grid display='flex' fullWidth sx={{ justifyContent: 'space-between' }}>
+
+                                    <Grid item >
+                                        <Typography variant="body1" color='text.secondary' component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
+                                            Delivery Charges
+                                        </Typography>
+                                        <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
+                                            Total
+                                        </Typography>
+                                    </Grid>
+
+                                    <Grid item display='flex' sx={{ flexDirection: 'column' }}>
+
+                                        <Typography variant="body1" color='text.secondary' component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
+                                            Rs. {deliveryCharges.toFixed(2)}
+                                        </Typography>
+
+                                        <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
+                                            Rs. {cartItems.reduce((acc, item) => acc + (item.quantity * item.price) + item.toppingstotal, deliveryCharges).toFixed(2)}
+                                        </Typography>
+
 
                                     </Grid>
+
                                 </Grid>
 
-                            </Box>
+                                <Button type='submit' variant="outlined" fullWidth
+                                    sx={{ m: 1, mt: 2, height: 50 }}
+                                    onClick={() => RedirectBtnHandler()}
+                                >Continue Shopping</Button>
+                            </Grid>
 
-    </Box>
+                        </Grid>
+                    </Grid>
+
+                </Box>
+
+            </Box>
 
 
 
 
-</Grid>
-    
-  )
+        </Grid>
+
+    )
 }
 
-export default orderSummary
+export default OrderSummary

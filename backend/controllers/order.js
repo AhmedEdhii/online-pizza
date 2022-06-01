@@ -5,43 +5,56 @@ const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 
 // Place a new order 
 exports.newOrder = catchAsyncErrors(async (req, res, next) => {
+
+    // console.log(req.body.cartItems)
+    // console.log(req.body)
     const {
         orderItems,
-        deliveryCharges,
+        deliverycharges,
         totalPrice,
         paymentmethod,
         deliveryaddress,
-        deliveryinstructions
+        additionalInstructions
     } = req.body;
 
-    if(req.user) {
+    // orderItems = [];
+    // req.body.orderItems.forEach(function (Item) {  // For every element of pageData from   client.
+    //     orderItems.push(Item)  // This pushes each and every pagedata given from the client into PagesData.
+    // })
+    // console.log(orderItems)
+    if (req.user) {
         const order = await Order.create({
-            orderItems,
-            deliveryCharges,
+            orderItems: orderItems,
+            deliverycharges,
             totalPrice,
             paymentmethod,
             deliveryaddress,
-            deliveryinstructions,
+            additionalInstructions,
             orderDate: Date.now(),
             customer_id: req.user._id
+        })
+
+        res.status(200).json({
+            success: true,
+            order
         })
     }
     else {
         const order = await Order.create({
-            orderItems,
-            deliveryCharges,
+            orderItems: orderItems,
+            deliverycharges,
             totalPrice,
             paymentmethod,
             deliveryaddress,
-            deliveryinstructions,
+            additionalInstructions,
             orderDate: Date.now()
         })
-    }
 
-    res.status(200).json({
-        success: true,
-        order
-    })
+        res.status(200).json({
+            success: true,
+            order
+        })
+    }
 })
 
 
