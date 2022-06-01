@@ -21,18 +21,20 @@ import { LOGIN_SUCCESS } from '../../constants/userConstants';
 import { useDispatch, useSelector } from 'react-redux'
 
 import OrderConfirmation from './OrderConfirmation';
+import { updateOrder, getOrderDetails, clearErrors } from '../../actions/orderActions'
+import { UPDATE_ORDER_RESET } from '../../constants/orderConstants'
 
 
-function createData(id, date, orderDetails, total, status) {
-    return {
-        id,
-        date,
-        orderDetails,
-        total,
+// function createData(id, date, orderDetails, total, status) {
+//     return {
+//         id,
+//         date,
+//         orderDetails,
+//         total,
 
-        status,
-    };
-}
+//         status,
+//     };
+// }
 
 
 const rows = [
@@ -124,10 +126,15 @@ function AdminManageOrders({ }) {
         setPage(0);
     };
 
+    const dispatch = useDispatch();
+    const [status, setStatus] = useState('Delivered');
 
     const [openOrderConfirmation, setOpenOrderConfirmation] = useState(false)
 
     const { orders } = useSelector(state => state.allOrders)
+    const { loading, order } = useSelector(state => state.orderDetails)
+    // const { deliveryaddress, orderItems, paymentmethod, customer_id, totalPrice, orderStatus } = order
+    const { error, isUpdated } = useSelector(state => state.order)
 
     orders.forEach(order => {
         rows.push({
@@ -140,9 +147,27 @@ function AdminManageOrders({ }) {
     })
 
     useEffect(() => {
-        // dispatch(getAdminProducts());
-        rows.splice(0, rows.length)
-    })
+
+        if (error) {
+            alert.error(error);
+            dispatch(clearErrors())
+        }
+
+        if (isUpdated) {
+            alert.success('Order updated successfully');
+            dispatch({ type: UPDATE_ORDER_RESET })
+        }
+    
+
+    }, [dispatch, alert, error, isUpdated])
+
+    const updateOrderHandler = (id) => {
+
+        const formData = new FormData();
+        formData.set('orderStatus', status);
+
+        dispatch(updateOrder(id, formData))
+    }
 
     return (
         <>
@@ -212,7 +237,6 @@ function AdminManageOrders({ }) {
                                                     <TableCell align="center" component="th" scope="row">
                                                         <Button disabled variant='contained'
 
-
                                                             sx={{
                                                                 backgroundColor: '#f30c1c',
                                                                 '&:hover': {
@@ -232,7 +256,14 @@ function AdminManageOrders({ }) {
 
                                                     <TableCell align="center" component="th" scope="row">
                                                         <Button variant='contained'
-                                                            onClick={() => { setOpenOrderConfirmation(true) }}
+                                                            onClick={() => {
+                                                                console.log("tre")
+                                                                dispatch(getOrderDetails(row.id))
+                                                                const formData = new FormData();
+                                                                formData.set('orderStatus', status);
+                                                                dispatch(updateOrder(row.id, formData))
+                                                                setOpenOrderConfirmation(false)
+                                                            }}
                                                             sx={{
                                                                 backgroundColor: '#f30c1c',
                                                                 '&:hover': {
@@ -292,8 +323,6 @@ function AdminManageOrders({ }) {
                     title="Employee Form"
                     openPopup={openOrderConfirmation}
                     setOpenPopup={setOpenOrderConfirmation}
-
-
                 >
 
                 </OrderConfirmation>
