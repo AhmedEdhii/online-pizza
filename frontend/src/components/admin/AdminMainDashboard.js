@@ -5,7 +5,7 @@ import MetaData from '../layout/MetaData'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import AdminSidebar from './AdminSidebar';
 
-function AdminMainDashboard({ products }) {
+function AdminMainDashboard({ products, users }) {
 
     let activeproducts = 0;
     products.forEach(product => {
@@ -13,6 +13,14 @@ function AdminMainDashboard({ products }) {
             activeproducts += 1;
         }
     })
+
+    let activeusers = 0;
+    users.forEach(user => {
+        if (user.account_status === 'active') {
+            activeusers += 1;
+        }
+    })
+
 
     return (
         <>
@@ -91,7 +99,7 @@ function AdminMainDashboard({ products }) {
                                         Total Products
                                     </Typography>
                                     <Typography variant="body1" component="div" sx={{ fontWeight: 'bold' }}>
-                                        Active Products
+                                        Categories
                                     </Typography>
 
                                 </Grid>
@@ -100,7 +108,7 @@ function AdminMainDashboard({ products }) {
                                         {products && products.length}
                                     </Typography>
                                     <Typography variant="body1" component="div" sx={{ fontWeight: 'bold' }}>
-                                        {activeproducts}
+                                        3
                                     </Typography>
                                 </Grid>
                             </Grid>
@@ -141,10 +149,10 @@ function AdminMainDashboard({ products }) {
                                 </Grid>
                                 <Grid sx={{ flexDirection: "column" }}>
                                     <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', }}>
-                                        500
+                                        {users && users.length}
                                     </Typography>
                                     <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', }}>
-                                        5
+                                        {activeusers}
                                     </Typography>
 
 

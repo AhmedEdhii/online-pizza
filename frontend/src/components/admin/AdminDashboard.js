@@ -19,6 +19,8 @@ import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAdminProducts, clearErrors } from '../../actions/productActions'
+import { allOrders } from '../../actions/orderActions'
+import { allUsers } from '../../actions/userActions'
 import MetaData from '../layout/MetaData'
 import AdminSidebar from './AdminSidebar'
 
@@ -26,8 +28,6 @@ import AdminMainDashboard from './AdminMainDashboard';
 import AdminDashboardMenu from './AdminDashboardMenu';
 import AdminManageOrders from './AdminManageOrders';
 import AdminToppings from './AdminToppings';
-
-
 
 const drawerWidth = 240;
 
@@ -43,9 +43,11 @@ function AdminDashboard() {
 
     const dispatch = useDispatch();
     const { loading, error, products } = useSelector(state => state.products);
+    const { users } = useSelector(state => state.allUsers)
 
     useEffect(() => {
         dispatch(getAdminProducts());
+        dispatch(allUsers());
         if (error) {
             alert.error(error);
             dispatch(clearErrors())
@@ -197,7 +199,7 @@ function AdminDashboard() {
 
                 <Grid display='flex' sx={{ m: 5, marginTop: 2, width: "80%", flexDirection: "column" }}>
                     {(dashboard === true) && (
-                        <AdminMainDashboard products={products} />
+                        <AdminMainDashboard products={products} users={users} />
                     )}
                     {(menu === true) && (
                         <AdminDashboardMenu products={products} />
