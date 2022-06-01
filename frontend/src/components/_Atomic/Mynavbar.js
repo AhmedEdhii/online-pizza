@@ -200,24 +200,6 @@ const Mynavbar = () => {
                               Dashboard
                             </MenuItem>
                           </NavLink>
-
-                          <NavLink to="/UserProfile" style={{ textDecoration: 'none', color: 'unset' }} >
-                            <MenuItem onClick={handleCloseUserMenu}>
-                              <ListItemIcon>
-                                <Settings fontSize="small" />
-                              </ListItemIcon>
-                              Profile
-                            </MenuItem>
-                          </NavLink>
-
-                          <NavLink to="/userOrders" style={{ textDecoration: 'none', color: 'unset' }} >
-                            <MenuItem onClick={handleCloseUserMenu}>
-                              <ListItemIcon>
-                                <Settings fontSize="small" />
-                              </ListItemIcon>
-                              Orders
-                            </MenuItem>
-                          </NavLink>
                         </Fragment>
                       )}
 
