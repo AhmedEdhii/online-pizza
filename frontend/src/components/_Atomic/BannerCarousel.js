@@ -1,5 +1,5 @@
 import React from 'react';
-import './BannerCarousel.css'
+import './imageslide/BannerCarousel.css'
 import { Box, Grid } from '@mui/material'
 import ImageSlider from './imageslide/ImageSlider';
 import {Slider_image} from './imageslide/Slider_image';

@@ -34,7 +34,7 @@ function createData(id, date, orderDetails, total, status) {
 
 
 const rows = [
-    createData('1123', '22.05.2022', '2xPizza', 1199, false),
+    createData('1123', '22.05.2022', '2xPizza 2xPizza2xPizza2xPizza2xPizza2xPizza2xPizza2xPizza2xPizza2xPizza2xPizza 2xPizza2xPizza2xPizza2xPizza2xPizza2xPizza2xPizza2xPizza2xPizza', 1199, false),
     createData('1123', '22.05.2022', '2xPizza', 1199, true),
     createData('1123', '22.05.2022', '2xPizza', 1199, true),
     createData('1123', '22.05.2022', '2xPizza', 1199, false),
@@ -142,7 +142,7 @@ function AdminManageOrders({ products }) {
                                 <TableHead>
                                     <TableRow sx={{ backgroundColor: "#E5E4E2" }}>
 
-                                        <TableCell align="left" sx={{ fontWeight: 'bold', }}>Order Id</TableCell>
+                                        <TableCell  align="left" sx={{ fontWeight: 'bold', }}>Order Id</TableCell>
 
                                         <TableCell align="left" sx={{ fontWeight: 'bold', }}>Order Date</TableCell>
                                         <TableCell align="left" sx={{ fontWeight: 'bold', }}>Order Details</TableCell>
@@ -169,7 +169,7 @@ function AdminManageOrders({ products }) {
 
                                             </TableCell>
 
-                                            <TableCell component="th" scope="row">
+                                            <TableCell component="th" scope="row" sx={{ width:'400px', pr:15 ,wordBreak: 'break-word'}}>
                                                 {row.orderDetails}
 
                                             </TableCell>

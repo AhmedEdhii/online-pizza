@@ -7,7 +7,7 @@ const [current, setCurrent] =useState(0);
 const length = slides.length;
 const autoScroll = true;
 let slideinterval;
-let intervalTime=5000;
+let intervalTime=3000;
 
 const nextSlide = () => {
     setCurrent(current === length - 1 ? 0 : current + 1);
@@ -31,7 +31,7 @@ useEffect(() => {
     return () => clearInterval(slideinterval);
     },[current]);
 
-console.log(current);
+
 
 if(!Array.isArray(slides) || slides.length <= 0){
     return null;

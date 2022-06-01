@@ -78,6 +78,8 @@ function ProductCard({ product, toppings }) {
                             component="img"
                             alt="green iguana"
                             height="170"
+                            width="170"
+                            sx={{borderRadius: "1.7rem",}}
                             image={product.url}
                         />
 
