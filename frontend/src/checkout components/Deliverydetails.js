@@ -26,7 +26,7 @@ function Deliverydetails({ user }) {
     const totalPrice = cartItems.reduce((acc, item) => acc + item.price * item.quantity, deliverycharges)
 
     useEffect(() => {
-        console.log(user)
+       // console.log(user)
         // if (user) {
         //     setName(user.name);
         //     setPhoneNumber(user.phonenumber);
@@ -52,7 +52,7 @@ function Deliverydetails({ user }) {
         // formData.set('additionalInstructions', additionalInstructions);
         // console.log(formData)
         // dispatch(createOrder(formData))
-        const orderItems = []
+        // const orderItems = []
 
         // {
         //     cartItems.map((item, index) => {
@@ -63,11 +63,22 @@ function Deliverydetails({ user }) {
         //     orderItems.push(cartItems[i])
         //     console.log(orderItems[i]);
         // }
-        cartItems.forEach(function (Item) {  // For every element of pageData from   client.
-            orderItems.push(Item)  // This pushes each and every pagedata given from the client into PagesData.
-        })
+        // cartItems.forEach(function (Item) {  // For every element of pageData from   client.
+        //     orderItems.push(Item)  // This pushes each and every pagedata given from the client into PagesData.
+        // })
+        // var orderItems = [];
+        // cartItems.forEach(function (item) {
+        //     var object = {
+        //         "name": item.name,
+        //         "price": item.price,
+        //         "size": item.size,
+        //         "product": item.product
+        //     }
+        //     orderItems.push(object);
+        // });
+
         const order = {
-            orderItems,
+            orderItems: cartItems,
             deliverycharges,
             totalPrice,
             paymentmethod,
@@ -75,8 +86,8 @@ function Deliverydetails({ user }) {
             additionalInstructions
         }
         //console.log(order)
-        dispatch(createOrder(order))
         alert.success('Order Placed!')
+        dispatch(createOrder(order))
     }
 
     return (

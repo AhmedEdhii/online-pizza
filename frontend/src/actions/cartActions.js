@@ -31,6 +31,7 @@ export const addItemToCart = (id, quantity, price, size, toppingids) => async (d
             category: data.product.category,
             description: data.product.description,
             price: price,
+            quantity: quantity,
             size: size,
             toppings: toppings,
             toppingstotal: toppingstotal,

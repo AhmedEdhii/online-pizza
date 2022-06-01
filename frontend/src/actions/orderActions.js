@@ -36,19 +36,20 @@ export const allOrders = () => async (dispatch) => {
 }
 
 
-export const createOrder = (order) => async (dispatch) => {
+export const createOrder = (order) => async (dispatch, getState) => {
     try {
 
         dispatch({ type: CREATE_ORDER_REQUEST })
 
         const config = {
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'application/json'
             }
         }
-
+        // console.log(order)
         const { data } = await axios.post('/api/neworder', order, config)
-
+        console.log("-------------------------------------------------------------------")
+        // console.log(data)
         dispatch({
             type: CREATE_ORDER_SUCCESS,
             payload: data

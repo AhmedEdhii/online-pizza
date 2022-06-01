@@ -6,7 +6,6 @@ const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 // Place a new order 
 exports.newOrder = catchAsyncErrors(async (req, res, next) => {
 
-    // console.log(req.body.cartItems)
     // console.log(req.body)
     const {
         orderItems,
@@ -17,14 +16,10 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
         additionalInstructions
     } = req.body;
 
-    // orderItems = [];
-    // req.body.orderItems.forEach(function (Item) {  // For every element of pageData from   client.
-    //     orderItems.push(Item)  // This pushes each and every pagedata given from the client into PagesData.
-    // })
-    // console.log(orderItems)
+
     if (req.user) {
         const order = await Order.create({
-            orderItems: orderItems,
+            orderItems,
             deliverycharges,
             totalPrice,
             paymentmethod,
@@ -41,7 +36,7 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
     }
     else {
         const order = await Order.create({
-            orderItems: orderItems,
+            orderItems,
             deliverycharges,
             totalPrice,
             paymentmethod,
