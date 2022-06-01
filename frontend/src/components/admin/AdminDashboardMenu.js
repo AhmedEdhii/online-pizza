@@ -405,7 +405,6 @@ function AdminDashboardMenu({ products }) {
 
         {product.category === "Pizzas" && (
           <EditPizzaModal
-            product={product}
             title="Employee Form"
             openPopup={openEditPizza}
             setOpenPopup={setOpenEditPizza}

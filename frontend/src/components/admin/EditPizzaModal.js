@@ -7,7 +7,7 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useState, useEffect, useReducer } from 'react'
 
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
@@ -15,9 +15,13 @@ import { updateProduct, clearErrors } from '../../actions/productActions'
 import { UPDATE_PRODUCT_RESET } from '../../constants/productConstants'
 
 
+<<<<<<< Updated upstream
 function EditPizzaModal({ title, openPopup, setOpenPopup, product }) {
 
     console.log('This is the passed product' +product.name)
+=======
+function EditPizzaModal({ title, openPopup, setOpenPopup}) {
+>>>>>>> Stashed changes
 
     const Input = styled('input')({
         display: 'none',
@@ -38,8 +42,10 @@ function EditPizzaModal({ title, openPopup, setOpenPopup, product }) {
 
     const alert = useAlert();
     const dispatch = useDispatch();
+    const [value, forceUpdate] = useReducer(x => x + 1);
 
     const { error: updateError, isUpdated } = useSelector(state => state.product);
+    const { product } = useSelector(state => state.productDetails)
 
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
@@ -71,8 +77,7 @@ function EditPizzaModal({ title, openPopup, setOpenPopup, product }) {
             alert.success('Product updated successfully');
             dispatch({ type: UPDATE_PRODUCT_RESET })
         }
-
-    }, [dispatch, alert, isUpdated, updateError, product])
+    }, [dispatch, alert, isUpdated, updateError, value])
 
 
     const submitHandler = (e) => {
@@ -91,15 +96,38 @@ function EditPizzaModal({ title, openPopup, setOpenPopup, product }) {
         formData.set('status', status)
         dispatch(updateProduct(product._id, formData))
         setAvatarPreview('/images/default.png')
+<<<<<<< Updated upstream
 
 
+=======
+        setName('')
+        setDescription('')
+        setSmallPrice('')
+        setMediumPrice('')
+        setLargePrice('')
+        setJumboPrice('')
+        // forceUpdate();
+>>>>>>> Stashed changes
     }
     var newname = product.name;
     const closeModal = () => {
 
         setOpenPopup(false)
+<<<<<<< Updated upstream
         console.log('this is new name' + newname)
         newname=null
+=======
+        // forceUpdate();
+        window.location.reload();
+        setAvatarPreview('/images/default.png')
+        setName('')
+        setDescription('')
+        setSmallPrice('')
+        setMediumPrice('')
+        setLargePrice('')
+        setJumboPrice('')
+        return openPopup;
+>>>>>>> Stashed changes
     }
 
 
@@ -122,10 +150,14 @@ function EditPizzaModal({ title, openPopup, setOpenPopup, product }) {
 
     return (
         <>
+<<<<<<< Updated upstream
             <Dialog open={openPopup} maxWidth="md" sx={{ borderRadius: '5rem', zIndex: 1200 }} >
 
 
 
+=======
+            <Dialog open={openPopup} maxWidth="md" sx={{ borderRadius: '5rem', zIndex: 1200 }} onClose={clearHandler}>
+>>>>>>> Stashed changes
 
                 <Grid display='flex' sm={12} sx={{ p: 2, }}>
 
