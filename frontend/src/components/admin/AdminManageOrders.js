@@ -18,6 +18,8 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import { LOGIN_SUCCESS } from '../../constants/userConstants';
 
+import { useDispatch, useSelector } from 'react-redux'
+
 import OrderConfirmation from './OrderConfirmation';
 
 
@@ -34,11 +36,13 @@ function createData(id, date, orderDetails, total, status) {
 
 
 const rows = [
-    createData('1123', '22.05.2022', '2xPizza 2xPizza2xPizza2xPizza2xPizza2xPizza2xPizza2xPizza2xPizza2xPizza2xPizza 2xPizza2xPizza2xPizza2xPizza2xPizza2xPizza2xPizza2xPizza2xPizza', 1199, false),
-    createData('1123', '22.05.2022', '2xPizza', 1199, true),
-    createData('1123', '22.05.2022', '2xPizza', 1199, true),
-    createData('1123', '22.05.2022', '2xPizza', 1199, false),
+    // createData('1123', '22.05.2022', '2xPizza 2xPizza2xPizza2xPizza2xPizza2xPizza2xPizza2xPizza2xPizza2xPizza2xPizza 2xPizza2xPizza2xPizza2xPizza2xPizza2xPizza2xPizza2xPizza2xPizza', 1199, false),
+    // createData('1123', '22.05.2022', '2xPizza', 1199, true),
+    // createData('1123', '22.05.2022', '2xPizza', 1199, true),
+    // createData('1123', '22.05.2022', '2xPizza', 1199, false),
 ];
+
+rows.splice(0, 1)
 
 function TablePaginationActions(props) {
     const theme = useTheme();
@@ -94,7 +98,7 @@ function TablePaginationActions(props) {
     );
 }
 
-function AdminManageOrders({ products }) {
+function AdminManageOrders({ }) {
 
     const Img = styled('img')({
         alignItems: "center",
@@ -123,6 +127,23 @@ function AdminManageOrders({ products }) {
 
     const [openOrderConfirmation, setOpenOrderConfirmation] = useState(false)
 
+    const { orders } = useSelector(state => state.allOrders)
+
+    orders.forEach(order => {
+        rows.push({
+            id: order._id,
+            date: String(order.orderDate).substring(0, 10),
+            orderDetails: order.orderItems.length,
+            total: order.totalPrice,
+            status: order.orderStatus
+        })
+    })
+
+    useEffect(() => {
+        // dispatch(getAdminProducts());
+        rows.splice(0, rows.length)
+    })
+
     return (
         <>
             <Grid display='flex' sx={{ alignItems: 'center', paddingTop: 2 }}>
@@ -142,7 +163,7 @@ function AdminManageOrders({ products }) {
                                 <TableHead>
                                     <TableRow sx={{ backgroundColor: "#E5E4E2" }}>
 
-                                        <TableCell  align="left" sx={{ fontWeight: 'bold', }}>Order Id</TableCell>
+                                        <TableCell align="left" sx={{ fontWeight: 'bold', }}>Order Id</TableCell>
 
                                         <TableCell align="left" sx={{ fontWeight: 'bold', }}>Order Date</TableCell>
                                         <TableCell align="left" sx={{ fontWeight: 'bold', }}>Order Details</TableCell>
@@ -169,7 +190,7 @@ function AdminManageOrders({ products }) {
 
                                             </TableCell>
 
-                                            <TableCell component="th" scope="row" sx={{ width:'400px', pr:15 ,wordBreak: 'break-word'}}>
+                                            <TableCell component="th" scope="row" sx={{ width: '400px', pr: 15, wordBreak: 'break-word' }}>
                                                 {row.orderDetails}
 
                                             </TableCell>
@@ -181,7 +202,7 @@ function AdminManageOrders({ products }) {
 
 
 
-                                            {row.status && (
+                                            {row.status == 'Delivered' && (
                                                 <>
                                                     <TableCell component="th" scope="row" sx={{ color: "#00D100" }} >
                                                         Delivered
@@ -190,19 +211,19 @@ function AdminManageOrders({ products }) {
 
                                                     <TableCell align="center" component="th" scope="row">
                                                         <Button disabled variant='contained'
-                                                       
-                                                        
-                                                        sx={{
-                                                            backgroundColor: '#f30c1c',
-                                                            '&:hover': {
-                                                                backgroundColor: '#FCAB04',
 
-                                                            }
-                                                        }} > Mark As Delivered</Button>
+
+                                                            sx={{
+                                                                backgroundColor: '#f30c1c',
+                                                                '&:hover': {
+                                                                    backgroundColor: '#FCAB04',
+
+                                                                }
+                                                            }} > Order Delivered</Button>
                                                     </TableCell>
                                                 </>
                                             )}
-                                            {!row.status && (
+                                            {row.status === 'Processing' && (
                                                 <>
                                                     <TableCell component="th" scope="row">
                                                         Pending
@@ -211,14 +232,14 @@ function AdminManageOrders({ products }) {
 
                                                     <TableCell align="center" component="th" scope="row">
                                                         <Button variant='contained'
-                                                         onClick={() => { setOpenOrderConfirmation(true)}}
-                                                        sx={{
-                                                            backgroundColor: '#f30c1c',
-                                                            '&:hover': {
-                                                                backgroundColor: '#FCAB04',
+                                                            onClick={() => { setOpenOrderConfirmation(true) }}
+                                                            sx={{
+                                                                backgroundColor: '#f30c1c',
+                                                                '&:hover': {
+                                                                    backgroundColor: '#FCAB04',
 
-                                                            }
-                                                        }} > Mark As Delivered</Button>
+                                                                }
+                                                            }} > Mark As Delivered</Button>
                                                     </TableCell>
                                                 </>
                                             )}
@@ -276,7 +297,7 @@ function AdminManageOrders({ products }) {
                 >
 
                 </OrderConfirmation>
-           
+
 
             </Grid>
         </>
