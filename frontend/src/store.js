@@ -5,7 +5,7 @@ import { productsReducer, newProductReducer, productDetailsReducer, productReduc
 import { authReducer, userReducer, allUsersReducer } from './reducers/userReducers'
 import { toppingsReducer, newToppingReducer } from './reducers/toppingReducers';
 import { cartReducer } from './reducers/cartReducers'
-import { myOrdersReducer, newOrderReducer , allOrdersReducer} from './reducers/orderReducers'
+import { myOrdersReducer, newOrderReducer , allOrdersReducer, updateOrderReducer } from './reducers/orderReducers'
 
 const reducer = combineReducers({
     products: productsReducer,
@@ -19,6 +19,7 @@ const reducer = combineReducers({
     cart: cartReducer,
     myOrders: myOrdersReducer,
     newOrder: newOrderReducer,
+    order: updateOrderReducer,
     allUsers: allUsersReducer,
     allOrders: allOrdersReducer,
 })
