@@ -28,7 +28,7 @@ import AdminMainDashboard from './AdminMainDashboard';
 import AdminDashboardMenu from './AdminDashboardMenu';
 import AdminManageOrders from './AdminManageOrders';
 import AdminToppings from './AdminToppings';
-
+import Admin_ManageUsers from './Admin_ManageUsers';
 const drawerWidth = 240;
 
 
@@ -209,6 +209,9 @@ function AdminDashboard() {
                     )}
                     {(order === true) && (
                         <AdminManageOrders products={products} />
+                    )}
+                    {(user === true) && (
+                        <Admin_ManageUsers users={users} />
                     )}
 
                 </Grid>

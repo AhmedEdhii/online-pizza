@@ -1,5 +1,5 @@
 import { Typography, Grid } from '@mui/material'
-import DeliveryDetails from '../checkout components/DeliveryDetails'
+import DeliveryDetails from '../checkout components/Deliverydetails'
 import OrderSummary from '../checkout components/OrderSummary'
 import MetaData from '../components/layout/MetaData'
 import React, { Fragment, useState, useEffect } from 'react'
