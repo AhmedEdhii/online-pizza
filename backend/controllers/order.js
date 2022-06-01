@@ -71,6 +71,23 @@ exports.getSingleOrder = catchAsyncErrors(async (req, res, next) => {
     })
 })
 
+exports.getSingleOrderAdmin = catchAsyncErrors(async (req, res, next) => {
+
+    const order = await Order.findOne(req.params.id)
+
+    if (!order) {
+        return res.status(404).json({
+            success: false,
+            message: 'Order not found'
+        })
+    }
+
+    res.status(200).json({
+        success: true,
+        order
+    })
+})
+
 // Get logged in user orders
 exports.myOrders = catchAsyncErrors(async (req, res, next) => {
     const orders = await Order.find({ customer_id: req.user._id })
@@ -101,7 +118,7 @@ exports.allOrders = catchAsyncErrors(async (req, res, next) => {
     })
 })
 
-// Update / Process order -- For Admins
+// Process order -- For Admins
 exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
     const order = await Order.findById(req.params.id)
 
