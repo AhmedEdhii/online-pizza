@@ -10,13 +10,13 @@ import {
 
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
-function UserDashboardMain() {
+function UserDashboardMain({user}) {
     return (
         <>
             <Grid>
                 <Typography variant="h4" component="div" sx={{ flexGrow: 1, paddingTop: 2 }}>
                     Welcome, <Typography variant="h4" component="span" sx={{ color: '#f30c1c', fontWeight: 'bold', flexGrow: 1, paddingTop: 1 }}>
-                        Ebrahim Baig
+                        {user && user.name}
                     </Typography>
                 </Typography>
 

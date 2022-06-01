@@ -42,17 +42,15 @@ function AdminDashboard() {
     const [user, setUser] = useState(false)
 
     const dispatch = useDispatch();
-    const { loading, error, products } = useSelector(state => state.products);
+    const { error, products } = useSelector(state => state.products);
     const { users } = useSelector(state => state.allUsers)
+    const { orders } = useSelector(state => state.allOrders)
 
     useEffect(() => {
-        dispatch(getAdminProducts());
-        dispatch(allUsers());
-        if (error) {
-            alert.error(error);
-            dispatch(clearErrors())
-        }
-    }, [dispatch, alert])
+        dispatch(getAdminProducts())
+        dispatch(allUsers())
+        dispatch(allOrders())
+    }, [dispatch])
 
     var sidebarNav = [
         { id: 'dashboard', state: true, color: '#f30c1c' },
@@ -199,7 +197,7 @@ function AdminDashboard() {
 
                 <Grid display='flex' sx={{ m: 5, marginTop: 2, width: "80%", flexDirection: "column" }}>
                     {(dashboard === true) && (
-                        <AdminMainDashboard products={products} users={users} />
+                        <AdminMainDashboard products={products} users={users} orders = {orders}/>
                     )}
                     {(menu === true) && (
                         <AdminDashboardMenu products={products} />

@@ -14,9 +14,8 @@ import { UPDATE_PRODUCT_RESET } from '../../constants/productConstants'
 
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 
-function EditOtherModal({ title, openPopup, setOpenPopup, product}) {
+function EditOtherModal({ title, openPopup, setOpenPopup}) {
 
-    console.log(product)
     const Input = styled('input')({
         display: 'none',
     });
@@ -36,6 +35,7 @@ function EditOtherModal({ title, openPopup, setOpenPopup, product}) {
     const dispatch = useDispatch();
 
     const { error: updateError, isUpdated } = useSelector(state => state.product);
+    const { product } = useSelector(state => state.productDetails)
 
     const [name, setName] = useState(product.name)
     const [description, setDescription] = useState(product.description)
@@ -48,7 +48,6 @@ function EditOtherModal({ title, openPopup, setOpenPopup, product}) {
     const [status, setStatus] = useState('active');
 
     const [avatar, setAvatar] = useState('')
-    // const [avatarPreview, setAvatarPreview] = useState(('/images/default.png'))
     const [avatarPreview, setAvatarPreview] = useState((product.url) || ('/images/default.png'))
 
     useEffect(() => {
@@ -95,7 +94,7 @@ function EditOtherModal({ title, openPopup, setOpenPopup, product}) {
 
     const clearHandler = () => {
         setOpenPopup(false)
-
+        window.location.reload();
         setAvatarPreview('/images/default.png')
         setName('')
         setCategory('')

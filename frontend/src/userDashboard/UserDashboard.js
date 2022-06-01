@@ -115,7 +115,7 @@ function UserDashboard() {
 
                 <Grid display='flex' sx={{ m: 5, marginTop: 2, width: "80%", flexDirection: "column" }}>
                     {(dashboard === true) && (
-                        <UserDashboardMain />
+                        <UserDashboardMain user = {user}/>
                     )}
                     {(profile === true) && (
                         <UserProfile user = {user}/>

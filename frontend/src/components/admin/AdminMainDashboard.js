@@ -1,25 +1,63 @@
 import { Typography, Card, Grid, Box, CardActions, CardContent, Button, Container, Divider } from '@mui/material'
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import MetaData from '../layout/MetaData'
 
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import AdminSidebar from './AdminSidebar';
 
-function AdminMainDashboard({ products, users }) {
+import AdminDashboardMenu from './AdminDashboardMenu';
+import AdminManageOrders from './AdminManageOrders';
+import Admin_ManageUsers from './Admin_ManageUsers';
+
+function AdminMainDashboard({ products, users, orders }) {
+
+    const today = new Date();
+
+    const date = today.getDate() + '.' + (today.getMonth() + 1) + '.' + today.getFullYear()
+
+    const [menu, setMenu] = useState(false)
+    const [order, setOrder] = useState(false)
+    const [user, setUser] = useState(false)
 
     let activeproducts = 0;
-    products.forEach(product => {
+    products && products.forEach(product => {
         if (product.product_status === 'active') {
             activeproducts += 1;
         }
     })
 
     let activeusers = 0;
-    users.forEach(user => {
+    users && users.forEach(user => {
         if (user.account_status === 'active') {
             activeusers += 1;
         }
     })
+
+    let openorders = 0;
+    orders && orders.forEach(order => {
+        if (order.orderStatus === 'Processing') {
+            openorders += 1;
+        }
+    })
+
+    const routeHandler = (navLabel) => {
+
+        if (navLabel === 1) {
+            setOrder(true)
+            setMenu(false)
+            setUser(false)
+        }
+        else if (navLabel === 2) {
+            setMenu(true)
+            setOrder(false)
+            setUser(false)
+        }
+        else if (navLabel === 3) {
+            setUser(true)
+            setOrder(false)
+            setMenu(false)
+        }
+    }
 
 
     return (
@@ -29,7 +67,7 @@ function AdminMainDashboard({ products, users }) {
                     Dashboard
                 </Typography>
                 <Typography variant="body1" component="div" sx={{ flexGrow: 1, paddingTop: 1 }}>
-                    12.05.2022
+                    {date}
                 </Typography>
 
             </Grid><Divider sx={{ marginTop: 1, marginBottom: 3 }} /><Grid display='flex' container rowSpacing={5} columnSpacing={8} sx={{ marginBottom: 8, width: "100%" }}>
@@ -62,17 +100,17 @@ function AdminMainDashboard({ products, users }) {
                                 </Grid>
                                 <Grid sx={{ flexDirection: "column" }}>
                                     <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', }}>
-                                        2
+                                        {openorders}
                                     </Typography>
                                     <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', }}>
-                                        20
+                                        {orders && orders.length}
                                     </Typography>
                                 </Grid>
                             </Grid>
                             <Divider sx={{ marginTop: 2, marginBottom: 1 }} />
                         </CardContent>
                         <CardActions>
-                            <Button fullWidth size="large" endIcon={<ChevronRightIcon />} sx={{ color: '#000', }}>View Details</Button>
+                            <Button onClick={() => routeHandler(1)} fullWidth size="large" endIcon={<ChevronRightIcon />} sx={{ color: '#000', }}>View Details</Button>
                         </CardActions>
                     </Card>
                 </Grid>
@@ -115,7 +153,7 @@ function AdminMainDashboard({ products, users }) {
                             <Divider sx={{ marginTop: 2, marginBottom: 1 }} />
                         </CardContent>
                         <CardActions>
-                            <Button fullWidth size="large" endIcon={<ChevronRightIcon />} sx={{ color: '#000', }}>View Details</Button>
+                            <Button onClick={() => routeHandler(2)} fullWidth size="large" endIcon={<ChevronRightIcon />} sx={{ color: '#000', }}>View Details</Button>
                         </CardActions>
                     </Card>
 
@@ -161,12 +199,23 @@ function AdminMainDashboard({ products, users }) {
                             <Divider sx={{ marginTop: 2, marginBottom: 1 }} />
                         </CardContent>
                         <CardActions>
-                            <Button fullWidth size="large" endIcon={<ChevronRightIcon />} sx={{ color: '#000', }}>View Details</Button>
+                            <Button onClick={() => routeHandler(3)} fullWidth size="large" endIcon={<ChevronRightIcon />} sx={{ color: '#000', }}>View Details</Button>
                         </CardActions>
                     </Card>
 
                 </Grid>
 
+                {/* <Grid display='flex' sx={{ m: 5, marginTop: 2, width: "80%", flexDirection: "column" }}>
+                    {(menu === true) && (
+                        <AdminDashboardMenu products={products} />
+                    )}
+                    {(order === true) && (
+                        <AdminManageOrders orders={orders} />
+                    )}
+                    {(user === true) && (
+                        <Admin_ManageUsers users={users} />
+                    )}
+                </Grid> */}
             </Grid>
 
         </>

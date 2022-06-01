@@ -414,7 +414,6 @@ function AdminDashboardMenu({ products }) {
 
         {(product.category === "Beverages" || product.category === "Sauces") && (
           <EditOtherModal
-            product={product}
             title="Employee Form"
             openPopup={openEditOther}
             setOpenPopup={setOpenEditOther}
