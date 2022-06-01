@@ -107,13 +107,7 @@ function TablePaginationActions(props) {
 
 function AdminToppings({ products }) {
 
-    const Img = styled('img')({
-        alignItems: "center",
-        maxwidth: "100%",
-        height: 80,
-        padding: 1,
-        margin: 1
-    });
+   
 
     const alert = useAlert();
     const dispatch = useDispatch();
@@ -180,9 +174,9 @@ function AdminToppings({ products }) {
                                     <TableRow sx={{ backgroundColor: "#E5E4E2", }}>
 
                                         <TableCell align="left" sx={{ fontWeight: 'bold', width: "300px" }}>Topping Name</TableCell>
-                                        <TableCell align="left" sx={{ fontWeight: 'bold', paddingLeft: -10 }}></TableCell>
+                                        
                                         <TableCell align="left" sx={{ fontWeight: 'bold', }}>Price</TableCell>
-
+                                        <TableCell align="left" sx={{ fontWeight: 'bold', paddingLeft: -10 }}></TableCell>
                                         <TableCell align="center" sx={{ fontWeight: 'bold', }}>Actions</TableCell>
                                     </TableRow>
                                 </TableHead>
@@ -199,16 +193,14 @@ function AdminToppings({ products }) {
 
                                             </TableCell>
 
-                                            <TableCell component="th" scope="row">
-                                                <Img alt="complex" src='/images/default.png' />
-                                            </TableCell>
+                                            
 
 
                                             <TableCell component="th" scope="row">
                                                 {row.price}
 
                                             </TableCell>
-
+                                            <TableCell align="left" sx={{ fontWeight: 'bold', paddingLeft: -10 }}></TableCell>
                                             <TableCell align="center" component="th" scope="row">
                                                 <IconButton
                                                     onClick={() => { console.log('delete clicked') }}>
