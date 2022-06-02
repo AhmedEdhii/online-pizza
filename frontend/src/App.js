@@ -91,11 +91,11 @@ function App() {
       <Route path="/login" component={LoginandSignup} />
 
       <ProtectedRoute path="/AdminDashboard" component={AdminDashboard} isAdmin={true} />
-      <ProtectedRoute path="/AdminDashboardMenu" component={AdminDashboardMenu} isAdmin={true} />
+      {/* <ProtectedRoute path="/AdminDashboardMenu" component={AdminDashboardMenu} isAdmin={true} /> */}
 
       {/* <Route path="/Admin_ManageUsers" component={Admin_ManageUsers} />*/}
 
-      <Route path="/UserDashboard" component={UserDashboard} />
+      <ProtectedRoute path="/UserDashboard" component={UserDashboard} />
       {/* <Route path="/UserProfile" component={UserProfile} />
       <Route path="/userOrders" component={UserOrders} /> */}
 

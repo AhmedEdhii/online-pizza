@@ -2,6 +2,9 @@ import {
     MY_ORDERS_REQUEST,
     MY_ORDERS_SUCCESS,
     MY_ORDERS_FAIL,
+    MY_LATEST_ORDERS_REQUEST,
+    MY_LATEST_ORDERS_SUCCESS,
+    MY_LATEST_ORDERS_FAIL,
     ALL_ORDERS_REQUEST,
     ALL_ORDERS_SUCCESS,
     ALL_ORDERS_FAIL,
@@ -19,11 +22,43 @@ import {
 } from '../constants/orderConstants'
 
 
+export const myLatestOrderReducer = (state = { order: {} }, action) => {
+    switch (action.type) {
+
+        case MY_LATEST_ORDERS_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+
+        case MY_LATEST_ORDERS_SUCCESS:
+            return {
+                loading: false,
+                order: action.payload
+            }
+
+        case MY_LATEST_ORDERS_FAIL:
+            return {
+                ...state,
+                error: action.payload
+            }
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state;
+    }
+}
+
 export const orderDetailsReducer = (state = { order: {} }, action) => {
     switch (action.type) {
 
         case ORDER_DETAILS_REQUEST:
             return {
+                ...state,
                 loading: true
             }
 
@@ -35,7 +70,7 @@ export const orderDetailsReducer = (state = { order: {} }, action) => {
 
         case ORDER_DETAILS_FAIL:
             return {
-                loading: false,
+                ...state,
                 error: action.payload
             }
         case CLEAR_ERRORS:

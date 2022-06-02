@@ -13,43 +13,25 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
         totalPrice,
         paymentmethod,
         deliveryaddress,
-        additionalInstructions
+        additionalInstructions,
+        customer_id
     } = req.body;
 
+    const order = await Order.create({
+        orderItems,
+        deliverycharges,
+        totalPrice,
+        paymentmethod,
+        deliveryaddress,
+        additionalInstructions,
+        orderDate: Date.now(),
+        customer_id
+    })
 
-    if (req.user) {
-        const order = await Order.create({
-            orderItems,
-            deliverycharges,
-            totalPrice,
-            paymentmethod,
-            deliveryaddress,
-            additionalInstructions,
-            orderDate: Date.now(),
-            customer_id: req.user._id
-        })
-
-        res.status(200).json({
-            success: true,
-            order
-        })
-    }
-    else {
-        const order = await Order.create({
-            orderItems,
-            deliverycharges,
-            totalPrice,
-            paymentmethod,
-            deliveryaddress,
-            additionalInstructions,
-            orderDate: Date.now()
-        })
-
-        res.status(200).json({
-            success: true,
-            order
-        })
-    }
+    res.status(200).json({
+        success: true,
+        order
+    })
 })
 
 
@@ -96,6 +78,18 @@ exports.myOrders = catchAsyncErrors(async (req, res, next) => {
         success: true,
         count: orders.length,
         orders
+    })
+})
+
+
+// my latest order
+exports.mylatestOrders = catchAsyncErrors(async (req, res, next) => {
+    // const orders = await Order.find({ customer_id: req.user._id })
+    const order = await Order.findOne({customer_id: req.user._id}).sort({'orderDate':-1}).limit(1)
+    console.log(order)
+    res.status(200).json({
+        success: true,
+        order
     })
 })
 

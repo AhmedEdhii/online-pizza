@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
-const { newOrder, getSingleOrderAdmin, myOrders, allOrders, updateOrder, deleteOrder} = require('../controllers/order')
+const { newOrder, getSingleOrderAdmin, myOrders, allOrders, mylatestOrders, updateOrder, deleteOrder} = require('../controllers/order')
 
 const {verifyToken, authorizeRoles} = require("../middlewares/authentication");
 
 
 router.post('/neworder', newOrder)
 
-// router.get('/order/:id', verifyToken, getSingleOrder)
+router.get('/myorder', verifyToken, mylatestOrders)
 
 router.get('/myorders', verifyToken, myOrders)
 

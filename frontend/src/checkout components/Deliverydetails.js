@@ -5,8 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { createOrder, clearErrors } from '../actions/orderActions'
 import { Link } from 'react-router-dom';
 
-
-function Deliverydetails({ user }) {
+const  Deliverydetails = ({ user }) => {
 
     const alert = useAlert();
     const dispatch = useDispatch();
@@ -14,25 +13,27 @@ function Deliverydetails({ user }) {
     const { cartItems } = useSelector(state => state.cart)
     // const { user } = useSelector(state => state.auth)
 
-    const [name, setName] = useState('')
-    const [phonenumber, setPhoneNumber] = useState('')
+    const [name, setName] = useState(user && user.name)
+    const [phonenumber, setPhoneNumber] = useState(user && user.phonenumber)
     // const [altNumber, setAltNumber] = useState('')
-    const [deliveryaddress, setDeliveryAddress] = useState('')
+    const [deliveryaddress, setDeliveryAddress] = useState(user && user.deliveryaddress)
 
     const [paymentmethod, setPaymentMethod] = useState('COD')
 
     const [additionalInstructions, setAdditionalInstructions] = useState('')
     const deliverycharges = 150;
-    const totalPrice = cartItems.reduce((acc, item) => acc + item.price * item.quantity, deliverycharges)
+    const totalPrice = cartItems.reduce((acc, item) => acc + (item.quantity * item.price) + item.toppingstotal, deliverycharges).toFixed(2)
 
-    useEffect(() => {
-       // console.log(user)
+  //  useEffect(() => {
+        // console.log(user)
         // if (user) {
         //     setName(user.name);
         //     setPhoneNumber(user.phonenumber);
         //     setDeliveryAddress(user.deliveryaddress);
         // }
-    }, user)
+   // }, user)
+
+   console.log(user && user.phonenumber)
 
     const paymentMethodHandler = (value) => {
 
@@ -42,24 +43,37 @@ function Deliverydetails({ user }) {
 
 
     const PlaceOrderHandler = () => {
-    
-
-        const order = {
-            orderItems: cartItems,
-            deliverycharges,
-            totalPrice,
-            paymentmethod,
-            deliveryaddress,
-            additionalInstructions
+        if (user) {
+            const customer_id = user._id
+            const order = {
+                orderItems: cartItems,
+                deliverycharges,
+                totalPrice,
+                paymentmethod,
+                deliveryaddress,
+                additionalInstructions,
+                customer_id
+            }
+            //console.log(order)
+            alert.success('Order Placed!')
+            dispatch(createOrder(order))
         }
-        //console.log(order)
-        alert.success('Order Placed!')
-        dispatch(createOrder(order))
+        else {
+            const order = {
+                orderItems: cartItems,
+                deliverycharges,
+                totalPrice,
+                paymentmethod,
+                deliveryaddress,
+                additionalInstructions,
+            }
+            //console.log(order)
+            alert.success('Order Placed!')
+            dispatch(createOrder(order))
+        }
     }
 
     return (
-
-
         <Grid display='flex'>
             <Box sm={12} sx={{ width: '500px', m: 5, p: 5, border: 1, borderColor: 'grey.300' }}>
 
@@ -123,8 +137,8 @@ function Deliverydetails({ user }) {
 
                 </Box>
                 <Fragment>
-                    
-                    <Button component={Link} to="/"  type='submit' variant="contained" fullWidth
+
+                    <Button component={Link} to="/" type='submit' variant="contained" fullWidth
                         sx={{ m: 1, mt: 2, height: 50 }}
                         onClick={() => PlaceOrderHandler()}
 

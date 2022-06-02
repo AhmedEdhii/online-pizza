@@ -1,4 +1,3 @@
-import React from 'react'
 import {
     Typography, Card, Grid, Box, CardActions, CardContent, List,
     ListItem,
@@ -9,8 +8,36 @@ import {
 } from '@mui/material'
 
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import React, { Fragment, useEffect } from 'react'
+import { useAlert } from 'react-alert'
+import { useDispatch, useSelector } from 'react-redux'
+import { createOrder, clearErrors } from '../actions/orderActions'
 
-function UserDashboardMain({user}) {
+const UserDashboardMain = ({ user }) => {
+
+    const alert = useAlert();
+    const dispatch = useDispatch();
+
+    const { error, order } = useSelector(state => state.myLatestOrder);
+    console.log("main" + order.deliverycharges)
+    // useEffect(() => {
+    //     dispatch(getmyLatestOrder());
+
+    //     console.log(order.deliverycharges)
+
+    //     if (error) {
+    //         alert.error(error);
+    //         dispatch(clearErrors())
+    //     }
+    // }, [dispatch, alert, error])
+
+    const PlaceOrderHandler = () => {
+            //console.log(order)
+            alert.success('Order Placed!')
+            dispatch(createOrder(order))
+    }
+
+
     return (
         <>
             <Grid>
@@ -43,36 +70,46 @@ function UserDashboardMain({user}) {
                             </Typography>
                             <Divider sx={{ marginTop: 1, marginBottom: 2 }} />
 
-                            <Grid display='flex' sx={{ justifyContent: 'space-between', }}>
-                                <Grid sx={{ columnDirection: 'column' }}>
-                                    <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
-                                        Chicken Fajita</Typography>
-                                    <Typography variant="body1" gutterBottom color='text.secondary' component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
-                                        Small</Typography>
-
-
-                                    <Typography variant="body2" component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
-                                        Extra Toppings
-                                    </Typography>
-
-
+                            {order.orderItems && order.orderItems.map(item => (
+                                <Grid display='flex' sx={{ justifyContent: 'space-between', }}>
                                     <Grid sx={{ columnDirection: 'column' }}>
-                                        <Typography variant="body2" color='text.secondary' component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
-                                            Cheese
+                                        <Typography variant="body1" component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
+                                            {item.name}
                                         </Typography>
+                                        {item.category === 'Pizzas' && (
+                                            <Fragment>
+                                                <Typography variant="body1" gutterBottom color='text.secondary' component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
+                                                    {item.size}
+                                                </Typography>
+                                            </Fragment>
+                                        )}
+                                        {item.toppings && item.toppings.map(topping => (
+                                            <Fragment>
+                                                <Typography variant="body2" component="div" sx={{ fontWeight: 'bold', flexGrow: 1 }}>
+                                                    Extra Toppings
+                                                </Typography>
+
+                                                <Grid sx={{ columnDirection: 'column' }}>
+                                                    <Typography variant="body2" color='text.secondary' component="div" sx={{ fontWeight: 'bold', flexGrow: 1, }}>
+                                                        {topping.name}
+                                                    </Typography>
+                                                </Grid>
+                                            </Fragment>
+                                        ))}
                                     </Grid>
 
+                                    <Grid item display='flex' alignContent='right' sx={{ flexDirection: 'column', alignItems: 'flex-end' }}>
+                                        <Typography variant="body1" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1, paddingBottom: 5 }}>
+                                            Rs. {item.price}
+                                        </Typography>
+                                        {item.toppings && item.toppings.map(topping => (
+                                            <Typography variant="body2" color='text.secondary' component="div" sx={{ flexGrow: 1 }}>
+                                                Rs. {topping.price}
+                                            </Typography>
+                                        ))}
+                                    </Grid>
                                 </Grid>
-                                <Grid item display='flex' alignContent='right' sx={{ flexDirection: 'column', alignItems: 'flex-end' }}>
-                                    <Typography variant="body1" gutterBottom component="div" sx={{ fontWeight: 'bold', flexGrow: 1, paddingBottom: 5 }}>
-                                        Rs. 4000
-                                    </Typography>
-
-                                    <Typography variant="body2" color='text.secondary' component="div" sx={{ flexGrow: 1 }}>
-                                        Rs. 80
-                                    </Typography>
-                                </Grid>
-                            </Grid>
+                            ))}
 
 
                             <Divider sx={{ marginTop: 2, marginBottom: 1 }} />
@@ -87,7 +124,9 @@ function UserDashboardMain({user}) {
                                         backgroundColor: '#FCAB04',
                                         boxShadow: 'none',
                                     },
-                                }}>
+                                }}
+                                onClick={() => PlaceOrderHandler()}
+                                >
                                 Order Now</Button>
                         </CardActions>
                     </Card>
