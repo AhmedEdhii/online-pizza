@@ -10,7 +10,7 @@ import {
 import React, { Fragment, useState, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateProfile, loadUser, clearErrors } from '../actions/userActions'
+import { getmyLatestOrder, clearErrors } from '../actions/orderActions'
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ListAltIcon from '@mui/icons-material/ListAlt';
@@ -28,16 +28,21 @@ import UserSidebar from './UserSidebar';
 
 
 
+
 const drawerWidth = 240;
 
 
-function UserDashboard() {
+const UserDashboard = () => {
 
     const [dashboard, setDashboard] = useState(true)
     const [profile, setProfile] = useState(false)
-    const [order, setOrder] = useState(false)
+    const [Order, setOrder] = useState(false)
 
     const { user, loading } = useSelector(state => state.auth)
+    const alert = useAlert();
+    const dispatch = useDispatch();
+
+    const { error, order } = useSelector(state => state.myLatestOrder);
 
     const sidebarHandler = (navLabel) => {
 
@@ -57,6 +62,17 @@ function UserDashboard() {
             setProfile(false)
         }
     }
+
+    useEffect(() => {
+        dispatch(getmyLatestOrder());
+
+        console.log("dash" + order.deliverycharges)
+
+        if (error) {
+            alert.error(error);
+            dispatch(clearErrors())
+        }
+    }, [dispatch, alert, error])
 
     return (
         <>
@@ -120,7 +136,7 @@ function UserDashboard() {
                     {(profile === true) && (
                         <UserProfile user = {user}/>
                     )}
-                    {(order === true) && (
+                    {(Order === true) && (
                         <UserOrders user = {user}/>
                     )}
                 </Grid>

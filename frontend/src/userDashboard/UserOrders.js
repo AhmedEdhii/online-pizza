@@ -113,16 +113,7 @@ function UserOrders(props) {
         }
     }, [dispatch, alert, error])
 
-    // orders && orders.forEach(orderItems => {
-    //     {orderItems.map(orderItems => (
-    //             console.log(orderItems)
-    //         ))}
-    // })
-
     orders && orders.forEach(order => {
-        {order.map(orderItems => (
-            console.log(orderItems)
-        ))}
         rows.push({
             id: order._id,
             date: String(order.orderDate).substring(0, 10),
@@ -131,13 +122,8 @@ function UserOrders(props) {
         })
     })
     useEffect(() => {
-        // dispatch(getAdminProducts());
-        // setProducts();
-        // const dup = [...rows];
-        // dup.splice(0, dup.length)
-        // rows = [...dup]; 
         rows.splice(0, rows.length)
-    }, orders)
+    },)
 
     const Img = styled('img')({
         alignItems: "center",

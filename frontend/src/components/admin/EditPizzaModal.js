@@ -80,7 +80,7 @@ function EditPizzaModal({ title, openPopup, setOpenPopup, dashboard}) {
             alert.success('Product updated successfully');
             dispatch({ type: UPDATE_PRODUCT_RESET })
         }
-    }, [dispatch, alert, isUpdated, updateError, value, product])
+    }, [dispatch, alert, isUpdated, updateError, value])
 
 
     const submitHandler = (e) => {
