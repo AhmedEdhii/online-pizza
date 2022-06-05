@@ -22,6 +22,7 @@ import React, { Fragment, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { myOrders, clearErrors } from '../actions/orderActions'
+import { createOrder, getOrderDetails } from '../actions/orderActions'
 
 
 // function createData(id, date, orderDetails, total) {
@@ -103,6 +104,9 @@ function UserOrders(props) {
     const dispatch = useDispatch();
 
     const { loading, error, orders } = useSelector(state => state.myOrders);
+    const { order } = useSelector(state => state.orderDetails)
+
+    let orderid = 0;
 
     useEffect(() => {
         dispatch(myOrders());
@@ -111,9 +115,20 @@ function UserOrders(props) {
             alert.error(error);
             dispatch(clearErrors())
         }
-    }, [dispatch, alert, error])
+    }, [dispatch, alert, error, order])
+
+    const Items = [];
+    // orders && orders.forEach(order => {
+    //     order && order.orderItems.forEach(item => {
+    //         orderItems.push(item)
+    //     })
+    // })
 
     orders && orders.forEach(order => {
+        order.orderItems && order.orderItems.forEach(item => {
+            Items.push(item)
+        })
+        console.log(Items)
         rows.push({
             id: order._id,
             date: String(order.orderDate).substring(0, 10),
@@ -123,7 +138,16 @@ function UserOrders(props) {
     })
     useEffect(() => {
         rows.splice(0, rows.length)
-    },)
+    })
+
+    const orderHandler = (id) => {
+        console.log(id)
+        dispatch(getOrderDetails(id))
+
+        dispatch(createOrder(order))
+        alert.success('Order Placed!')
+    }
+
 
     const Img = styled('img')({
         alignItems: "center",
@@ -213,7 +237,7 @@ function UserOrders(props) {
                                                         backgroundColor: '#FCAB04',
 
                                                     }
-                                                }} > Order Again </Button>
+                                                }} onClick={() => { orderHandler(row.id) }} > Order Again </Button>
                                             </TableCell>
 
 

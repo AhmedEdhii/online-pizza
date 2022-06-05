@@ -100,7 +100,7 @@ function TablePaginationActions(props) {
     );
 }
 
-function AdminManageOrders({ }) {
+function AdminManageOrders() {
 
     const Img = styled('img')({
         alignItems: "center",
@@ -157,8 +157,8 @@ function AdminManageOrders({ }) {
             alert.success('Order updated successfully');
             dispatch({ type: UPDATE_ORDER_RESET })
         }
-    
 
+        rows.splice(0, rows.length)
     }, [dispatch, alert, error, isUpdated])
 
     const updateOrderHandler = (id) => {
@@ -168,6 +168,10 @@ function AdminManageOrders({ }) {
 
         dispatch(updateOrder(id, formData))
     }
+
+    // useEffect(() => {
+    //     rows.splice(0, rows.length)
+    // })
 
     return (
         <>
@@ -191,7 +195,7 @@ function AdminManageOrders({ }) {
                                         <TableCell align="left" sx={{ fontWeight: 'bold', }}>Order Id</TableCell>
 
                                         <TableCell align="left" sx={{ fontWeight: 'bold', }}>Order Date</TableCell>
-                                        <TableCell align="left" sx={{ fontWeight: 'bold', }}>Order Details</TableCell>
+                                        <TableCell align="left" sx={{ fontWeight: 'bold', }}>Quantity</TableCell>
                                         <TableCell align="left" sx={{ fontWeight: 'bold', }}>Total</TableCell>
                                         <TableCell align="left" sx={{ fontWeight: 'bold', }}>Status</TableCell>
                                         <TableCell align="center" sx={{ fontWeight: 'bold', }}>Actions</TableCell>
@@ -215,7 +219,8 @@ function AdminManageOrders({ }) {
 
                                             </TableCell>
 
-                                            <TableCell component="th" scope="row" sx={{ width: '400px', pr: 15, wordBreak: 'break-word' }}>
+                                            {/* <TableCell component="th" scope="row" sx={{ width: '400px', pr: 15, wordBreak: 'break-word' }}> */}
+                                            <TableCell component="th" scope="row">
                                                 {row.orderDetails}
 
                                             </TableCell>
@@ -257,7 +262,6 @@ function AdminManageOrders({ }) {
                                                     <TableCell align="center" component="th" scope="row">
                                                         <Button variant='contained'
                                                             onClick={() => {
-                                                                console.log("tre")
                                                                 dispatch(getOrderDetails(row.id))
                                                                 const formData = new FormData();
                                                                 formData.set('orderStatus', status);

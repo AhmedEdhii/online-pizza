@@ -68,6 +68,7 @@ function AdminDashboard() {
             setTopping(false)
             setOrder(false)
             setUser(false)
+            window.location.reload();
         }
         else if (navLabel === 1) {
             setMenu(true)
@@ -138,7 +139,7 @@ function AdminDashboard() {
 
 
                         <ListItem sx={{ color: '#fff' }}>
-                            <ListItemButton onClick={() => sidebarHandler(0)} sx={{ backgroundColor: sidebarNav[0].color }} >
+                            <ListItemButton onClick={() => sidebarHandler(0)}>
                                 <ListItemIcon sx={{ color: '#fff' }}>
                                     <DashboardIcon />
                                 </ListItemIcon>

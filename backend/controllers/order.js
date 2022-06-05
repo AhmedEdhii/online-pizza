@@ -55,7 +55,7 @@ exports.getSingleOrder = catchAsyncErrors(async (req, res, next) => {
 
 exports.getSingleOrderAdmin = catchAsyncErrors(async (req, res, next) => {
 
-    const order = await Order.findOne(req.params.id)
+    const order = await Order.findById(req.params.id)
 
     if (!order) {
         return res.status(404).json({
@@ -72,7 +72,7 @@ exports.getSingleOrderAdmin = catchAsyncErrors(async (req, res, next) => {
 
 // Get logged in user orders
 exports.myOrders = catchAsyncErrors(async (req, res, next) => {
-    const orders = await Order.find({ customer_id: req.user._id })
+    const orders = await Order.find({ customer_id: req.user._id }).sort({ 'orderDate': -1 })
 
     res.status(200).json({
         success: true,
@@ -85,8 +85,8 @@ exports.myOrders = catchAsyncErrors(async (req, res, next) => {
 // my latest order
 exports.mylatestOrders = catchAsyncErrors(async (req, res, next) => {
     // const orders = await Order.find({ customer_id: req.user._id })
-    const order = await Order.findOne({customer_id: req.user._id}).sort({'orderDate':-1}).limit(1)
-    console.log(order)
+    const order = await Order.findOne({ customer_id: req.user._id }).sort({ 'orderDate': -1 }).limit(1)
+    //console.log(order)
     res.status(200).json({
         success: true,
         order
@@ -96,7 +96,7 @@ exports.mylatestOrders = catchAsyncErrors(async (req, res, next) => {
 
 // Get all orders -- For Admins
 exports.allOrders = catchAsyncErrors(async (req, res, next) => {
-    const orders = await Order.find()
+    const orders = await Order.find().sort({ 'orderStatus': -1, 'orderDate': -1 })
 
     let totalAmount = 0;
 
@@ -156,6 +156,6 @@ exports.deleteOrder = catchAsyncErrors(async (req, res, next) => {
 
     res.status(200).json({
         success: true,
-        order
+        // order
     })
 })

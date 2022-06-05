@@ -126,16 +126,15 @@ export const createOrder = (order) => async (dispatch, getState) => {
                 'Content-Type': 'application/json'
             }
         }
-        // console.log(order)
+        console.log("order" + order)
         const { data } = await axios.post('/api/neworder', order, config)
         console.log("-------------------------------------------------------------------")
+        console.log("data" + data)
         // console.log(data)
         dispatch({
             type: CREATE_ORDER_SUCCESS,
             payload: data
         })
-        window.localStorage.clear();
-        window.location.reload();
 
     } catch (error) {
         dispatch({

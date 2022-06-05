@@ -111,7 +111,6 @@ const UserDashboardMain = ({ user }) => {
                                 </Grid>
                             ))}
 
-
                             <Divider sx={{ marginTop: 2, marginBottom: 1 }} />
                         </CardContent>
                         <CardActions>

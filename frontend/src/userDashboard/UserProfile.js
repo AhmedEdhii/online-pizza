@@ -17,7 +17,7 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateProfile, loadUser, clearErrors } from '../actions/userActions'
-import { UPDATE_PROFILE_RESET } from '../constants/userConstants'
+import { UPDATE_PROFILE_RESET, UPDATE_PASSWORD_RESET } from '../constants/userConstants'
 import { updatePassword } from '../actions/userActions'
 
 import UserSidebar from './UserSidebar';
@@ -47,7 +47,7 @@ function UserProfile({ user }) {
     const [avatarPreview, setAvatarPreview] = useState(user.avatar.url || '/images/default_avatar.jpg')
     const [avatar, setAvatar] = useState('')
     const [oldPassword, setOldPassword] = useState('')
-    const [newPassword, setNewPassword] = useState('');
+    const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
 
 
@@ -55,18 +55,32 @@ function UserProfile({ user }) {
     const dispatch = useDispatch();
 
     // const { user } = useSelector(state => state.auth);
-    const { error, isUpdated, loading } = useSelector(state => state.userUpdated)
+    const { error, isUpdated, isPassUpdated } = useSelector(state => state.userUpdated)
 
     useEffect(() => {
         if (error) {
             alert.error(error);
             dispatch(clearErrors());
         }
-    }, [dispatch, alert, error, isUpdated])
+        if (isPassUpdated) {
+            alert.success('Password updated successfully')
 
-    function timeout(delay) {
-        return new Promise(res => setTimeout(res, delay));
-    }
+            dispatch({
+                type: UPDATE_PASSWORD_RESET
+            })
+        }
+
+        if (isUpdated) {
+            alert.success('Profile updated successfully')
+            // dispatch(loadUser());
+            dispatch({
+                type: UPDATE_PROFILE_RESET
+            })
+        }
+
+
+    }, [dispatch, alert, error, isUpdated, isPassUpdated])
+
 
     const SubmitHandler = () => {
 
@@ -77,13 +91,10 @@ function UserProfile({ user }) {
         formData.set('deliveryaddress', deliveryaddress);
         formData.set('avatar', avatar);
         dispatch(updateProfile(formData))
-        alert.success('Profile Edited')
-
-
+        //alert.success('Profile Edited')
         // window.location.reload()
-
-
     }
+    
     const UploadHandler = () => {
 
         alert.success('Avatar Uploaded')
@@ -93,19 +104,17 @@ function UserProfile({ user }) {
     const ChangePasswordHandler = () => {
         const formData = new FormData();
         formData.set('oldPassword', oldPassword);
-        if (newPassword !== confirmPassword) {
+        if (password !== confirmPassword) {
             alert.error("Passwords must Match");
             return 0;
         }
-        else {
-            formData.set('password', newPassword);
-            dispatch(updatePassword(formData))
-            alert.success('Password Changed')
-        }
+        formData.set('password', password);
+        dispatch(updatePassword(formData))
+        // alert.success('Password Changed')
 
-        setOldPassword('')
-        setNewPassword('');
-        setConfirmPassword('')
+        // setOldPassword('')
+        // setPassword('');
+        // setConfirmPassword('')
 
     }
 
@@ -259,61 +268,61 @@ function UserProfile({ user }) {
                     </Grid> */}
                 </Grid>
 
-                    {/* Chnage Password */}
+                {/* Chnage Password */}
 
-                    <Grid item xs={12} display='flex' sx={{ flexDirection: 'column', ml: 20, }}>
+                <Grid item xs={12} display='flex' sx={{ flexDirection: 'column', ml: 15 }}>
 
-                        <Typography variant='body1' sx={{ fontWeight: 'bold', marginBottom: 1, marginLeft: 1.2 }}>Change Password</Typography>
-                        <Divider sx={{ marginBottom: 1 }} />
-                        <Grid item >
-                            <Box container display='flex'
-                                component="form"
-                                sx={{
-                                    '& .MuiTextField-root': { m: 1, },
+                    <Typography variant='body1' sx={{ fontWeight: 'bold', marginBottom: 1, marginLeft: 1.2 }}>Change Password</Typography>
+                    <Divider sx={{ marginBottom: 1 }} />
+                    <Grid item >
+                        <Box container display='flex'
+                            component="form"
+                            sx={{
+                                '& .MuiTextField-root': { m: 1, },
 
-                                    width: '300px',
-                                    flexDirection: 'column',
+                                width: '300px',
+                                flexDirection: 'column',
 
-                                }}
-                                noValidate
-                                autoComplete="off"
-                            >
-
-
-                                {/* Name and Email */}
-                                <TextField
-                                    label='Old Password'
-                                    placeholder='Enter Old Password' fullWidth required
-                                    defaultValue={oldPassword} type='password'
-                                    onChange={(e) => setOldPassword(e.target.value)}
-                                />
+                            }}
+                            noValidate
+                            autoComplete="off"
+                        >
 
 
-                                <TextField
-                                    label='New Password'
-                                    placeholder='Enter New Password' 
-                                    type='password' fullWidth required
-                                    defaultValue={newPassword}
-                                    onChange={(e) => setNewPassword(e.target.value)}
-                                />
+                            {/* Name and Email */}
+                            <TextField
+                                label='Old Password'
+                                placeholder='Enter Old Password' fullWidth required
+                                defaultValue={oldPassword} type='password'
+                                onChange={(e) => setOldPassword(e.target.value)}
+                            />
 
 
-                                <TextField
-                                    label='Confirm Password'
-                                    placeholder='Confirm Password' type='password' fullWidth required
-                                    onChange={(e) => setConfirmPassword(e.target.value)}
-                                />
-                                <Button fullWidth variant='contained' sx={{ marginTop: 5.5, marginLeft: 1, }}
-                                    onClick={ChangePasswordHandler}>Change Password</Button>
+                            <TextField
+                                label='New Password'
+                                placeholder='Enter New Password'
+                                type='password' fullWidth required
+                                defaultValue={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
 
 
-                            </Box>
-                        </Grid>
+                            <TextField
+                                label='Confirm Password'
+                                placeholder='Confirm Password' type='password' fullWidth required
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                            />
+                            <Button fullWidth variant='contained' sx={{ marginTop: 5.5, marginLeft: 1, }}
+                                onClick={ChangePasswordHandler}>Change Password</Button>
 
 
-
-
+                        </Box>
                     </Grid>
+
+
+
+
+                </Grid>
 
 
             </Grid>

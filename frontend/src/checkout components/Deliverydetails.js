@@ -71,6 +71,8 @@ const  Deliverydetails = ({ user }) => {
             alert.success('Order Placed!')
             dispatch(createOrder(order))
         }
+        window.localStorage.clear();
+        window.location.href = "/homepage";
     }
 
     return (

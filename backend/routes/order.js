@@ -15,10 +15,11 @@ router.get('/myorders', verifyToken, myOrders)
 // admin routes
 router.get('/admin/allorders', verifyToken, authorizeRoles('admin'), allOrders)
 
-router.get('/order/:id', verifyToken, authorizeRoles('admin'), getSingleOrderAdmin)
+// router.get('/order/:id', verifyToken, authorizeRoles('admin'), getSingleOrderAdmin)
+router.get('/order/:id', verifyToken, getSingleOrderAdmin)
 
 router.put('/admin/order/:id', verifyToken, authorizeRoles('admin'), updateOrder)
 
-//router.delete('/admin/order/:id', verifyToken, authorizeRoles('admin'), deleteOrder)
+router.delete('/admin/order/', verifyToken, authorizeRoles('admin'), deleteOrder)
 
 module.exports = router;
