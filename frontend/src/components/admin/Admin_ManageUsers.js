@@ -120,15 +120,15 @@ function TablePaginationActions(props) {
 
 function Admin_ManageUsers() {
 
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
     const { error, products } = useSelector(state => state.products);
     const alert = useAlert();
     const dispatch = useDispatch();
     const { users, usersCount } = useSelector(state => state.allUsers)
     const [openUsers, setOpenUsers] = useState(false)
 
-  
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
 
     users.forEach(user => {
@@ -137,7 +137,8 @@ function Admin_ManageUsers() {
             name: user.name,
             phonenumber: user.phonenumber,
             email: user.email,
-            role: user.role
+            role: user.role,
+            password: user.encrypted_password
         })
     })
 
@@ -188,9 +189,11 @@ function Admin_ManageUsers() {
                                     
                                         <TableCell align="left" sx={{ fontWeight: 'bold', }}>Phone Number</TableCell>
                                         <TableCell align="left" sx={{ fontWeight: 'bold', }}>Email</TableCell>
+                                        <TableCell align="left" sx={{ fontWeight: 'bold', }}>Password</TableCell>
                                         <TableCell align="left" sx={{ fontWeight: 'bold', }}>Role</TableCell>
+                                      
 
-                                        <TableCell align="center" sx={{ fontWeight: 'bold', }}>Actions</TableCell>
+                                        {/* <TableCell align="center" sx={{ fontWeight: 'bold', }}>Actions</TableCell> */}
                                     </TableRow>
                                 </TableHead>
 
@@ -210,16 +213,22 @@ function Admin_ManageUsers() {
                                                 {row.phonenumber}
 
                                             </TableCell>
-                                            <TableCell component="th" scope="row">
-                                                {row.role}
 
-                                            </TableCell>
                                             <TableCell component="th" scope="row">
                                                 {row.email}
 
                                             </TableCell>
+                                            <TableCell component="th" scope="row">
+                                                {row.password}
 
-                                            <TableCell align="center" component="th" scope="row">
+                                            </TableCell>
+                                            <TableCell component="th" scope="row">
+                                                {row.role}
+
+                                            </TableCell>
+                                           
+
+                                            {/* <TableCell align="center" component="th" scope="row">
                                                 <IconButton
                                                     onClick={() => { console.log('delete clicked') }}>
                                                     <EditIcon color='success' />
@@ -229,7 +238,7 @@ function Admin_ManageUsers() {
                                                     onClick={() => { console.log('delete clicked') }}>
                                                     <DeleteOutlineIcon color='error' />
                                                 </IconButton>
-                                            </TableCell>
+                                            </TableCell> */}
 
 
                                         </TableRow>
@@ -247,7 +256,7 @@ function Admin_ManageUsers() {
                                 <TableFooter>
                                     <TableRow>
                                         <TablePagination
-                                            rowsPerPageOptions={[3, 10, 25, { label: 'All', value: -1 }]}
+                                            rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                                             colSpan={3}
                                             count={rows.length}
                                             rowsPerPage={rowsPerPage}
