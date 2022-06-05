@@ -9,7 +9,7 @@ align-items: center;
     flex:1;
     
     height: undefined;
-    width: undefined;
+    width: 100%;
   
     }
 
@@ -43,6 +43,6 @@ transition-duration: 2s ease;
 
 .slide.active{
     opacity: 1;
-    transition-duration: 1s;
+    transition-duration: 2s;
     transform: scale(1.08);
 }

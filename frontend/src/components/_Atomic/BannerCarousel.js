@@ -6,31 +6,39 @@ import {Slider_image} from './imageslide/Slider_image';
 
 function BannerCarousel() {
   
-    {/*
+    
       
       
-      <Grid sx={{flexGrow: 1}} >
-      <Grid item>
-      <Box
-        sx={{
-          marginBottom:3,
-          
-          width: '100%',
-          height: 450,
-          
 
-          
-          backgroundColor: '#F0F0F0',
-          '&:hover': {
-            backgroundColor: '#D8D8D8',
-            opacity: [0.9, 0.8, 0.7],
-          },
-        }}
-      />
-    </Grid>
-      </Grid>*/}
       
-      return <ImageSlider slides={Slider_image} />
+      return (
+
+        <Grid sx={{flexGrow: 1}} >
+        <Grid item>
+        <Box
+          sx={{
+            marginBottom:3,
+            
+            width: '100%',
+            height: 450,
+            
+  
+            
+           
+            '&:hover': {
+              cursor: 'pointer',
+              boxShadow: '0 8px 24px 0 rgba(0,0,0,0.12)',
+            },
+          }}
+        >
+           <ImageSlider slides={Slider_image} />
+           </Box>
+      </Grid>
+        </Grid>
+
+
+       
+      )
 }
 
 export default BannerCarousel
