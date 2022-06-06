@@ -18,8 +18,8 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import { LOGIN_SUCCESS } from '../../constants/userConstants';
 
-import { useDispatch, useSelector } from 'react-redux'
-
+import { useDispatch, useSelector, alert } from 'react-redux'
+import { useAlert } from 'react-alert';
 import OrderConfirmation from './OrderConfirmation';
 import { updateOrder, getOrderDetails, clearErrors } from '../../actions/orderActions'
 import { UPDATE_ORDER_RESET } from '../../constants/orderConstants'
@@ -127,6 +127,7 @@ function AdminManageOrders() {
     };
 
     const dispatch = useDispatch();
+    const alert = useAlert();
     const [status, setStatus] = useState('Delivered');
 
     const [openOrderConfirmation, setOpenOrderConfirmation] = useState(false)

@@ -46,7 +46,7 @@ export const getmyLatestOrder = () => async (dispatch) => {
     }
 }
 
-// Get order details - admin
+// Get order details
 export const getOrderDetails = (id) => async (dispatch) => {
     try {
 

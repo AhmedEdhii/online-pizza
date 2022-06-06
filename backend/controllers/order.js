@@ -35,25 +35,24 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
 })
 
 
-// Get single order of logged in user
+// exports.getSingleOrder = catchAsyncErrors(async (req, res, next) => {
+
+//     const order = await Order.findOne({ $and: [{ _id: req.params.id }, { customer_id: req.user._id }] })
+
+//     if (!order) {
+//         return res.status(404).json({
+//             success: false,
+//             message: 'Order not found'
+//         })
+//     }
+
+//     res.status(200).json({
+//         success: true,
+//         order
+//     })
+// })
+
 exports.getSingleOrder = catchAsyncErrors(async (req, res, next) => {
-
-    const order = await Order.findOne({ $and: [{ _id: req.params.id }, { customer_id: req.user._id }] })
-
-    if (!order) {
-        return res.status(404).json({
-            success: false,
-            message: 'Order not found'
-        })
-    }
-
-    res.status(200).json({
-        success: true,
-        order
-    })
-})
-
-exports.getSingleOrderAdmin = catchAsyncErrors(async (req, res, next) => {
 
     const order = await Order.findById(req.params.id)
 

@@ -137,8 +137,9 @@ function Admin_ManageUsers() {
             name: user.name,
             phonenumber: user.phonenumber,
             email: user.email,
-            role: user.role,
-            password: user.encrypted_password
+            deliveryaddress: user.deliveryaddress,
+            status: user.account_status,
+            role: user.role
         })
     })
 
@@ -185,11 +186,11 @@ function Admin_ManageUsers() {
                                 <TableHead>
                                     <TableRow sx={{ backgroundColor: "#E5E4E2", }}>
 
-                                        <TableCell align="left" sx={{ fontWeight: 'bold', width: "300px" }}>User Name</TableCell>
-                                    
+                                        <TableCell align="left" sx={{ fontWeight: 'bold'}}>User Name</TableCell>
                                         <TableCell align="left" sx={{ fontWeight: 'bold', }}>Phone Number</TableCell>
                                         <TableCell align="left" sx={{ fontWeight: 'bold', }}>Email</TableCell>
-                                        <TableCell align="left" sx={{ fontWeight: 'bold', }}>Password</TableCell>
+                                        {/* <TableCell align="left" sx={{ fontWeight: 'bold', }}>Delivery Address</TableCell> */}
+                                        <TableCell align="left" sx={{ fontWeight: 'bold', }}>Account Status</TableCell>
                                         <TableCell align="left" sx={{ fontWeight: 'bold', }}>Role</TableCell>
                                       
 
@@ -204,7 +205,7 @@ function Admin_ManageUsers() {
                                     ).map((row) => (
                                         <TableRow key={row.name} >
 
-                                            <TableCell component="th" scope="row" sx={{ paddingLeft: 5 }}>
+                                            <TableCell component="th" scope="row">
                                                 {row.name}
 
                                             </TableCell>
@@ -218,8 +219,12 @@ function Admin_ManageUsers() {
                                                 {row.email}
 
                                             </TableCell>
+                                            {/* <TableCell component="th" scope="row">
+                                                {row.deliveryaddress}
+
+                                            </TableCell> */}
                                             <TableCell component="th" scope="row">
-                                                {row.password}
+                                                {row.status}
 
                                             </TableCell>
                                             <TableCell component="th" scope="row">

@@ -4,14 +4,9 @@ const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const APIFeatures = require('../utils/apiFeatures')
 const cloudinary = require('cloudinary')
 
-
-//Add new product -- For Admins
 //Add new product -- For Admins
 exports.newProduct = catchAsyncErrors(async (req, res, next) => {
 
-   
-    //else {
-    //console.log(req.body.avatar)
     var url;
     if (req.body.avatar != '/images/default.png') {
         const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
@@ -43,7 +38,7 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
             product_status: activeState,
             url
         });
-        console.log(product)
+        //console.log(product)
         res.status(201).json({
             success: true,
             product
@@ -83,7 +78,6 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
             product
         })
     }
-    // }
 })
 
 
@@ -157,7 +151,7 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
 
     const product = await Product.findById(req.params.id);
 
-    console.log(product)
+    //console.log(product)
     if (!product) {
         return res.status(404).json({
             success: false,
@@ -165,7 +159,6 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
         })
     }
 
-   
     if (req.body.category === 'Pizzas') {
         const newProductData = {
             name: req.body.name,
@@ -181,13 +174,27 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
             },
             product_status: req.body.status
         }
+        // var url;
+        // if (req.body.avatar != '/images/default.png') {
+        //     const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+        //         folder: 'products',
+        //         width: 800,
+        //         crop: "scale"
+        //     })
+        //     url = result.secure_url;
+
+        //     newProductData.url = {
+        //         url: result.secure_url || (product.url)
+        //     }
+        // }
+        
         const product = await Product.findByIdAndUpdate(req.params.id, newProductData, {
             new: true,
             runValidators: true,
             useFindAndModify: false
         });
 
-        console.log(product)
+        //console.log(product)
 
         res.status(200).json({
             success: true,
@@ -205,30 +212,27 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
             },
             product_status: req.body.status
         }
-        var url;
-        if (req.body.avatar != '/images/default.png') {
-            const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
-                folder: 'products',
-                width: 800,
-                crop: "scale"
-            })
-            url = result.secure_url;
-    
-            newProductData.url = {
-                url: result.secure_url || (product.url)
-            }
-        }
-        product = await Product.findByIdAndUpdate((req.params.id), newProductData, {
+        // var url;
+        // if (req.body.avatar != '/images/default.png') {
+        //     const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+        //         folder: 'products',
+        //         width: 800,
+        //         crop: "scale"
+        //     })
+        //     url = result.secure_url;
+
+        //     newProductData.url = {
+        //         url: result.secure_url || (product.url)
+        //     }
+        // }
+        await Product.findByIdAndUpdate((req.params.id), newProductData, {
             new: true,
             runValidators: true,
             useFindAndModify: false
         });
 
-        console.log(product)
-
         res.status(200).json({
-            success: true,
-            // product
+            success: true
         })
 
     }
@@ -243,30 +247,29 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
             product_status: req.body.status,
         }
 
-        var url;
-        if (req.body.avatar != '/images/default.png') {
-            const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
-                folder: 'products',
-                width: 800,
-                crop: "scale"
-            })
-            url = result.secure_url;
-    
-            newProductData.url = {
-                url: result.secure_url || (product.url)
-            }
-        }
-        product = await Product.findByIdAndUpdate((req.params.id), newProductData, {
+        // var url;
+        // if (req.body.avatar != '/images/default.png') {
+        //     const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+        //         folder: 'products',
+        //         width: 800,
+        //         crop: "scale"
+        //     })
+        //     url = result.secure_url;
+
+        //     newProductData.url = {
+        //         url: result.secure_url || (product.url)
+        //     }
+        // }
+        await Product.findByIdAndUpdate((req.params.id), newProductData, {
             new: true,
             runValidators: true,
             useFindAndModify: false
         });
 
-        console.log(product)
+        //console.log(product)
 
         res.status(200).json({
-            success: true,
-            // product
+            success: true
         })
 
     }

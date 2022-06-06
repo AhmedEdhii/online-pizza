@@ -55,7 +55,7 @@ function OtherItemsModal({ title, openPopup, setOpenPopup, }) {
         }
 
         if (success) {
-            // alert.success('Product added successfully');
+            alert.success('Product added successfully');
             dispatch({ type: NEW_PRODUCT_RESET })
         }
 
@@ -107,7 +107,7 @@ function OtherItemsModal({ title, openPopup, setOpenPopup, }) {
         formData.set('price', price);
         formData.set('avatar', avatar);
         dispatch(newProduct(formData))
-        alert.success('Product added successfully');
+        // alert.success('Product added successfully');
         setAvatarPreview('/images/default.png')
         setName('')
         setDescription('')

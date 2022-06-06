@@ -116,7 +116,7 @@ exports.getprofile = catchAsyncErrors(async (req, res, next) => {
         User.findOne({ _id: req.user._id }, (err, user) => {
             const { _id, name, email, phonenumber, deliveryaddress, role, createdAt, avatar } = user
             return res.status(200).json({
-                message: "Route to User Profile Successful",
+                message: "success",
                 user: {
                     _id,
                     name,

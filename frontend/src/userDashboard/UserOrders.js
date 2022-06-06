@@ -106,8 +106,6 @@ function UserOrders(props) {
     const { loading, error, orders } = useSelector(state => state.myOrders);
     const { order } = useSelector(state => state.orderDetails)
 
-    let orderid = 0;
-
     useEffect(() => {
         dispatch(myOrders());
 
@@ -237,7 +235,12 @@ function UserOrders(props) {
                                                         backgroundColor: '#FCAB04',
 
                                                     }
-                                                }} onClick={() => { orderHandler(row.id) }} > Order Again </Button>
+                                                }} onClick={() => {
+                                                    console.log(row.id)
+                                                    dispatch(getOrderDetails(row.id))
+                                                    dispatch(createOrder(order))
+                                                    alert.success('Order Placed!')
+                                                }} > Order Again </Button>
                                             </TableCell>
 
 

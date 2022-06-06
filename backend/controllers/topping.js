@@ -7,7 +7,7 @@ const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 exports.newTopping = catchAsyncErrors(async (req, res, next) => {
         req.body.createdBy = req.user._id;
         const topping = await Topping.create(req.body);
-        const { _id, name, price, category } = toppings;
+        // const { _id, name, price, category } = toppings;
         res.status(201).json({
             success: true,
             topping
@@ -20,17 +20,17 @@ exports.getallToppings = catchAsyncErrors(async (req, res, next) => {
     if (req.user != null) {
         const toppings = await Topping.find();
         res.status(200).json({
-            success: true,
-            toppings,
             count: toppings.length,
+            success: true,
+            toppings
         })
     }
     else {
         const toppings = await Topping.find({ topping_status: "active" });
         res.status(200).json({
+            count: toppings.length,
             success: true,
-            toppings,
-            count: toppings.length
+            toppings
         })
     }
 })
